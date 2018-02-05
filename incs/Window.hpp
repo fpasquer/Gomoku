@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Gomoku.hpp                                         :+:      :+:    :+:   */
+/*   Window.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 20:25:51 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 22:57:30 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/05 23:01:17 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GOMOKU_HPP
-# define GOMOKU_HPP
-
-# define SIZE_GRID 15
-# define SIZE_BUFF 7
-# define MIN_LINES 15
-# define MIN_COLS 50
-# define EMPTY_CELL " "
-# define KEY_ESC_ (char[]){27, 0, 0, 0, 0, 0, 0}
+#ifndef WINDOW_HPP
+# define WINDOW_HPP
 
 # include <ncurses.h>
+# include <stdlib.h>
+# include <string>
+# include "Gomoku.hpp"
+
+class Window
+{
+	public:
+							Window(void);
+		bool				show(std::string const &left, std::string const &right);
+							~Window(void);
+	public:
+		unsigned int		m_cols;
+		unsigned int		m_lines;
+		WINDOW				*m_win_left;
+		WINDOW				*m_win_right;
+};
 
 #endif

@@ -6,13 +6,13 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/05 22:21:45 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/05 23:03:52 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Gomoku
 
-SRC_NAME = $(sort main.cpp Player.cpp Cell.cpp Grid.cpp Key.cpp)
+SRC_NAME = $(sort main.cpp Player.cpp Cell.cpp Grid.cpp Key.cpp Window.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/
@@ -25,7 +25,7 @@ INC = $(addprefix -I,$(INC_PATH))
 CC = clang++
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = $(addprefix -L,)
-LDLIBS = -I/usr/local/opt/qt/include
+LDLIBS = -I/usr/local/opt/qt/include -lncurses
 
 .PHONY: all clean fclean re
 
