@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 11:10:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 12:34:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ bool						Player::checkKeyEntry(std::string const &key)
 		this->setY(m_y + 1);
 	else if (key == KEY_ARROW_UP_)
 		this->setY(m_y - 1);
-	else if (key == KEY_ENTER_)
-		return (true);
-	return (false);
+	return ((key == KEY_ENTER_) ? true : false); 
 }
 
 std::string					Player::getValue(void) const
