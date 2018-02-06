@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 12:34:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 12:37:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ unsigned int				Player::getY(void) const
 	return (m_y);
 }
 
-bool						Player::checkKeyEntry(std::string const &key)
+bool						Player::checkKeySelect(std::string const &key)
 {
 	if (key == KEY_ARROW_LEFT_)
 		this->setX(m_x - 1);
@@ -60,7 +60,7 @@ bool						Player::checkKeyEntry(std::string const &key)
 		this->setY(m_y + 1);
 	else if (key == KEY_ARROW_UP_)
 		this->setY(m_y - 1);
-	return ((key == KEY_ENTER_) ? true : false); 
+	return ((key == KEY_SPACE_) ? true : false); 
 }
 
 std::string					Player::getValue(void) const

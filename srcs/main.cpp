@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 11:09:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 12:41:07 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int							main(void)
 		win.show(grid, player1, key);
 		if (Key::getKey(key) == false)
 			return (-1);
-		if (player1.checkKeyEntry(key) == true)
+		if (player1.checkKeySelect(key) == true)
 			grid.play(player1);
 		if (key == KEY_ESC_)
 			break ;
