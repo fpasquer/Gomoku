@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:32:56 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 21:05:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <string>
 # include "Grid.hpp"
-# include "Gomoku.hpp"
+# include "Gomoku_client.hpp"
 
 typedef struct				s_color
 {

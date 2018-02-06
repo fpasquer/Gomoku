@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 20:45:03 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/06 20:48:57 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/06 20:54:01 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ clean:
 	make -C Client clean
 	make -C Server clean
 
-fclean: clean
+fclean:
 	make -C Client fclean
 	make -C Server fclean
 

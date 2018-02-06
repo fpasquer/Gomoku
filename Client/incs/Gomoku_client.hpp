@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Gomoku.hpp                                         :+:      :+:    :+:   */
+/*   Gomoku_client.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:25:51 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:33:39 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 21:08:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GOMOKU_HPP
-# define GOMOKU_HPP
+#ifndef GOMOKU_CLIENT_HPP
+# define GOMOKU_CLIENT_HPP
 
 # define SIZE_GRID 15
 # define SIZE_BUFF 7
@@ -24,6 +24,8 @@
 # define KEY_ARROW_UP_ (char[]){27, 91, 65, 0, 0, 0, 0}
 # define KEY_ARROW_LEFT_ (char[]){27, 91, 68, 0, 0, 0, 0}
 # define KEY_SPACE_ (char[]){32, 0, 0, 0, 0, 0, 0}
+# define MIN_PORT 1
+# define MAX_PORT 0xffff
 
 # include <ncurses.h>
 

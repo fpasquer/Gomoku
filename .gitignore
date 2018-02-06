@@ -32,3 +32,5 @@
 *.app
 
 .vscode
+Gomoku_client
+Gomoku_server

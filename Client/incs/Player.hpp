@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:13:23 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 21:05:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PLAYER_HPP
 # define PLAYER_HPP
 
-# include "Gomoku.hpp"
+# include "Gomoku_client.hpp"
 # include <string>
 
 class Player

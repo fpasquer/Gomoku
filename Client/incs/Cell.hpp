@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:27:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 09:12:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 21:04:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CELL_HPP
 # define CELL_HPP
 
-# include "../incs/Gomoku.hpp"
+# include "../incs/Gomoku_client.hpp"
 # include <string>
 # include "Player.hpp"
 
