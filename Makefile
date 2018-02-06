@@ -6,13 +6,13 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/05 23:03:52 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/06 13:49:43 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Gomoku
 
-SRC_NAME = $(sort main.cpp Player.cpp Cell.cpp Grid.cpp Key.cpp Window.cpp)
+SRC_NAME = $(sort main.cpp Player.cpp Cell.cpp Grid.cpp Key.cpp Window.cpp Error.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/

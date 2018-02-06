@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 12:41:07 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:23:03 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@
 #include "../incs/Key.hpp"
 #include "../incs/Window.hpp"
 #include <iostream>
+#include <signal.h>
+#include <exception>
 
 int							main(void)
 {
-	std::string				key = "ABCDEFG";
+	Player					player1, player2;
+	std::string				key;
 	Window					win;
-	Player					player1;
-	Grid					grid;
 
+	Grid					grid;
+	grid.play(player2);
 	while (1)
 	{
 		win.show(grid, player1, key);

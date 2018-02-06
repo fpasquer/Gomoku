@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 11:06:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:35:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,25 @@ t_color const				Window::m_color[] = {
 	curs_set(false);
 	m_cols = COLS / 2;
 	m_lines = LINES;
-	m_win_left = subwin(stdscr, LINES, COLS / 2, 0, 0);
-	m_win_right = subwin(stdscr, LINES, COLS / 2, 0, COLS / 2);
+	try
+	{
+		if (COLS < MIN_COLS)
+			throw Error("Window not enough larg");
+		else if (LINES < MIN_LINES)
+			throw Error("Window not enough hight");
+		m_win_left = subwin(stdscr, LINES, COLS / 2, 0, 0);
+		if ((m_win_right = subwin(stdscr, LINES, COLS / 2, 0, COLS / 2)) == NULL || m_win_left == NULL)
+			throw Error("Allocation window failled");
+	}
+	catch (std::exception const&e)
+	{
+		clear();
+		printw("%s", e.what());
+		getch();
+		curs_set(true);
+		endwin();
+		exit(-1);
+	}
 	wclear(m_win_left);
 	wclear(m_win_right);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);

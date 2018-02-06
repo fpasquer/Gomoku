@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:25:51 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 12:38:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 14:33:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define SIZE_GRID 15
 # define SIZE_BUFF 7
-# define MIN_LINES 15
-# define MIN_COLS 50
+# define MIN_LINES SIZE_GRID * 2 + 1
+# define MIN_COLS (SIZE_GRID * 4 + 1) * 2
 # define EMPTY_CELL " "
 # define KEY_ESC_ (char[]){27, 0, 0, 0, 0, 0, 0}
 # define KEY_ARROW_RIGHT_ (char[]){27, 91, 67, 0, 0, 0, 0}
