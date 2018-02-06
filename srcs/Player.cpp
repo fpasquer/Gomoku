@@ -6,16 +6,15 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 21:57:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 11:10:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Player.hpp"
 
 unsigned int				Player::m_count = 0;
-std::string					Player::player1 = "X\033[0m";
-std::string					Player::player2 = "O\033[0m";
-t_color						Player::tab_color[] = {{"\033[31m"},{"\033[31;01m"},{"\033[32m"},{"\033[32;01m"}};
+std::string					Player::player1 = "X";
+std::string					Player::player2 = "O";
 
 							Player::Player(unsigned int const &x, unsigned int const &y) : m_x(x), m_y(y)
 {
@@ -51,9 +50,22 @@ unsigned int				Player::getY(void) const
 	return (m_y);
 }
 
-std::string					Player::getValue(unsigned int const &x, unsigned int const &y) const
+bool						Player::checkKeyEntry(std::string const &key)
 {
-	if (x == this->getX() && y == this->getY())
-		return (tab_color[m_i * 2 + 1].color + m_val);
-	return (tab_color[m_i * 2].color + m_val);
+	if (key == KEY_ARROW_LEFT_)
+		this->setX(m_x - 1);
+	else if (key == KEY_ARROW_RIGHT_)
+		this->setX(m_x + 1);
+	else if (key == KEY_ARROW_DOWN_)
+		this->setY(m_y + 1);
+	else if (key == KEY_ARROW_UP_)
+		this->setY(m_y - 1);
+	else if (key == KEY_ENTER_)
+		return (true);
+	return (false);
+}
+
+std::string					Player::getValue(void) const
+{
+		return (m_val);
 }

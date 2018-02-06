@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 21:55:12 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 10:39:22 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include "Cell.hpp"
 # include <string>
+# include <ncurses.h>
 
 class Grid
 {
 	public:
 							Grid(void);
-		std::string			show(void) const;
+		void				show(WINDOW *win, unsigned int start_x, unsigned int start_y, Player const &player) const;
 		bool				play(Player const &player);
 							~Grid(void);
 	private:

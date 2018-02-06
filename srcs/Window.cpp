@@ -6,16 +6,25 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 23:21:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 11:06:27 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Window.hpp"
 
+t_color const				Window::m_color[] = {
+	{1, COLOR_GREEN, COLOR_BLACK},
+	{2, COLOR_RED, COLOR_BLACK}, 
+	{0, 0, 0}
+};
+
 							Window::Window(void)
 {
+	unsigned int			i;
+
 	initscr();
-	m_cols = COLS;
+	curs_set(false);
+	m_cols = COLS / 2;
 	m_lines = LINES;
 	m_win_left = subwin(stdscr, LINES, COLS / 2, 0, 0);
 	m_win_right = subwin(stdscr, LINES, COLS / 2, 0, COLS / 2);
@@ -26,24 +35,41 @@
 	wrefresh(m_win_left);
 	wrefresh(m_win_right);
 	curs_set(false);
+	for (i = 0; m_color[i].pair != 0; i++)
+		init_pair(m_color[i].pair, m_color[i].font, m_color[i].background);
 }
 
-bool						Window::show(std::string const &left, std::string const &right)
+bool						Window::show_grid(Grid const &grid, Player const &player)
 {
 	unsigned int			x;
 	unsigned int			y;
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
-	x = (m_cols - SIZE_GRID) / 2;
-	y = (m_lines - SIZE_GRID) / 2;
+	x = (m_cols - SIZE_GRID * 4) / 2;
+	y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
 	wclear(m_win_left);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);
-	mvwprintw(m_win_left, 1, 1, left.c_str());
+	grid.show(m_win_left, x, y, player);
 	wrefresh(m_win_left);
 	return (true);
-	mvwprintw(m_win_left, x, y, left.c_str());
-	mvwprintw(m_win_right, x, y, right.c_str());
+	grid.show(m_win_left, x, y, player);
+}
+
+bool						Window::show(Grid const &grid, Player const &player, std::string const &key)
+{
+	unsigned int			i;
+
+	this->show_grid(grid, player);
+	wclear(m_win_right);
+	box(m_win_right, ACS_VLINE, ACS_HLINE);
+	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
+		mvwprintw(m_win_right, i + 1, 1, "%d", key[i]);
+
+	mvwprintw(m_win_right, 10, 1, "x = %d", player.getX());
+	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
+	wrefresh(m_win_right);
+	return (true);
 }
 
 							Window::~Window(void)

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:25:51 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 22:57:30 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 11:05:02 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # define MIN_COLS 50
 # define EMPTY_CELL " "
 # define KEY_ESC_ (char[]){27, 0, 0, 0, 0, 0, 0}
+# define KEY_ARROW_RIGHT_ (char[]){27, 91, 67, 0, 0, 0, 0}
+# define KEY_ARROW_DOWN_ (char[]){27, 91, 66, 0, 0, 0, 0}
+# define KEY_ARROW_UP_ (char[]){27, 91, 65, 0, 0, 0, 0}
+# define KEY_ARROW_LEFT_ (char[]){27, 91, 68, 0, 0, 0, 0}
+# define KEY_ENTER_ (char[]){13, 0, 0, 0, 0, 0, 0}
 
 # include <ncurses.h>
 

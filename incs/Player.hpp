@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/05 21:12:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/06 10:53:25 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 # include "Gomoku.hpp"
 # include <string>
 
-typedef struct				s_color
+typedef struct				s_cmd
 {
-	std::string				color;
-}							t_color;
+	char					key[SIZE_BUFF];
+
+}							t_cmd;
 
 class Player
 {
@@ -29,12 +30,12 @@ class Player
 		unsigned int		getX(void) const;
 		bool				setY(unsigned int const &y);
 		unsigned int		getY(void) const;
-		std::string			getValue(unsigned int const &x, unsigned int const &y) const;
+		bool				checkKeyEntry(std::string const &key);
+		std::string			getValue(void) const;
 		static std::string	player1;
 		static std::string	player2;
 
 	private:
-		static t_color		tab_color[];
 		static unsigned int	m_count;
 		unsigned int		m_i;
 		std::string			m_val;
