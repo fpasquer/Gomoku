@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cell.hpp                                           :+:      :+:    :+:   */
+/*   Gomoku.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 20:27:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:02:25 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/07 10:55:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CELL_HPP
-# define CELL_HPP
+#ifndef GOMOKU_HPP
+# define GOMOKU_HPP
 
-# include "../incs/Gomoku_client.hpp"
-# include <string>
-# include "Player.hpp"
+# define SIZE_CMD 10
+# define SIZE_GRID 15
+# define EMPTY_CELL " "
+# define IA_CELL ' '
 
-class Cell
-{
-	public:
-							Cell(void);
-		bool				setVal(Player const &player);
-		bool				setVal(char const &c);
-		std::string			getVal(void) const;
-
-	private:
-		std::string			m_val;
-};
+# define QUIT		"QUIT     "
+# define IA			"IA       "
+# define TIME_SPEND	"TIME     "
+# define ERROR		"ERROR    "
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:58:04 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 20:40:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 08:46:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int							Server::accept_client(void)
 		std::cerr << e.what() << std::endl;
 		exit(-1);
 	}
-	m_list_sock_client.push_back(ret);
 	return (ret);
 }
 
@@ -68,9 +67,5 @@ int 						Server::get_sock_server(void) const
 
 							Server::~Server(void)
 {
-	unsigned int			i;
-
-	for (i = 0; i < m_list_sock_client.size(); i++)
-		close(m_list_sock_client[i]);
 	close(m_sock_server);
 }

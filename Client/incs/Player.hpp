@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 21:05:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 09:37:49 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 # define PLAYER_HPP
 
 # include "Gomoku_client.hpp"
+# include "../../Gomoku.hpp"
 # include <string>
 
 class Player
 {
 	public:
-							Player(unsigned int const &x = 0, unsigned int const &y = 0);
+							Player(unsigned int const &x = 0, unsigned int const &y = 0, unsigned int const &deep = INIT_DEEP);
 		bool				setX(unsigned int const &x);
 		unsigned int		getX(void) const;
 		bool				setY(unsigned int const &y);
 		unsigned int		getY(void) const;
 		bool				checkKeySelect(std::string const &key);
 		std::string			getValue(void) const;
+		unsigned int		getDeep(void) const;
 		static std::string	player1;
 		static std::string	player2;
 
@@ -35,6 +37,7 @@ class Player
 		std::string			m_val;
 		unsigned int		m_x;
 		unsigned int		m_y;
+		unsigned int		m_deep;
 };
 
 

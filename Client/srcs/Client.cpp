@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 21:10:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 21:34:42 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 10:30:09 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,19 @@ std::string					Client::localhost_ipv4 = "127.0.0.1";
 	}
 }
 
+ssize_t						Client::send_to_server(void const *data, size_t const &len) const
+{
+	return (write(m_sock_client, data, len));
+}
+
+ssize_t						Client::read_from_server(void *data, size_t const &len) const
+{
+	memset(data, 0, len);
+	return (read(m_sock_client, data, len));
+}
+
 							Client::~Client(void)
 {
+	this->send_to_server(QUIT, strlen(QUIT));
 	close(m_sock_client);
 }

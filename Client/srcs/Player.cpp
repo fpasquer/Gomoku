@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:13:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 09:44:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ unsigned int				Player::m_count = 0;
 std::string					Player::player1 = "X";
 std::string					Player::player2 = "O";
 
-							Player::Player(unsigned int const &x, unsigned int const &y) : m_x(x), m_y(y)
+							Player::Player(unsigned int const &x, unsigned int const &y, unsigned int const &deep) : m_x(x), m_y(y), m_deep(deep)
 {
+	m_deep = (m_deep > MAX_DEEP) ? INIT_DEEP : m_deep;
 	m_x = (m_x >= SIZE_GRID) ? 0 : m_x;
 	m_y = (m_y >= SIZE_GRID) ? 0 : m_y;
 	m_i = m_count;
@@ -35,6 +36,11 @@ bool						Player::setX(unsigned int const &x)
 unsigned int				Player::getX(void) const
 {
 	return (m_x);
+}
+
+unsigned int				Player::getDeep(void) const
+{
+	return (m_deep);
 }
 
 bool						Player::setY(unsigned int const &y)

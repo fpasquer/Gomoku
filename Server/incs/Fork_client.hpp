@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:07:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 20:33:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:10:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 # include "Error.hpp"
 # include <iostream>
-
+# include <unistd.h>
+# include "../../Gomoku.hpp"
+#include <time.h>
+ 
 # define INIT_SOCK -1
+# define SIZE_BUFF_READ 1000
 
 class Fork_client
 {
@@ -24,6 +28,10 @@ class Fork_client
 							Fork_client(int const &sock_client = INIT_SOCK, int const &sock_server = INIT_SOCK);
 		bool				set_sock_client(int const &sock_client);
 		bool				set_sock_server(int const &sock_server);
+		void				ia(void) const;
+		void				ia_playe(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y) const;
+		ssize_t				read_from_client(void *data, size_t const &size) const;
+		ssize_t				send_to_client(void *data, size_t const &size) const;
 		void				run_loop(void) const;
 							~Fork_client(void);
 

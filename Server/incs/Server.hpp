@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:56:02 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 20:36:09 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 08:46:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ class Server
 		static int			m_backlog;
 
 	private:
-		std::vector <int>	m_list_sock_client;
 		int					m_sock_server;
 		int					m_port;
 };

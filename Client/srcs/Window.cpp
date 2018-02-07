@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:35:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 10:32:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ bool						Window::show(Grid const &grid, Player const &player, std::string const
 
 	mvwprintw(m_win_right, 10, 1, "x = %d", player.getX());
 	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
+	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
 	wrefresh(m_win_right);
 	return (true);
 }

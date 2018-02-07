@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 14:43:44 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:27:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(void)  throw() : m_border(SIZE_GRID * 4 + 1, '-')
+							Grid::Grid(void)  throw() : m_border(SIZE_GRID * 4 + 1, '-'), m_time_spend(0.0), m_player2()
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -64,15 +64,49 @@ void						Grid::show(WINDOW *win, unsigned int start_x, unsigned int start_y, Pl
 	}
 }
 
-bool						Grid::play(Player const &player)
+bool						Grid::play_ia(Player const &ia)
 {
+	m_last_x = ia.getX();
+	m_last_y = ia.getY();
+	return (m_cell[ia.getX()][ia.getY()]->setVal(ia));
+}
+
+bool						Grid::play(Player const &player, Client const &client)
+{
+	unsigned int			x;
+	unsigned int			y;
+	unsigned int			deep;
+	char					grid[SIZE_GRID][SIZE_GRID];
+	char					buff[SIZE_CMD + 1];
+
 	if (m_cell[player.getX()][player.getY()]->setVal(player) == true)
 	{
-		m_last_x = player.getX();
-		m_last_y = player.getY();
+		for (x = 0; x < SIZE_GRID; x++)
+			for (y = 0; y < SIZE_GRID; y++)
+				grid[x][y] = m_cell[x][y]->getVal()[0];
+		deep = player.getDeep();
+		client.send_to_server(IA, SIZE_CMD);
+		client.send_to_server(&deep, sizeof(deep));
+		client.send_to_server(grid, sizeof(grid));
+		memset(buff, 0, sizeof(buff));
+		client.read_from_server(buff, SIZE_CMD);
+		if (strcmp(buff, TIME_SPEND) == 0)
+		{
+			client.read_from_server(&m_time_spend, sizeof(m_time_spend));
+			client.read_from_server(&y, sizeof(y));
+			client.read_from_server(&x, sizeof(x));
+			m_player2.setY(y);
+			m_player2.setX(x);
+			this->play_ia(m_player2);
+		}
 		return (true);
 	}
 	return (false);
+}
+
+double						Grid::get_time_spend(void) const
+{
+	return (m_time_spend);
 }
 
 							Grid::~Grid(void)

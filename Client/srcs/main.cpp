@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 21:18:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 09:34:23 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,18 @@ int							main(int argc, char **argv)
 	if (argc != 3 || (!((port = atoi(argv[2])) >= MIN_PORT && port < MAX_PORT)))
 		usage(argv[0]);
 	Client					client(argv[1], port);
-	Player					player1, player2;
+	Player					player1;
 	std::string				key;
 	Window					win;
-
 	Grid					grid;
-	grid.play(player2);
+
 	while (1)
 	{
 		win.show(grid, player1, key);
 		if (Key::getKey(key) == false)
 			return (-1);
 		if (player1.checkKeySelect(key) == true)
-			grid.play(player1);
+			grid.play(player1, client);
 		if (key == KEY_ESC_)
 			break ;
 	}
