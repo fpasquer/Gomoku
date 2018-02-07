@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:20:06 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:04:38 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 12:58:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ bool						Cell::setVal(Player const &player)
 
 bool						Cell::setVal(char const &c)
 {
-	if (!(c == EMPTY_CELL[0] || c == Player::player1[0] || c == Player::player2[0]))
+	if (!(c == EMPTY_CELL || c == PLAYER1 || c == PLAYER2))
 		return (false);
 	m_val = c;
 	return (true);
 }
 
-std::string					Cell::getVal(void) const
+char						Cell::getVal(void) const
 {
 	return (m_val);
 }

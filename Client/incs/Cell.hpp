@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:27:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:02:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:35:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CELL_HPP
 
 # include "../incs/Gomoku_client.hpp"
-# include <string>
 # include "Player.hpp"
 
 class Cell
@@ -23,10 +22,10 @@ class Cell
 							Cell(void);
 		bool				setVal(Player const &player);
 		bool				setVal(char const &c);
-		std::string			getVal(void) const;
+		char				getVal(void) const;
 
 	private:
-		std::string			m_val;
+		char				m_val;
 };
 
 #endif

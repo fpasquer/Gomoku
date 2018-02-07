@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 09:37:49 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 11:37:02 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ class Player
 		bool				setY(unsigned int const &y);
 		unsigned int		getY(void) const;
 		bool				checkKeySelect(std::string const &key);
-		std::string			getValue(void) const;
+		char				getValue(void) const;
 		unsigned int		getDeep(void) const;
-		static std::string	player1;
-		static std::string	player2;
 
 	private:
 		static unsigned int	m_count;
 		unsigned int		m_i;
-		std::string			m_val;
+		char				m_val;
 		unsigned int		m_x;
 		unsigned int		m_y;
 		unsigned int		m_deep;

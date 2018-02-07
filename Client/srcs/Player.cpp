@@ -6,15 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 09:44:16 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 12:58:01 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Player.hpp"
 
 unsigned int				Player::m_count = 0;
-std::string					Player::player1 = "X";
-std::string					Player::player2 = "O";
 
 							Player::Player(unsigned int const &x, unsigned int const &y, unsigned int const &deep) : m_x(x), m_y(y), m_deep(deep)
 {
@@ -22,7 +20,7 @@ std::string					Player::player2 = "O";
 	m_x = (m_x >= SIZE_GRID) ? 0 : m_x;
 	m_y = (m_y >= SIZE_GRID) ? 0 : m_y;
 	m_i = m_count;
-	m_val = (m_count++ == 0) ? Player::player1 : Player::player2;
+	m_val = (m_count++ == 0) ? PLAYER1 : PLAYER2;
 }
 
 bool						Player::setX(unsigned int const &x)
@@ -69,7 +67,7 @@ bool						Player::checkKeySelect(std::string const &key)
 	return ((key == KEY_SPACE_) ? true : false); 
 }
 
-std::string					Player::getValue(void) const
+char						Player::getValue(void) const
 {
-		return (m_val);
+	return (m_val);
 }

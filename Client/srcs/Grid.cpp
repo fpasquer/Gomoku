@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:27:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 12:59:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	try
 	{
-		for (x = 0; x < SIZE_GRID; x++)
-			for (y = 0; y < SIZE_GRID; y++)
-				if ((m_cell[x][y] = new Cell) == NULL)
+		for (y = 0; y < SIZE_GRID; y++)
+			for (x = 0; x < SIZE_GRID; x++)
+				if ((m_cell[y][x] = new Cell) == NULL)
 					throw Error("Allocation Cell failled");
 	}
 	catch (std::exception const&e)
@@ -53,7 +53,7 @@ void						Grid::show(WINDOW *win, unsigned int start_x, unsigned int start_y, Pl
 				wattron(win, A_REVERSE);
 			else if (m_last_x == x && m_last_y == y)
 				wattron(win, A_UNDERLINE);
-			mvwprintw(win, start_y + y, start_x + x * 4 + 1, " %s ", m_cell[x][y]->getVal().c_str());
+			mvwprintw(win, start_y + y, start_x + x * 4 + 1, " %c ", m_cell[y][x]->getVal());
 			if (player.getX() == x && player.getY() == y)
 				wattroff(win, A_REVERSE);
 			else if (m_last_x == x && m_last_y == y)
@@ -68,7 +68,7 @@ bool						Grid::play_ia(Player const &ia)
 {
 	m_last_x = ia.getX();
 	m_last_y = ia.getY();
-	return (m_cell[ia.getX()][ia.getY()]->setVal(ia));
+	return (m_cell[ia.getY()][ia.getX()]->setVal(ia));
 }
 
 bool						Grid::play(Player const &player, Client const &client)
@@ -79,11 +79,11 @@ bool						Grid::play(Player const &player, Client const &client)
 	char					grid[SIZE_GRID][SIZE_GRID];
 	char					buff[SIZE_CMD + 1];
 
-	if (m_cell[player.getX()][player.getY()]->setVal(player) == true)
+	if (m_cell[player.getY()][player.getX()]->setVal(player) == true)
 	{
-		for (x = 0; x < SIZE_GRID; x++)
-			for (y = 0; y < SIZE_GRID; y++)
-				grid[x][y] = m_cell[x][y]->getVal()[0];
+		for (y = 0; y < SIZE_GRID; y++)
+			for (x = 0; x < SIZE_GRID; x++)
+				grid[y][x] = m_cell[y][x]->getVal();
 		deep = player.getDeep();
 		client.send_to_server(IA, SIZE_CMD);
 		client.send_to_server(&deep, sizeof(deep));
@@ -114,10 +114,11 @@ double						Grid::get_time_spend(void) const
 	unsigned int			x;
 	unsigned int			y;
 
-	for (x = 0; x < SIZE_GRID; x++)
-		for (y = 0; y < SIZE_GRID; y++)
+	for (y = 0; y < SIZE_GRID; y++)
+		for (x = 0; x < SIZE_GRID; x++)
+		
 		{
-			delete m_cell[x][y];
-			m_cell[x][y] = NULL;
+			delete m_cell[y][x];
+			m_cell[y][x] = NULL;
 		}
 }
