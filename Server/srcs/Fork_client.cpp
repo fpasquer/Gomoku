@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:09:41 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:50:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 22:05:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,5 @@ void						Fork_client::run_loop(void) const
 {
 	std::cout << "close_client[" << m_sock_client << "]" << std::endl;
 	close(m_sock_client);
+	kill(getpid(), SIGINT);
 }

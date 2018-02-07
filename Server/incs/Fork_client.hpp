@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:07:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:10:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 21:57:23 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include "../../Gomoku.hpp"
 #include <time.h>
+# include <signal.h>
  
 # define INIT_SOCK -1
 # define SIZE_BUFF_READ 1000

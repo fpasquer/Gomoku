@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:37:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 14:53:07 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,21 @@ class Player
 		bool				checkKeySelect(std::string const &key);
 		char				getValue(void) const;
 		unsigned int		getDeep(void) const;
+		bool				moveLeft(void);
+		bool				moveRight(void);
+		bool				moveUp(void);
+		bool				moveDown(void);
+		bool				deepMore(void);
+		bool				deepMinus(void);
 
 	private:
+		typedef struct		s_cmd
+		{
+			char			*key;
+			bool			(Player::*f) (void);
+		}					t_cmd;
+		static t_cmd const	m_cmd[];
+		bool				isSpace(void);
 		static unsigned int	m_count;
 		unsigned int		m_i;
 		char				m_val;

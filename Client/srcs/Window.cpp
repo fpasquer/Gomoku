@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 10:32:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 21:40:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ t_color const				Window::m_color[] = {
 	m_lines = LINES;
 	try
 	{
-		if (COLS < MIN_COLS)
+		if (m_cols < MIN_COLS)
 			throw Error("Window not enough larg");
-		else if (LINES < MIN_LINES)
+		else if (m_lines < MIN_LINES)
 			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, LINES, COLS / 2, 0, 0);
 		if ((m_win_right = subwin(stdscr, LINES, COLS / 2, 0, COLS / 2)) == NULL || m_win_left == NULL)
@@ -82,10 +82,11 @@ bool						Window::show(Grid const &grid, Player const &player, std::string const
 	box(m_win_right, ACS_VLINE, ACS_HLINE);
 	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
 		mvwprintw(m_win_right, i + 1, 1, "%d", key[i]);
-
 	mvwprintw(m_win_right, 10, 1, "x = %d", player.getX());
 	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
 	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
+	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
+	mvwprintw(m_win_right, 16, 1, "LINES = %d COLS %d", LINES, COLS);
 	wrefresh(m_win_right);
 	return (true);
 }

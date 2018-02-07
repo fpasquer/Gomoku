@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:37:01 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/06 20:24:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 21:57:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../incs/Fork_client.hpp"
 #include <iostream>
 #include <stdlib.h>
+#include <signal.h>
 
 void						usage(std::string str)
 {

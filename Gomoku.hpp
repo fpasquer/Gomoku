@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 11:35:12 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/07 21:29:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define GOMOKU_HPP
 
 # define SIZE_CMD 10
-# define SIZE_GRID 15
+# define SIZE_GRID 19
+# define MIN_DEEP 1
+# define MAX_DEEP 10
 # define EMPTY_CELL ' '
 # define PLAYER1 'X'
 # define PLAYER2 'O'
-//# define IA_CELL ' '
 
 # define QUIT		"QUIT     "
 # define IA			"IA       "
