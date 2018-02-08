@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:09:41 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 22:05:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:02:22 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void						Fork_client::ia(void) const
 	start = clock();
 	this->read_from_client(&deep, sizeof(deep));
 	this->read_from_client(&grid, sizeof(grid));
-
 	start = clock();
 	this->ia_playe(grid, x, y);
 	end = clock();

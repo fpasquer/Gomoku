@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 08:35:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/08 12:01:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(void) : m_time_spend(0.0), m_player2()
+							Grid::Grid(void) : m_time_spend(0.0), m_ia()
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -43,17 +43,19 @@ bool						Grid::getValue(char &val, unsigned int const x, unsigned int const y) 
 	return (true);
 }
 
-bool						Grid::play_ia(Player const &ia)
+bool						Grid::play(Player_ia const &player)
 {
-	if (ia.getX() >= SIZE_GRID || ia.getY() >= SIZE_GRID)
-		return (false);
-	m_last_x = ia.getX();
-	m_last_y = ia.getY();
-	m_cell[m_last_y][m_last_x] = ia.getValue();
-	return (true);
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
+	{
+		m_last_x = player.getX();
+		m_last_y = player.getY();
+		m_cell[m_last_y][m_last_x] = player.getValue();
+		return (true);
+	}
+	return (false);
 }
 
-bool						Grid::play(Player const &player, Client const &client)
+bool						Grid::play(Player_human const &player)
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -63,20 +65,22 @@ bool						Grid::play(Player const &player, Client const &client)
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
 	{
 		m_cell[player.getY()][player.getX()] = player.getValue();
-		deep = player.getDeep();
-		client.send_to_server(IA, SIZE_CMD);
-		client.send_to_server(&deep, sizeof(deep));
-		client.send_to_server(m_cell, sizeof(m_cell));
-		memset(buff, 0, sizeof(buff));
-		client.read_from_server(buff, SIZE_CMD);
-		if (strcmp(buff, TIME_SPEND) == 0)
+		if (player.isOnline() == true)
 		{
-			client.read_from_server(&m_time_spend, sizeof(m_time_spend));
-			client.read_from_server(&y, sizeof(y));
-			client.read_from_server(&x, sizeof(x));
-			m_player2.setY(y);
-			m_player2.setX(x);
-			this->play_ia(m_player2);
+			deep = player.getDeep();
+			player.send_to_server(IA, SIZE_CMD);
+			player.send_to_server(&deep, sizeof(deep));
+			player.send_to_server(m_cell, sizeof(m_cell));
+			memset(buff, 0, sizeof(buff));
+			player.read_from_server(buff, SIZE_CMD);
+			if (strcmp(buff, TIME_SPEND) != 0)
+				return (false);
+			player.read_from_server(&m_time_spend, sizeof(m_time_spend));
+			player.read_from_server(&y, sizeof(y));
+			player.read_from_server(&x, sizeof(x));
+			m_ia.setY(y);
+			m_ia.setX(x);
+			this->play(m_ia);
 		}
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 08:34:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/08 10:39:30 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_color const				Window::m_color[] = {
 		init_pair(m_color[i].pair, m_color[i].font, m_color[i].background);
 }
 
-bool						Window::show_grid(Grid const &grid, Player const &player)
+bool						Window::show_grid(Grid const &grid, Player_human const &player)
 {
 	char					c;
 	unsigned int			start_x;
@@ -95,7 +95,7 @@ bool						Window::show_grid(Grid const &grid, Player const &player)
 	return (true);
 }
 
-bool						Window::show(Grid const &grid, Player const &player, std::string const &key)
+bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key)
 {
 	unsigned int			i;
 
@@ -109,6 +109,7 @@ bool						Window::show(Grid const &grid, Player const &player, std::string const
 	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
 	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
 	mvwprintw(m_win_right, 16, 1, "LINES = %d COLS %d", LINES, COLS);
+	mvwprintw(m_win_right, 17, 1, "ONLINE %s", player.isOnline() == true ? "Yes" : "No");
 	wrefresh(m_win_right);
 	return (true);
 }

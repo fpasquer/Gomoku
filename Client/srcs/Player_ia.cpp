@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Player.cpp                                         :+:      :+:    :+:   */
+/*   Player_ia.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 09:20:28 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/08 09:58:13 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/08 10:17:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/Player.hpp"
+#include "../incs/Player_ia.hpp"
 
-unsigned int				Player::m_count = 0;
-
-							Player::Player(unsigned int const &x, unsigned int const &y) : m_x(x), m_y(y)
+							Player_ia::Player_ia(unsigned int const &x, unsigned int const &y) : Player(x, y)
 {
-	m_x = (m_x >= SIZE_GRID) ? 0 : m_x;
-	m_y = (m_y >= SIZE_GRID) ? 0 : m_y;
-	m_val = (m_count++ == 0) ? PLAYER1 : PLAYER2;
+	
 }
 
-bool						Player::setX(unsigned int const &x)
+bool						Player_ia::setX(unsigned int const &x)
 {
 	if (x >= SIZE_GRID)
 		return (false);
@@ -29,25 +25,10 @@ bool						Player::setX(unsigned int const &x)
 	return (true);
 }
 
-unsigned int				Player::getX(void) const
-{
-	return (m_x);
-}
-
-bool						Player::setY(unsigned int const &y)
+bool						Player_ia::setY(unsigned int const &y)
 {
 	if (y >= SIZE_GRID)
 		return (false);
 	m_y = y;
 	return (true);
-}
-
-unsigned int				Player::getY(void) const
-{
-	return (m_y);
-}
-
-char						Player::getValue(void) const
-{
-	return (m_val);
 }
