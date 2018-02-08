@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 21:40:16 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/08 08:34:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_color const				Window::m_color[] = {
 	{0, 0, 0}
 };
 
-							Window::Window(void)
+							Window::Window(void) : m_border(SIZE_GRID * 4 + 1, '-')
 {
 	unsigned int			i;
 
@@ -58,19 +58,41 @@ t_color const				Window::m_color[] = {
 
 bool						Window::show_grid(Grid const &grid, Player const &player)
 {
+	char					c;
+	unsigned int			start_x;
+	unsigned int			start_y;
 	unsigned int			x;
 	unsigned int			y;
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
-	x = (m_cols - SIZE_GRID * 4) / 2;
-	y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
+	start_x = (m_cols - SIZE_GRID * 4) / 2;
+	start_y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
 	wclear(m_win_left);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);
-	grid.show(m_win_left, x, y, player);
+	mvwprintw(m_win_left, start_y++, start_x, "%s", m_border.c_str());
+	for (y = 0; y < SIZE_GRID; y++, start_y++)
+	{
+		for (x = 0; x < SIZE_GRID; x++)
+		{
+			mvwprintw(m_win_left, start_y + y, start_x + x * 4, "|");
+			if (player.getX() == x && player.getY() == y)
+				wattron(m_win_left, A_REVERSE);
+			else if (grid.getLastX() == x && grid.getLastY() == y)
+				wattron(m_win_left, A_UNDERLINE);
+			if (grid.getValue(c, x, y) == false)
+				break ;
+			mvwprintw(m_win_left, start_y + y, start_x + x * 4 + 1, " %c ", c);
+			if (player.getX() == x && player.getY() == y)
+				wattroff(m_win_left, A_REVERSE);
+			else if (grid.getLastX() == x && grid.getLastY() == y)
+				wattroff(m_win_left, A_UNDERLINE);
+		}
+		mvwprintw(m_win_left, start_y + y, start_x + x  * 4, "|");
+		mvwprintw(m_win_left, start_y + y + 1, start_x, "%s", m_border.c_str());
+	}
 	wrefresh(m_win_left);
 	return (true);
-	grid.show(m_win_left, x, y, player);
 }
 
 bool						Window::show(Grid const &grid, Player const &player, std::string const &key)
