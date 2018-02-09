@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:07:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 21:57:23 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 14:39:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <iostream>
 # include <unistd.h>
 # include "../../Gomoku.hpp"
-#include <time.h>
+# include <time.h>
 # include <signal.h>
+# include "ia_player.hpp"
  
 # define INIT_SOCK -1
 # define SIZE_BUFF_READ 1000

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:09:41 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 12:02:22 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 14:40:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void						Fork_client::ia_playe(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x
 		x = rand() % SIZE_GRID;
 		y = rand() % SIZE_GRID;
 	}	while (grid[y][x] != EMPTY_CELL);
+	Ia_player::play(grid, 6);
 }
 
 void						Fork_client::ia(void) const

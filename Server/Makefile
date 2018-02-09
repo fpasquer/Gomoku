@@ -6,13 +6,13 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/06 20:40:02 by fpasquer         ###   ########.fr        #
+#*   Updated: 2018/02/09 14:38:14 by fpasquer         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Gomoku_server
 
-SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_client.cpp)
+SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_client.cpp Ia_player.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/
