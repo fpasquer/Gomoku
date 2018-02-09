@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/09 08:40:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 09:03:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int							main(int argc, char **argv)
 	Player_human			*player;
 
 	if ((argc == 3 || argc == 4) && (port = atoi(argv[2])) >= MIN_PORT && port < MAX_PORT)
-		player1.set_online(argv[1], port, argc == 3 ? "" : argv[4]);
+		player1.set_online(argv[1], port, argc == 3 ? "" : argv[3]);
 
 	std::string				key;
 	Grid					grid;
@@ -41,7 +41,7 @@ int							main(int argc, char **argv)
 		if (Key::getKey(key) == false)
 			return (-1);
 		if (player->checkKeySelect(key) == true && grid.play(*player) == true)
-			if (player1.isOnline() == false)
+			if (player1.isOnline() == OFFLINE)
 				player = (player == & player1) ? &player2 : &player1;
 		if (key == KEY_ESC_)
 			break ;

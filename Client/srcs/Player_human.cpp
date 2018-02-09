@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 09:03:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/09 08:50:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 09:04:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void						Player_human::set_online(std::string const &addr, int const &port, std
 	m_client.set_port(port);
 	m_client.connect_to_server();
 	m_type_online = (type_online == LAN_STR) ? LAN_TYPE : ONLINE;
+	m_enable = (m_type_online == LAN_TYPE) ? false : true;
 }
 
 void						Player_human::enable(void)
@@ -119,14 +120,14 @@ t_type_online				Player_human::isOnline(void) const
 
 ssize_t						Player_human::send_to_server(void const *data, size_t const &len) const
 {
-	if (this->isOnline() == false)
+	if (this->isOnline() == OFFLINE)
 		return (-1);
 	return (m_client.send_to_server(data, len));
 }
 
 ssize_t						Player_human::read_from_server(void *data, size_t const &len) const
 {
-	if (this->isOnline() == false)
+	if (this->isOnline() == OFFLINE)
 		return (-1);
 	return (m_client.read_from_server(data, len));
 }

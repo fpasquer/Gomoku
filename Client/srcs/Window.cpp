@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 21:19:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 09:02:28 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
 	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
 	mvwprintw(m_win_right, 16, 1, "LINES = %d COLS %d", LINES, COLS);
-	mvwprintw(m_win_right, 17, 1, "ONLINE %s", player.isOnline() == true ? "Yes" : "No");
+	mvwprintw(m_win_right, 17, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
 	wrefresh(m_win_right);
 	return (true);
 }
