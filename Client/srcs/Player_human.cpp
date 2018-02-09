@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 09:03:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 12:01:09 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 08:50:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ Player_human::t_cmd const	Player_human::m_cmd[] = {
 	{0, NULL}
 };
 
-							Player_human::Player_human(unsigned int const &x, unsigned int const &y, unsigned int const &deep) : Player(x, y), m_deep(deep), m_client()
+							Player_human::Player_human(unsigned int const &x, unsigned int const &y, unsigned int const &deep)
+		: Player(x, y), m_deep(deep), m_client(), m_enable(true), m_type_online(OFFLINE)
 {
 	m_deep = (m_deep > MAX_DEEP) ? INIT_DEEP : m_deep;
 }
@@ -86,16 +87,34 @@ bool						Player_human::isSpace(void)
 	return (true);
 }
 
-void						Player_human::set_online(std::string const &addr, int const &port)
+void						Player_human::set_online(std::string const &addr, int const &port, std::string const &type_online)
 {
 	m_client.set_addr(addr);
 	m_client.set_port(port);
 	m_client.connect_to_server();
+	m_type_online = (type_online == LAN_STR) ? LAN_TYPE : ONLINE;
 }
 
-bool						Player_human::isOnline(void) const
+void						Player_human::enable(void)
 {
-	return (m_client.connected());
+	m_enable = true;
+}
+
+void						Player_human::disable(void)
+{
+	m_enable = false;
+}
+
+bool						Player_human::isEnable(void) const
+{
+	return (m_enable);
+}
+
+t_type_online				Player_human::isOnline(void) const
+{
+	// if (m_client.connected() == false)
+	// 	return (OFFLINE);
+	return (m_type_online);
 }
 
 ssize_t						Player_human::send_to_server(void const *data, size_t const &len) const

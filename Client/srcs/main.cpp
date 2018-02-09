@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 14:50:03 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/09 08:40:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int							main(int argc, char **argv)
 	Player_human			player2;
 	Player_human			*player;
 
-	if (argc == 3 && (port = atoi(argv[2])) >= MIN_PORT && port < MAX_PORT)
-		player1.set_online(argv[1], port);
+	if ((argc == 3 || argc == 4) && (port = atoi(argv[2])) >= MIN_PORT && port < MAX_PORT)
+		player1.set_online(argv[1], port, argc == 3 ? "" : argv[4]);
 
 	std::string				key;
 	Grid					grid;
