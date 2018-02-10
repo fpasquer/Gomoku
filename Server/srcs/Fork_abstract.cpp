@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Gomoku.hpp                                         :+:      :+:    :+:   */
+/*   Fork_abstract.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 10:52:45 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/10 09:26:53 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/10 09:49:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GOMOKU_HPP
-# define GOMOKU_HPP
+#include "../incs/Fork_abstract.hpp"
 
-# define SIZE_CMD 10
-# define SIZE_GRID 19
-# define MIN_DEEP 1
-# define MAX_DEEP 10
-# define EMPTY_CELL ' '
-# define PLAYER1 'X'
-# define PLAYER2 'O'
-# define INIT_SOCK -1
-
-# define QUIT		"QUIT     "
-# define IA			"IA       "
-# define TIME_SPEND	"TIME     "
-# define ERROR		"ERROR    "
-# define LAN		"LAN      "
-# define CONNECTED	"CONNECTED"
-
-#endif
+							Fork_abstract::Fork_abstract(Client const &player) : m_player(player), m_pid(-1)
+{
+	
+}

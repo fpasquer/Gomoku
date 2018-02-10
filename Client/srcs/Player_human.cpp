@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 09:03:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 12:01:09 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 11:19:54 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,28 @@ bool						Player_human::isSpace(void)
 
 void						Player_human::set_online(std::string const &addr, int const &port)
 {
+	char					buff[SIZE_CMD + 1];
+	ssize_t					len;
+
 	m_client.set_addr(addr);
 	m_client.set_port(port);
 	m_client.connect_to_server();
+	try
+	{
+		if (m_client.connected() == false)
+			throw Error("Error connection online");
+		this->send_to_server(IA, SIZE_CMD);
+																				//this->send_to_server(LAN, SIZE_CMD);
+		len = this->read_from_server(buff, SIZE_CMD);
+		buff[len] = '\0';
+		if (strcmp(buff, ERROR) == 0)
+			throw Error("Error connection");
+	}
+	catch (std::exception const &e)
+	{
+		std::cerr << e.what() << std::endl;
+		exit(-1);
+	}
 }
 
 bool						Player_human::isOnline(void) const

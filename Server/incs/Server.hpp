@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:56:02 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 08:46:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 10:40:08 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class Server
 {
 	public:
 							Server(int const &port);
-		int					accept_client(void);
+		int					accept_client(void) const;
 		int					get_sock_server(void) const;
 							~Server(void);
 		static int			m_backlog;

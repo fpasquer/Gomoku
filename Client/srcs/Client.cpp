@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 21:10:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 11:55:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 11:24:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ std::string					Client::localhost_ipv4 = "127.0.0.1";
 	
 }
 
-							Client::Client(std::string const &ip, int const &port) : m_connected(true), m_addr(ip), m_port(port)
+							Client::Client(std::string const &ip, int const &port) : m_connected(false), m_addr(ip), m_port(port)
 {
-	if (m_addr == Client::localhost_str)
-		m_addr = Client::localhost_ipv4;
 	this->connect_to_server();
 }
 
@@ -96,6 +94,6 @@ ssize_t						Client::read_from_server(void *data, size_t const &len) const
 {
 	if (this->connected() == false)
 		return ;
-	this->send_to_server(QUIT, strlen(QUIT));
+	this->send_to_server(QUIT, SIZE_CMD);
 	close(m_sock_client);
 }

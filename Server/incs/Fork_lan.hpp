@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Gomoku.hpp                                         :+:      :+:    :+:   */
+/*   Fork_lan.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 10:52:45 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/10 09:09:06 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/10 09:17:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GOMOKU_HPP
-# define GOMOKU_HPP
+#ifndef FORK_LAN_HPP
+# define FORK_LAN_HPP
 
-# define SIZE_CMD 10
-# define SIZE_GRID 19
-# define MIN_DEEP 1
-# define MAX_DEEP 10
-# define EMPTY_CELL ' '
-# define PLAYER1 'X'
-# define PLAYER2 'O'
-# define INIT_SOCK -1
+# include "Fork_abstract.hpp"
+# include "Client.hpp"
 
-# define QUIT		"QUIT     "
-# define IA			"IA       "
-# define TIME_SPEND	"TIME     "
-# define ERROR		"ERROR    "
-# define LAN		"LAN      "
-# define CONNECTED	"CONNECTED"
+class Fork_lan : public Fork_abstract
+{
+	public:
+							Fork_lan(Client *player1, Client const &player2);
+};
 
 #endif

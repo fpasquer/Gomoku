@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:58:04 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/07 08:46:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 10:40:21 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int							Server::m_backlog = 50;
 	}
 }
 
-int							Server::accept_client(void)
+int							Server::accept_client(void) const
 {
 	int						ret;
 	struct sockaddr_in		addr;
@@ -54,7 +54,7 @@ int							Server::accept_client(void)
 	}
 	catch (std::exception const &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << e.what() << " Pid = " << getpid() << " Sock_serv = " << m_sock_server <<std::endl;
 		exit(-1);
 	}
 	return (ret);

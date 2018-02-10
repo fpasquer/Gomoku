@@ -1,45 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fork_client.hpp                                    :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/06 20:07:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/09 14:39:37 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/02/10 07:57:33 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/02/10 10:52:02 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORK_CLIENT_HPP
-# define FORK_CLIENT_HPP
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
 
-# include "Error.hpp"
-# include <iostream>
-# include <unistd.h>
 # include "../../Gomoku.hpp"
-# include <time.h>
-# include <signal.h>
-# include "ia_player.hpp"
- 
-# define INIT_SOCK -1
-# define SIZE_BUFF_READ 1000
+# include "Server.hpp"
 
-class Fork_client
+class Client
 {
 	public:
-							Fork_client(int const &sock_client = INIT_SOCK, int const &sock_server = INIT_SOCK);
-		bool				set_sock_client(int const &sock_client);
-		bool				set_sock_server(int const &sock_server);
-		void				ia(void) const;
-		void				ia_playe(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y) const;
+							Client(void);
+		void				setNewClient(Server const &server);
+		int					getSockClient(void) const;
+		int					getSockServer(void) const;
+		std::string			getTypeClient(void) const;
+		void				sendError(void) const;
+							~Client(void);
 		ssize_t				read_from_client(void *data, size_t const &size) const;
 		ssize_t				send_to_client(void *data, size_t const &size) const;
-		void				run_loop(void) const;
-							~Fork_client(void);
 
 	private:
 		int					m_sock_client;
 		int					m_sock_server;
+		std::string			m_type_client;
 };
 
 #endif
