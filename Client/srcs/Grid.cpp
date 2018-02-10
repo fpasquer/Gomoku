@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 12:01:39 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:49:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool						Grid::play(Player_human const &player)
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
 	{
 		m_cell[player.getY()][player.getX()] = player.getValue();
-		if (player.isOnline() == true)
+		if (player.isOnline() != OFFLINE)
 		{
 			deep = player.getDeep();
 			player.send_to_server(IA, SIZE_CMD);

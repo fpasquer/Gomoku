@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 18:37:01 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 11:53:42 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 21:05:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int							main(int argc, char **argv)
 		usage(argv[0]);
 	Server					server(port);
 	Client					client;
-	//Client					*tmp;
+	//Client					*tmp = NULL;
 
 	while (1)
 	{
@@ -43,14 +43,14 @@ int							main(int argc, char **argv)
 			Fork_ia			fork_ia(client);
 		// else if (client.getTypeClient() == LAN)
 		// {
-		// 	if (tmp != NULL)
+		// 	if (tmp == NULL)
+		// 		tmp = &client;
+		// 	else
 		// 	{
-		// 		Fork_lan	forkLan(*tmp, client);
-		// 		delete tmp;
+		// 		Fork_lan	fork_lan(*tmp, client);
+		// 		//delete tmp;
 		// 		tmp = NULL;
 		// 	}
-		// 	else
-		// 		tmp = new Client::Client(client);
 		// }
 		else
 			client.sendError();

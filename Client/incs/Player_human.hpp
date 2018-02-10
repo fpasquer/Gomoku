@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 08:56:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 11:11:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:47:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include "Player.hpp"
 # include "Client.hpp"
+
+typedef enum				e_type_connect
+{
+	OFFLINE, ONLINE, ONLINE_LAN
+}							t_type_connect;
+
+# define ONLINE_LAN_STR "LAN"
 
 class Player_human : public Player
 {
@@ -28,8 +35,8 @@ class Player_human : public Player
 		bool				moveDown(void);
 		bool				deepMore(void);
 		bool				deepMinus(void);
-		void				set_online(std::string const &addr, int const &port);
-		bool				isOnline(void) const;
+		void				set_online(std::string const &addr, int const &port, std::string const &type_connect);
+		t_type_connect		isOnline(void) const;
 		ssize_t				send_to_server(void const *data, size_t const &len) const;
 		ssize_t				read_from_server(void *data, size_t const &len) const;
 
@@ -43,6 +50,7 @@ class Player_human : public Player
 		bool				isSpace(void);
 		unsigned int		m_deep;
 		Client				m_client;
+		t_type_connect		m_type_connect;
 };
 
 #endif

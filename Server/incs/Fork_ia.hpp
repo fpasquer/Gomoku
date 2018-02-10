@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:11:30 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 11:42:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:30:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ class Fork_ia : public Fork_abstract
 							Fork_ia(Client const &player);
 
 	protected:
-		void				play_ia(Client const &player) const;
-		void				run_loop(Client const &player) const;
+		void				play_ia(void) const;
+		virtual void		run_loop(void) const;
 };
 
 #endif

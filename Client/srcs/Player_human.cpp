@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 09:03:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 11:19:54 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:49:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ Player_human::t_cmd const	Player_human::m_cmd[] = {
 	{0, NULL}
 };
 
-							Player_human::Player_human(unsigned int const &x, unsigned int const &y, unsigned int const &deep) : Player(x, y), m_deep(deep), m_client()
+							Player_human::Player_human(unsigned int const &x, unsigned int const &y, unsigned int const &deep) :
+		Player(x, y), m_deep(deep), m_client(), m_type_connect(OFFLINE)
 {
 	m_deep = (m_deep > MAX_DEEP) ? INIT_DEEP : m_deep;
 }
@@ -86,7 +87,7 @@ bool						Player_human::isSpace(void)
 	return (true);
 }
 
-void						Player_human::set_online(std::string const &addr, int const &port)
+void						Player_human::set_online(std::string const &addr, int const &port, std::string const &type_connect)
 {
 	char					buff[SIZE_CMD + 1];
 	ssize_t					len;
@@ -94,12 +95,12 @@ void						Player_human::set_online(std::string const &addr, int const &port)
 	m_client.set_addr(addr);
 	m_client.set_port(port);
 	m_client.connect_to_server();
+	m_type_connect = type_connect == ONLINE_LAN_STR ? ONLINE_LAN : ONLINE;
 	try
 	{
 		if (m_client.connected() == false)
 			throw Error("Error connection online");
-		this->send_to_server(IA, SIZE_CMD);
-																				//this->send_to_server(LAN, SIZE_CMD);
+		this->send_to_server(m_type_connect == ONLINE_LAN ? LAN : IA, SIZE_CMD);
 		len = this->read_from_server(buff, SIZE_CMD);
 		buff[len] = '\0';
 		if (strcmp(buff, ERROR) == 0)
@@ -112,21 +113,21 @@ void						Player_human::set_online(std::string const &addr, int const &port)
 	}
 }
 
-bool						Player_human::isOnline(void) const
+t_type_connect				Player_human::isOnline(void) const
 {
-	return (m_client.connected());
+	return (m_type_connect);
 }
 
 ssize_t						Player_human::send_to_server(void const *data, size_t const &len) const
 {
-	if (this->isOnline() == false)
+	if (this->isOnline() == OFFLINE)
 		return (-1);
 	return (m_client.send_to_server(data, len));
 }
 
 ssize_t						Player_human::read_from_server(void *data, size_t const &len) const
 {
-	if (this->isOnline() == false)
+	if (this->isOnline() == OFFLINE)
 		return (-1);
 	return (m_client.read_from_server(data, len));
 }

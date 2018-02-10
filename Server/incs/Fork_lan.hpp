@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:09:06 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 09:17:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/10 20:36:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 class Fork_lan : public Fork_abstract
 {
 	public:
-							Fork_lan(Client *player1, Client const &player2);
+							Fork_lan(Client const &player, Client const &player2);
+
+	protected:
+		virtual void		run_loop(void) const;
+		Client				m_player2;
 };
 
 #endif
