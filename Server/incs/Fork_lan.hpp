@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:09:06 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 20:36:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 13:33:30 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "Fork_abstract.hpp"
 # include "Client.hpp"
+# include <signal.h>
 
 class Fork_lan : public Fork_abstract
 {
@@ -22,6 +23,7 @@ class Fork_lan : public Fork_abstract
 							Fork_lan(Client const &player, Client const &player2);
 
 	protected:
+		bool				in_loop(Client const &src, Client const &dest) const;
 		virtual void		run_loop(void) const;
 		Client				m_player2;
 };

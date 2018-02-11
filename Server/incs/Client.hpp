@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 07:57:33 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 10:52:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:25:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class Client
 							~Client(void);
 		ssize_t				read_from_client(void *data, size_t const &size) const;
 		ssize_t				send_to_client(void *data, size_t const &size) const;
+		ssize_t				send_to_server(void *data, size_t const &size) const;
 
 	private:
 		int					m_sock_client;

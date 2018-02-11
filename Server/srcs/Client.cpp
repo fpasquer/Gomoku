@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 08:02:55 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 21:10:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:35:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void						Client::setNewClient(Server const &server)
 	ssize_t					len;
 
 	m_sock_client = server.accept_client();
+																				std::cout << m_sock_client << " sock_client" << std::endl;
 	m_sock_server = server.get_sock_server();
 	len = this->read_from_client(buff, sizeof(buff));
 	buff[len] = '\0';
@@ -62,6 +63,11 @@ ssize_t						Client::read_from_client(void *data, size_t const &size) const
 ssize_t						Client::send_to_client(void *data, size_t const &size) const
 {
 	return (write(m_sock_client, data, size));
+}
+
+ssize_t						Client::send_to_server(void *data, size_t const &size) const
+{
+	return (write(m_sock_server, data, size));
 }
 
 							Client::~Client(void)

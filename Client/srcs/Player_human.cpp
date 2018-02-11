@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 09:03:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 20:49:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:14:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Player_human::t_cmd const	Player_human::m_cmd[] = {
 };
 
 							Player_human::Player_human(unsigned int const &x, unsigned int const &y, unsigned int const &deep) :
-		Player(x, y), m_deep(deep), m_client(), m_type_connect(OFFLINE)
+		Player(x, y), m_deep(deep), m_client(), m_type_connect(OFFLINE), m_enable(true)
 {
 	m_deep = (m_deep > MAX_DEEP) ? INIT_DEEP : m_deep;
 }
@@ -87,6 +87,21 @@ bool						Player_human::isSpace(void)
 	return (true);
 }
 
+void						Player_human::setDisable(void)
+{
+	m_enable = false;
+}
+
+void						Player_human::setEnable(void)
+{
+	m_enable = true;
+}
+
+bool						Player_human::enable(void) const
+{
+	return (m_enable);
+}
+
 void						Player_human::set_online(std::string const &addr, int const &port, std::string const &type_connect)
 {
 	char					buff[SIZE_CMD + 1];
@@ -108,14 +123,20 @@ void						Player_human::set_online(std::string const &addr, int const &port, std
 	}
 	catch (std::exception const &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << e.what() << " " << buff <<std::endl;
 		exit(-1);
 	}
+	m_enable = (strcmp(buff, CONNECTED) == 0) ? true : false;
 }
 
 t_type_connect				Player_human::isOnline(void) const
 {
 	return (m_type_connect);
+}
+
+int							Player_human::getSockClient(void) const
+{
+	return (m_client.getSockClient());
 }
 
 ssize_t						Player_human::send_to_server(void const *data, size_t const &len) const

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 10:52:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 09:30:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 # define ERROR		"ERROR    "
 # define LAN		"LAN      "
 # define CONNECTED	"CONNECTED"
+# define CONNECTED2	"CONNECTE2"
 
 #endif

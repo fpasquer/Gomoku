@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:56:39 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 11:29:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:12:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ class Client
 		bool				set_port(int const &port);
 		void				connect_to_server(void);
 		bool				connected(void) const;
+		int					getSockClient(void) const;
 		ssize_t				send_to_server(void const *data, size_t const &len) const;
 		ssize_t				read_from_server(void *data, size_t const &len) const;
 							~Client(void);

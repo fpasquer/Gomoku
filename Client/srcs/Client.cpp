@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 21:10:26 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 11:24:24 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:13:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ std::string					Client::localhost_ipv4 = "127.0.0.1";
 							Client::Client(void) : m_connected(false), m_addr(""), m_port(0)
 {
 	
+}
+
+int							Client::getSockClient(void) const
+{
+	return (m_sock_client);
 }
 
 							Client::Client(std::string const &ip, int const &port) : m_connected(false), m_addr(ip), m_port(port)

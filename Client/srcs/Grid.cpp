@@ -6,11 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 20:49:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 15:21:52 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
+# include <fstream>
+
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
@@ -55,12 +57,29 @@ bool						Grid::play(Player_ia const &player)
 	return (false);
 }
 
-bool						Grid::play(Player_human const &player)
+void						Grid::updateGrid(Player_human &player)
+{
+	unsigned int			x;
+	unsigned int			y;
+
+	if (player.enable() == false)
+	{
+		player.read_from_server(&y, sizeof(y));
+		player.read_from_server(&x, sizeof(x));
+		m_ia.setY(y);
+		m_ia.setX(x);
+		this->play(m_ia);
+		player.setEnable();
+	}
+}
+
+bool						Grid::play(Player_human &player)
 {
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			deep;
 	char					buff[SIZE_CMD + 1];
+	ssize_t					len;
 
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
 	{
@@ -68,19 +87,34 @@ bool						Grid::play(Player_human const &player)
 		if (player.isOnline() != OFFLINE)
 		{
 			deep = player.getDeep();
-			player.send_to_server(IA, SIZE_CMD);
-			player.send_to_server(&deep, sizeof(deep));
-			player.send_to_server(m_cell, sizeof(m_cell));
-			memset(buff, 0, sizeof(buff));
-			player.read_from_server(buff, SIZE_CMD);
-			if (strcmp(buff, TIME_SPEND) != 0)
-				return (false);
-			player.read_from_server(&m_time_spend, sizeof(m_time_spend));
-			player.read_from_server(&y, sizeof(y));
-			player.read_from_server(&x, sizeof(x));
-			m_ia.setY(y);
-			m_ia.setX(x);
-			this->play(m_ia);
+			player.send_to_server(player.isOnline() == ONLINE ? IA : LAN, SIZE_CMD);
+			if (player.isOnline() == ONLINE)
+			{
+				player.send_to_server(&deep, sizeof(deep));
+				player.send_to_server(m_cell, sizeof(m_cell));
+			}
+			else if (player.isOnline() == ONLINE_LAN)
+			{
+				y = player.getY();
+				x = player.getX();
+				player.send_to_server(&y, sizeof(y));
+				player.send_to_server(&x, sizeof(x));
+			}
+			len = player.read_from_server(buff, SIZE_CMD);
+			buff[len] = '\0';
+			if (player.isOnline() == ONLINE)
+			{
+				if (strcmp(buff, TIME_SPEND) != 0)
+					return (false);
+				player.read_from_server(&m_time_spend, sizeof(m_time_spend));
+			}
+			else if (player.isOnline() == ONLINE_LAN)
+			{
+				if (strcmp(buff, CONNECTED2) != 0)
+					return (false);
+				player.setDisable();
+			}
+			this->updateGrid(player);
 		}
 		return (true);
 	}

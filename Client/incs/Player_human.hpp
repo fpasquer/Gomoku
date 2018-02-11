@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 08:56:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 20:47:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 14:11:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ class Player_human : public Player
 		bool				moveDown(void);
 		bool				deepMore(void);
 		bool				deepMinus(void);
+		void				setDisable(void);
+		void				setEnable(void);
+		bool				enable(void) const;
+		int					getSockClient(void) const;
 		void				set_online(std::string const &addr, int const &port, std::string const &type_connect);
 		t_type_connect		isOnline(void) const;
 		ssize_t				send_to_server(void const *data, size_t const &len) const;
@@ -51,6 +55,7 @@ class Player_human : public Player
 		unsigned int		m_deep;
 		Client				m_client;
 		t_type_connect		m_type_connect;
+		bool				m_enable;
 };
 
 #endif
