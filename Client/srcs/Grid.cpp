@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 15:21:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/11 16:37:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ bool						Grid::play(Player_human &player)
 				if (strcmp(buff, TIME_SPEND) != 0)
 					return (false);
 				player.read_from_server(&m_time_spend, sizeof(m_time_spend));
+				player.setDisable();//pour que updateGrid fonctionne
 			}
 			else if (player.isOnline() == ONLINE_LAN)
 			{
