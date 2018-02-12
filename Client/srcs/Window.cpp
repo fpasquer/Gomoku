@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 11:19:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 11:41:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_color const				Window::m_color[] = {
 			throw Error("Window not enough larg");
 		else if (m_lines < MIN_LINES)
 			throw Error("Window not enough hight");
-		m_win_left = subwin(stdscr, LINES, COLS / 2, 0, 0);
-		if ((m_win_right = subwin(stdscr, LINES, COLS / 2, 0, COLS / 2)) == NULL || m_win_left == NULL)
+		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
+		if ((m_win_right = subwin(stdscr, MIN_LINES, MIN_COLS, 0, MIN_COLS)) == NULL || m_win_left == NULL)
 			throw Error("Allocation window failled");
 	}
 	catch (std::exception const&e)
@@ -108,7 +108,8 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 		return (false);
 	start_x = (m_cols - SIZE_GRID * 4) / 2;
 	start_y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
-
+	start_x = 1;
+	start_y = 1;
 	std::string				space(start_x, ' ');
 
 	wclear(m_win_left);
@@ -159,10 +160,8 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
 	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
 	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
-	mvwprintw(m_win_right, 16, 1, "LINES = %d COLS %d", LINES, COLS);
-	mvwprintw(m_win_right, 17, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
+	mvwprintw(m_win_right, 16, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
 	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
-	mvwprintw(m_win_right, 19, 1, "Socket player %d", player.getSockClient());
 	wrefresh(m_win_right);
 	return (true);
 }
