@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 08:18:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 11:26:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ bool						Grid::play(Player_human &player)
 			else if (player.isOnline() == ONLINE_LAN)
 			{
 				if (strcmp(buff, CONNECTED2) != 0)
-					exit(-1);//return (false);
+					return (false);
 				player.setDisable();
 			}
 			this->updateGrid(player);

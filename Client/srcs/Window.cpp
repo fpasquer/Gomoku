@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 10:05:29 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 11:19:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,58 +101,47 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			start_x;
-	unsigned int			decalage_x;
-	unsigned int			mem_start_x;
 	unsigned int			start_y;
 	std::string				str;
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
-	mem_start_x = start_x = (m_cols - SIZE_GRID * 4) / 2;
+	start_x = (m_cols - SIZE_GRID * 4) / 2;
 	start_y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
+
+	std::string				space(start_x, ' ');
+
 	wclear(m_win_left);
-	box(m_win_left, ACS_VLINE, ACS_HLINE);
-	str = m_border + "\n" + m_border;
-	grid.getLastX();
-	mvwprintw(m_win_left, start_y++, start_x, "%s", m_border.c_str());
-	for (y = 0; y < SIZE_GRID; y++, start_y++)
+	str = m_border + "\n" + space;
+	for (y = 0; y < SIZE_GRID; y++)
 	{
-		for (str = "", x = 0, decalage_x = 0, start_x = mem_start_x; x < SIZE_GRID; x++)
+		for (x = 0; x < SIZE_GRID; x++)
 		{
 			if (grid.getValue(c, x, y) == false)
-				break ;
-			str += "|";
+				return (false);
 			if (player.getX() == x && player.getY() == y)
 			{
-				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
-				start_x += str.size();
+				str += "|";
+				mvwprintw(m_win_left, start_y, start_x, "%s", str.c_str());
 				wattron(m_win_left, A_REVERSE);
-				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, " %c ", c);
-				decalage_x += 3;
+				start_y = start_y + y * 2 + 1;
+				start_x = start_x + 1 + x * (3 + 1);
+				mvwprintw(m_win_left, start_y, start_x, " %c ", c);
+				start_x += 3;
 				wattroff(m_win_left, A_REVERSE);
-				str = "";
-			}
-			else if (grid.getLastX() == x && grid.getLastY() == y)
-			{
-				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
-				start_x += str.size();
-				wattron(m_win_left, A_UNDERLINE);
-				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, " %c ", c);
-				decalage_x += 3;
-				wattroff(m_win_left, A_UNDERLINE);
-				str = "";
+				str.erase();
 			}
 			else
 			{
-				str += " ";
+				str += "| ";
 				str.push_back(c);
 				str += " ";
 			}
 		}
-		str += "|";
-		mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
-		mvwprintw(m_win_left, start_y + y + 1, mem_start_x, "%s", m_border.c_str());
+		str += "|\n" + space + m_border + "\n" + space;
 	}
+	mvwprintw(m_win_left, start_y, start_x, "%s", str.c_str());
+	box(m_win_left, ACS_VLINE, ACS_HLINE);
 	wrefresh(m_win_left);
 	return (true);
 }
