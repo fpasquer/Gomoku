@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 08:24:21 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 10:05:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,40 +56,102 @@ t_color const				Window::m_color[] = {
 		init_pair(m_color[i].pair, m_color[i].font, m_color[i].background);
 }
 
+// bool						Window::show_grid(Grid const &grid, Player_human const &player)
+// {
+// 	char					c;
+// 	unsigned int			start_x;
+// 	unsigned int			start_y;
+// 	unsigned int			x;
+// 	unsigned int			y;
+
+// 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
+// 		return (false);
+// 	start_x = (m_cols - SIZE_GRID * 4) / 2;
+// 	start_y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
+// 	wclear(m_win_left);
+// 	box(m_win_left, ACS_VLINE, ACS_HLINE);
+// 	mvwprintw(m_win_left, start_y++, start_x, "%s", m_border.c_str());
+// 	for (y = 0; y < SIZE_GRID; y++, start_y++)
+// 	{
+// 		for (x = 0; x < SIZE_GRID; x++)
+// 		{
+// 			mvwprintw(m_win_left, start_y + y, start_x + x * 4, "|");
+// 			if (player.getX() == x && player.getY() == y)
+// 				wattron(m_win_left, A_REVERSE);
+// 			else if (grid.getLastX() == x && grid.getLastY() == y)
+// 				wattron(m_win_left, A_UNDERLINE);
+// 			if (grid.getValue(c, x, y) == false)
+// 				break ;
+// 			mvwprintw(m_win_left, start_y + y, start_x + x * 4 + 1, " %c ", c);
+// 			if (player.getX() == x && player.getY() == y)
+// 				wattroff(m_win_left, A_REVERSE);
+// 			else if (grid.getLastX() == x && grid.getLastY() == y)
+// 				wattroff(m_win_left, A_UNDERLINE);
+// 		}
+// 		mvwprintw(m_win_left, start_y + y, start_x + x  * 4, "|");
+// 		mvwprintw(m_win_left, start_y + y + 1, start_x, "%s", m_border.c_str());
+// 	}
+// 	wrefresh(m_win_left);
+// 	return (true);
+// }
+
 bool						Window::show_grid(Grid const &grid, Player_human const &player)
 {
 	char					c;
-	unsigned int			start_x;
-	unsigned int			start_y;
 	unsigned int			x;
 	unsigned int			y;
+	unsigned int			start_x;
+	unsigned int			decalage_x;
+	unsigned int			mem_start_x;
+	unsigned int			start_y;
+	std::string				str;
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
-	start_x = (m_cols - SIZE_GRID * 4) / 2;
+	mem_start_x = start_x = (m_cols - SIZE_GRID * 4) / 2;
 	start_y = (m_lines - (SIZE_GRID * 2 + 1)) / 2;
 	wclear(m_win_left);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);
+	str = m_border + "\n" + m_border;
+	grid.getLastX();
 	mvwprintw(m_win_left, start_y++, start_x, "%s", m_border.c_str());
 	for (y = 0; y < SIZE_GRID; y++, start_y++)
 	{
-		for (x = 0; x < SIZE_GRID; x++)
+		for (str = "", x = 0, decalage_x = 0, start_x = mem_start_x; x < SIZE_GRID; x++)
 		{
-			mvwprintw(m_win_left, start_y + y, start_x + x * 4, "|");
-			if (player.getX() == x && player.getY() == y)
-				wattron(m_win_left, A_REVERSE);
-			else if (grid.getLastX() == x && grid.getLastY() == y)
-				wattron(m_win_left, A_UNDERLINE);
 			if (grid.getValue(c, x, y) == false)
 				break ;
-			mvwprintw(m_win_left, start_y + y, start_x + x * 4 + 1, " %c ", c);
+			str += "|";
 			if (player.getX() == x && player.getY() == y)
+			{
+				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
+				start_x += str.size();
+				wattron(m_win_left, A_REVERSE);
+				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, " %c ", c);
+				decalage_x += 3;
 				wattroff(m_win_left, A_REVERSE);
+				str = "";
+			}
 			else if (grid.getLastX() == x && grid.getLastY() == y)
+			{
+				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
+				start_x += str.size();
+				wattron(m_win_left, A_UNDERLINE);
+				mvwprintw(m_win_left, start_y + y, start_x + decalage_x, " %c ", c);
+				decalage_x += 3;
 				wattroff(m_win_left, A_UNDERLINE);
+				str = "";
+			}
+			else
+			{
+				str += " ";
+				str.push_back(c);
+				str += " ";
+			}
 		}
-		mvwprintw(m_win_left, start_y + y, start_x + x  * 4, "|");
-		mvwprintw(m_win_left, start_y + y + 1, start_x, "%s", m_border.c_str());
+		str += "|";
+		mvwprintw(m_win_left, start_y + y, start_x + decalage_x, "%s", str.c_str());
+		mvwprintw(m_win_left, start_y + y + 1, mem_start_x, "%s", m_border.c_str());
 	}
 	wrefresh(m_win_left);
 	return (true);
