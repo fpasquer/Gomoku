@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 11:41:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 15:50:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
 	mvwprintw(m_win_right, 16, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
 	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
+	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.capture().c_str());
+	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.captureIa().c_str());
 	wrefresh(m_win_right);
 	return (true);
 }

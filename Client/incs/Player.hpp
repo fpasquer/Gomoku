@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 11:20:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 15:25:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class Player
 		unsigned int		getX(void) const;
 		unsigned int		getY(void) const;
 		char				getValue(void) const;
+		void				addCapture(void);
+		std::string			capture(void) const;
 
 	protected:
 		bool				setX(unsigned int const &x);
@@ -32,6 +34,7 @@ class Player
 		char				m_val;
 		unsigned int		m_x;
 		unsigned int		m_y;
+		std::string			m_capture;
 };
 
 

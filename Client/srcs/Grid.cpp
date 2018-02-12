@@ -6,16 +6,19 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 11:26:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 15:53:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
-# include <fstream>
-
+#include "../incs/Captures.hpp"
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
+Grid::t_list_way const		Grid::m_list_way[] = {
+	{LEFT, &Grid::checkLeft},
+	{NONE, NULL}
+};
 
 							Grid::Grid(void) : m_time_spend(0.0), m_ia()
 {
@@ -83,6 +86,44 @@ bool						Grid::updateGrid(Player_human &player)
 	return (true);
 }
 
+t_way						Grid::checkLeft(Player_human &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && x - i - 1 < SIZE_GRID; i++)
+		if (m_cell[y][x - i - 1] == val || m_cell[y][x - i - 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || m_cell[y][x - i - 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y][x - i - 1] = EMPTY_CELL;
+	return (LEFT);
+}
+
+std::string					Grid::captureIa(void) const
+{
+	return (m_ia.capture());
+}
+
+t_way						Grid::checkCaptures(Player_human &player)
+{
+	unsigned int			i;
+
+	for (i = 0; m_list_way[i].f != NULL; i++)
+		if (((*this).*m_list_way[i].f)(player) == m_list_way[i].way)
+		{
+			player.addCapture();
+			return (m_list_way[i].way);
+		}
+	return (NONE);
+}
+
 bool						Grid::play(Player_human &player)
 {
 	unsigned int			x;
@@ -93,6 +134,7 @@ bool						Grid::play(Player_human &player)
 
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
 	{
+		this->checkCaptures(player);
 		m_cell[player.getY()][player.getX()] = player.getValue();
 		if (player.isOnline() != OFFLINE)
 		{

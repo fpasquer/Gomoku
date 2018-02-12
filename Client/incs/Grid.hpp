@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 07:54:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 15:37:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 # include "Client.hpp"
 # include "../../Gomoku.hpp"
 
+typedef enum				e_way
+{
+	NONE, LEFT, LEFT_TOP, TOP, TOP_RIGHT, RIGHT, RIGHT_BOTTOM, BOTTOM, BOTTOM_LEFT
+}							t_way;
+
+# define NB_WAY_POSSIBLE 8
+
 class Grid
 {
 	public:
@@ -32,8 +39,25 @@ class Grid
 		bool				updateGrid(Player_human &player);
 		bool				play(Player_human &player);
 		double				get_time_spend(void) const;
+		std::string			captureIa(void) const;
 
 	private:
+		typedef struct		s_list_way
+		{
+			t_way			way;
+			t_way			(Grid::*f)(Player_human &);
+		}					t_list_way;
+		static t_list_way const
+							m_list_way[];
+		t_way				checkCaptures(Player_human &player);
+		t_way				checkLeft(Player_human &player);
+		// t_way			checkLeftTop(Player const &player);
+		// t_way			checkTop(Player const &player);
+		// t_way			checkTopRight(Player const &player);
+		// t_way			checkRight(Player const &player);
+		// t_way			checkRightBottom(Player const &player);
+		// t_way			checkBottom(Player const &player);
+		// t_way			checkBottomLeft(Player const &player);
 		bool				play(Player_ia const &player);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
