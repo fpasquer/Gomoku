@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 08:03:38 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 08:18:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,13 @@ bool						Grid::updateGrid(Player_human &player)
 
 	if (player.enable() == false)
 	{
-		len = player.read_from_server(buff, SIZE_CMD);
-		buff[len] = '\0';
-		if (strcmp(buff, CONNECTED) != 0)
-			return (false);
+		if (player.isOnline() == ONLINE_LAN)
+		{
+			len = player.read_from_server(buff, SIZE_CMD);
+			buff[len] = '\0';
+			if (strcmp(buff, CONNECTED) != 0)
+				return (false);
+		}
 		player.read_from_server(&y, sizeof(y));
 		player.read_from_server(&x, sizeof(x));
 		m_ia.setY(y);
