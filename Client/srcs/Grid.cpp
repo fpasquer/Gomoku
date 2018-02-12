@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 16:37:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 08:03:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,19 @@ bool						Grid::play(Player_ia const &player)
 	return (false);
 }
 
-void						Grid::updateGrid(Player_human &player)
+bool						Grid::updateGrid(Player_human &player)
 {
 	unsigned int			x;
 	unsigned int			y;
+	char					buff[SIZE_CMD + 1];
+	ssize_t					len;
 
 	if (player.enable() == false)
 	{
+		len = player.read_from_server(buff, SIZE_CMD);
+		buff[len] = '\0';
+		if (strcmp(buff, CONNECTED) != 0)
+			return (false);
 		player.read_from_server(&y, sizeof(y));
 		player.read_from_server(&x, sizeof(x));
 		m_ia.setY(y);
@@ -71,6 +77,7 @@ void						Grid::updateGrid(Player_human &player)
 		this->play(m_ia);
 		player.setEnable();
 	}
+	return (true);
 }
 
 bool						Grid::play(Player_human &player)
@@ -112,7 +119,7 @@ bool						Grid::play(Player_human &player)
 			else if (player.isOnline() == ONLINE_LAN)
 			{
 				if (strcmp(buff, CONNECTED2) != 0)
-					return (false);
+					exit(-1);//return (false);
 				player.setDisable();
 			}
 			this->updateGrid(player);

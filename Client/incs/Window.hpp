@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/08 10:11:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 07:56:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class Window
 							Window(void);
 		bool				show(Grid const &grid, Player_human const &player, std::string const &key);
 							~Window(void);
+		int					disconnected(void) const;
 	private:
 		static t_color const
 							m_color[];

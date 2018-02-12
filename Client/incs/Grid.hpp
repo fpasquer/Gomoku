@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 13:51:46 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 07:54:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class Grid
 		bool				getValue(char &val, unsigned int const x, unsigned int const y) const;
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
-		void				updateGrid(Player_human &player);
+		bool				updateGrid(Player_human &player);
 		bool				play(Player_human &player);
 		double				get_time_spend(void) const;
 

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 14:20:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/12 08:01:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,14 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 19, 1, "Socket player %d", player.getSockClient());
 	wrefresh(m_win_right);
 	return (true);
+}
+
+int							Window::disconnected(void) const
+{
+	clear();
+	printw("Your Opponnent is go on. Press any key to leave the program");
+	getch();
+	return (0);
 }
 
 							Window::~Window(void)
