@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 15:37:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/13 15:28:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,20 @@ class Grid
 		typedef struct		s_list_way
 		{
 			t_way			way;
-			t_way			(Grid::*f)(Player_human &);
+			t_way			(Grid::*f)(Player &);
 		}					t_list_way;
 		static t_list_way const
 							m_list_way[];
-		t_way				checkCaptures(Player_human &player);
-		t_way				checkLeft(Player_human &player);
-		// t_way			checkLeftTop(Player const &player);
-		// t_way			checkTop(Player const &player);
-		// t_way			checkTopRight(Player const &player);
-		// t_way			checkRight(Player const &player);
-		// t_way			checkRightBottom(Player const &player);
-		// t_way			checkBottom(Player const &player);
-		// t_way			checkBottomLeft(Player const &player);
-		bool				play(Player_ia const &player);
+		t_way				checkCaptures(Player &player);
+		t_way				checkLeft(Player &player);
+		t_way				checkLeftTop(Player &player);
+		t_way				checkTop(Player &player);
+		t_way				checkTopRight(Player &player);
+		t_way				checkRight(Player &player);
+		t_way				checkRightBottom(Player &player);
+		t_way				checkBottom(Player &player);
+		t_way				checkBottomLeft(Player &player);
+		bool				play(Player_ia &player);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		char				m_cell[SIZE_GRID][SIZE_GRID];

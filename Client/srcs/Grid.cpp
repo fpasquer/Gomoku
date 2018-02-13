@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 15:53:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/13 15:34:17 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 Grid::t_list_way const		Grid::m_list_way[] = {
 	{LEFT, &Grid::checkLeft},
+	{LEFT_TOP, &Grid::checkLeftTop},
+	{TOP, &Grid::checkTop},
+	{TOP_RIGHT, &Grid::checkTopRight},
+	{RIGHT, &Grid::checkRight},
+	{RIGHT_BOTTOM, &Grid::checkRightBottom},
+	{BOTTOM, &Grid::checkBottom},
+	{BOTTOM_LEFT, &Grid::checkBottomLeft},
 	{NONE, NULL}
 };
 
@@ -48,13 +55,14 @@ bool						Grid::getValue(char &val, unsigned int const x, unsigned int const y) 
 	return (true);
 }
 
-bool						Grid::play(Player_ia const &player)
+bool						Grid::play(Player_ia &player)
 {
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
 	{
 		m_last_x = player.getX();
 		m_last_y = player.getY();
 		m_cell[m_last_y][m_last_x] = player.getValue();
+		this->checkCaptures(player);
 		return (true);
 	}
 	return (false);
@@ -86,7 +94,7 @@ bool						Grid::updateGrid(Player_human &player)
 	return (true);
 }
 
-t_way						Grid::checkLeft(Player_human &player)
+t_way						Grid::checkLeft(Player &player)
 {
 	char					val;
 	unsigned int			y;
@@ -99,11 +107,151 @@ t_way						Grid::checkLeft(Player_human &player)
 	for (i = 0; i < NB_STONE_CAPTURE && x - i - 1 < SIZE_GRID; i++)
 		if (m_cell[y][x - i - 1] == val || m_cell[y][x - i - 1] == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || m_cell[y][x - i - 1] != val)
+	if (i != NB_STONE_CAPTURE || x - i - 1 >= SIZE_GRID || m_cell[y][x - i - 1] != val)
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 		m_cell[y][x - i - 1] = EMPTY_CELL;
 	return (LEFT);
+}
+
+t_way						Grid::checkLeftTop(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && x - i - 1 < SIZE_GRID && y - i - 1 < SIZE_GRID; i++)
+		if (m_cell[y - i - 1][x - i - 1] == val || m_cell[y - i - 1][x - i - 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || x - i - 1 >=  SIZE_GRID|| y - i - 1 >= SIZE_GRID || m_cell[y - i - 1][x - i - 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y - i - 1][x - i - 1] = EMPTY_CELL;
+	return (LEFT_TOP);
+}
+
+t_way						Grid::checkTop(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && y - i - 1 < SIZE_GRID; i++)
+		if (m_cell[y - i - 1][x] == val || m_cell[y - i - 1][x] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || m_cell[y - i - 1][x] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y - i - 1][x] = EMPTY_CELL;
+	return (TOP);
+}
+
+t_way						Grid::checkTopRight(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID; i++)
+		if (m_cell[y - i - 1][x + i + 1] == val || m_cell[y - i - 1][x + i + 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || x + i + 1 >= SIZE_GRID || m_cell[y - i - 1][x + i + 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y - i - 1][x + i + 1] = EMPTY_CELL;
+	return (TOP_RIGHT);
+}
+
+t_way						Grid::checkRight(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && x + i + 1 < SIZE_GRID; i++)
+		if (m_cell[y][x + i + 1] == val || m_cell[y][x + i + 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || m_cell[y][x + i + 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y][x + i + 1] = EMPTY_CELL;
+	return (RIGHT);
+}
+
+t_way						Grid::checkRightBottom(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID; i++)
+		if (m_cell[y + i + 1][x + i + 1] == val || m_cell[y + i + 1][x + i + 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || y + i + 1 >= SIZE_GRID || m_cell[y + i + 1][x + i + 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y + i + 1][x + i + 1] = EMPTY_CELL;
+	return (RIGHT_BOTTOM);
+}
+
+t_way						Grid::checkBottom(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID; i++)
+		if (m_cell[y + i + 1][x] == val || m_cell[y + i + 1][x] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || m_cell[y + i + 1][x] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y + i + 1][x] = EMPTY_CELL;
+	return (BOTTOM);
+}
+
+t_way						Grid::checkBottomLeft(Player &player)
+{
+	char					val;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID; i++)
+		if (m_cell[y + i + 1][x - i - 1] == val || m_cell[y + i + 1][x - i - 1] == EMPTY_CELL)
+			break ;
+	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || x - i - 1 >= SIZE_GRID || m_cell[y + i + 1][x - i - 1] != val)
+		return (NONE);
+	for (i = 0; i < NB_STONE_CAPTURE; i++)
+		m_cell[y + i + 1][x - i - 1] = EMPTY_CELL;
+	return (BOTTOM_LEFT);
 }
 
 std::string					Grid::captureIa(void) const
@@ -111,17 +259,18 @@ std::string					Grid::captureIa(void) const
 	return (m_ia.capture());
 }
 
-t_way						Grid::checkCaptures(Player_human &player)
+t_way						Grid::checkCaptures(Player &player)
 {
 	unsigned int			i;
+	t_way					way;
 
-	for (i = 0; m_list_way[i].f != NULL; i++)
+	for (way = NONE, i = 0; m_list_way[i].f != NULL; i++)
 		if (((*this).*m_list_way[i].f)(player) == m_list_way[i].way)
 		{
 			player.addCapture();
-			return (m_list_way[i].way);
+			way = m_list_way[i].way;
 		}
-	return (NONE);
+	return (way);
 }
 
 bool						Grid::play(Player_human &player)
