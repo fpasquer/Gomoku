@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 13:58:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 20:07:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,10 +273,15 @@ t_way						Grid::checkCaptures(Player &player)
 	return (way);
 }
 
-unsigned int				Grid::countLeft(Player const &player) const
+bool						Grid::countLeft(Player const &player, unsigned int &count) const
+/*
+DESCRIPTION:
+	count the number of stone on the left site of the player
+RETURN VALUES:
+	return true if the next stone after the last on left of the player is empty, else false
+*/
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -286,13 +291,18 @@ unsigned int				Grid::countLeft(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; x - i - 1 < SIZE_GRID && m_cell[y][x - i - 1] == val; i++)
 		count ++;
-	return (count);
+	return (x - i - 1 < SIZE_GRID && m_cell[y][x - i - 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countRight(Player const &player) const
+bool						Grid::countRight(Player const &player, unsigned int &count) const
+/*
+DESCRIPTION:
+	count the number of stone on the right site of the player
+RETURN VALUES:
+	return true if the next stone after the last on right of the player is empty, else false
+*/
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -302,13 +312,12 @@ unsigned int				Grid::countRight(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; x + i + 1 < SIZE_GRID && m_cell[y][x + i + 1] == val; i++)
 		count ++;
-	return (count);
+	return (x + i + 1 < SIZE_GRID && m_cell[y][x + i + 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countTop(Player const &player) const
+bool						Grid::countTop(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -318,13 +327,12 @@ unsigned int				Grid::countTop(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == val; i++)
 		count ++;
-	return (count);
+	return (y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countBottom(Player const &player) const
+bool						Grid::countBottom(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -334,13 +342,12 @@ unsigned int				Grid::countBottom(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && m_cell[y + i + 1][x] == val; i++)
 		count ++;
-	return (count);
+	return (y + i + 1 < SIZE_GRID && m_cell[y + i + 1][x] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countLeftTop(Player const &player) const
+bool						Grid::countLeftTop(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -350,13 +357,12 @@ unsigned int				Grid::countLeftTop(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y - i - 1][x - i - 1] == val; i++)
 		count ++;
-	return (count);
+	return (y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y - i - 1][x - i - 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countRightBottom(Player const &player) const
+bool						Grid::countRightBottom(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -366,13 +372,12 @@ unsigned int				Grid::countRightBottom(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y + i + 1][x + i + 1] == val; i++)
 		count ++;
-	return (count);
+	return (y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y + i + 1][x + i + 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countTopRight(Player const &player) const
+bool						Grid::countTopRight(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -382,13 +387,12 @@ unsigned int				Grid::countTopRight(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y - i - 1][x + i + 1] == val; i++)
 		count ++;
-	return (count);
+	return (y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y - i - 1][x + i + 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::countBottomLeft(Player const &player) const
+bool						Grid::countBottomLeft(Player const &player, unsigned int &count) const
 {
 	char					val;
-	unsigned int			count;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			i;
@@ -398,27 +402,65 @@ unsigned int				Grid::countBottomLeft(Player const &player) const
 	val = player.getValue();
 	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y + i + 1][x - i - 1] == val; i++)
 		count ++;
-	return (count);
+	return (y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y + i + 1][x - i - 1] == EMPTY_CELL ? true : false);
 }
 
-unsigned int				Grid::getLineNbStone(Player const &player) const
+bool						Grid::getLineNbStone(Player const &player, unsigned int &count) const
 {
-	return (this->countLeft(player) + this->countRight(player) + 1);
+	bool					left_end;
+	bool					right_end;
+	unsigned int			count_left = 0;
+	unsigned int			count_right = 0;
+
+	left_end = this->countLeft(player, count_left);
+	right_end = this->countRight(player, count_right);
+	count = count_left + count_right + 1;
+	return (left_end == true && right_end == true ? true : false);
 }
 
-unsigned int				Grid::getColNbStone(Player const &player) const
+bool						Grid::getColNbStone(Player const &player, unsigned int &count) const
+/*
+DESCRIPTION:
+	count the number of stone aline of the player on the collumn
+RETURN VALUES:
+	return true if the next stone after the higer and the lower of the stone's player is empty, else false
+*/
 {
-	return (this->countTop(player) + this->countBottom(player) + 1);
+	bool					above_end;
+	bool					below_end;
+	unsigned int			count_above = 0;
+	unsigned int			count_below = 0;
+
+	above_end = this->countTop(player, count_above);
+	below_end = this->countBottom(player, count_below);
+	count = count_above + count_below + 1;
+	return (above_end == true && below_end == true ? true : false);
 }
 
-unsigned int				Grid::getDiagLeftTopRightBottomNbStone(Player const &player) const
+bool						Grid::getDiagLeftTopRightBottomNbStone(Player const &player, unsigned int &count) const
 {
-	return (this->countLeftTop(player) + this->countRightBottom(player) + 1);
+	bool					left_end;
+	bool					right_end;
+	unsigned int			count_left = 0;
+	unsigned int			count_right = 0;
+
+	left_end = this->countLeftTop(player, count_left);
+	right_end = this->countRightBottom(player, count_right);
+	count = count_right + count_left + 1;
+	return (left_end == true && right_end == true ? true : false);
 }
 
-unsigned int				Grid::getDiagRightTopLeftBottomNbStone(Player const &player) const
+bool						Grid::getDiagRightTopLeftBottomNbStone(Player const &player, unsigned int &count) const
 {
-	return (this->countTopRight(player) + this->countBottomLeft(player) + 1);
+	bool					left_end;
+	bool					right_end;
+	unsigned int			count_left = 0;
+	unsigned int			count_right = 0;
+
+	left_end = this->countBottomLeft(player, count_left);
+	right_end = this->countTopRight(player, count_right);
+	count = count_left + count_right + 1;
+	return (left_end == true && right_end == true ? true : false);
 }
 
 bool						Grid::play(Player_human &player)

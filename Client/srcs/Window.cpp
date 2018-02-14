@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 14:32:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 20:00:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_color const				Window::m_color[] = {
 	{1, COLOR_GREEN, COLOR_BLACK},
-	{2, COLOR_RED, COLOR_RED}, 
+	{2, COLOR_BLACK, COLOR_RED}, 
 	{0, 0, 0}
 };
 
@@ -153,6 +153,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key)
 {
 	unsigned int			i;
+	unsigned int			count;
 
 	this->show_grid(grid, player);
 	wclear(m_win_right);
@@ -167,10 +168,14 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
 	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.capture().c_str());
 	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.captureIa().c_str());
-	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", grid.getLineNbStone(player));
-	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", grid.getColNbStone(player));
-	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", grid.getDiagLeftTopRightBottomNbStone(player));
-	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", grid.getDiagRightTopLeftBottomNbStone(player));
+	grid.getLineNbStone(player, count);
+	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", count);
+	grid.getColNbStone(player, count);
+	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", count);
+	grid.getDiagLeftTopRightBottomNbStone(player, count);
+	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", count);
+	grid.getDiagRightTopLeftBottomNbStone(player, count);
+	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", count);
 	wrefresh(m_win_right);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 16:37:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 19:36:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ bool						FreeThree::checkFTLeft(void)
 				m_grid.getValue(c, x + 1, y) == true &&
 				c == val &&
 				m_grid.getValue(c, x - 1, y) == true &&
-				c == EMPTY_CELL
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
 			)
 			||
 			(
@@ -56,7 +59,10 @@ bool						FreeThree::checkFTLeft(void)
 				m_grid.getValue(c, x - 1, y) == true &&
 				c == val &&
 				m_grid.getValue(c, x - 2, y) == true &&
-				c == EMPTY_CELL
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
 			)
 		)
 		return (true);
@@ -75,8 +81,29 @@ bool						FreeThree::checkFTTopLeft(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x - 1, y - 1) == true && c == val) ||
-			(m_grid.getValue(c, x + 1, y + 1) == true && c == val))
+	if (
+			(
+				m_grid.getValue(c, x + 1, y + 1) == true &&
+				c == val &&
+				m_grid.getValue(c, x - 1, y - 1) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+			||
+			(
+				m_grid.getValue(c, x + 1, y + 1) == true &&
+				c == EMPTY_CELL &&
+				m_grid.getValue(c, x - 1, y - 1) == true &&
+				c == val &&
+				m_grid.getValue(c, x - 2, y - 2) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+		)
 		return (true);
 	return (false);
 }
@@ -93,8 +120,29 @@ bool						FreeThree::checkFTTop(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x, y - 1) == true && c == val) ||
-			(m_grid.getValue(c, x, y + 1) == true && c == val))
+	if (
+			(
+				m_grid.getValue(c, x, y + 1) == true &&
+				c == val &&
+				m_grid.getValue(c, x, y - 1) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+			||
+			(
+				m_grid.getValue(c, x, y + 1) == true &&
+				c == EMPTY_CELL &&
+				m_grid.getValue(c, x, y - 1) == true &&
+				c == val &&
+				m_grid.getValue(c, x, y - 2) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+		)
 		return (true);
 	return (false);
 }
@@ -111,8 +159,29 @@ bool						FreeThree::checkFTRight(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x + 1, y) == true && c == val) ||
-			(m_grid.getValue(c, x - 1, y) == true && c == val))
+	if (
+			(
+				m_grid.getValue(c, x - 1, y) == true &&
+				c == val &&
+				m_grid.getValue(c, x + 1, y) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+			||
+			(
+				m_grid.getValue(c, x - 1, y) == true &&
+				c == EMPTY_CELL &&
+				m_grid.getValue(c, x + 1, y) == true &&
+				c == val &&
+				m_grid.getValue(c, x + 2, y) == true &&
+				(
+					c == EMPTY_CELL ||
+					c == val
+				)
+			)
+		)
 		return (true);
 	return (false);
 }
@@ -194,9 +263,13 @@ bool						FreeThree::checkFTBottomRight(void)
 
 bool						FreeThree::checkFreeThree(void)
 {
+	char					c;
 	unsigned int			i;
 	unsigned int			count;
 
+	if (m_grid.getValue(c, m_player.getX(), m_player.getY()) == false ||
+			c != EMPTY_CELL)
+		return (false);
 	for (i = 0, count = 0; m_func[i].f != NULL; i++)
 		if (((*this).*m_func[i].f)() == true)
 			count++;
