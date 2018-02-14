@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/13 15:34:17 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:32:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,154 @@ t_way						Grid::checkCaptures(Player &player)
 			way = m_list_way[i].way;
 		}
 	return (way);
+}
+
+unsigned int				Grid::countLeft(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; x - i - 1 < SIZE_GRID && m_cell[y][x - i - 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countRight(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; x + i + 1 < SIZE_GRID && m_cell[y][x + i + 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countTop(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countBottom(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && m_cell[y + i + 1][x] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countLeftTop(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y - i - 1][x - i - 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countRightBottom(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y + i + 1][x + i + 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countTopRight(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y - i - 1][x + i + 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::countBottomLeft(Player const &player) const
+{
+	char					val;
+	unsigned int			count;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			i;
+
+	y = player.getY();
+	x = player.getX();
+	val = player.getValue();
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y + i + 1][x - i - 1] == val; i++)
+		count ++;
+	return (count);
+}
+
+unsigned int				Grid::getLineNbStone(Player const &player) const
+{
+	return (this->countLeft(player) + this->countRight(player) + 1);
+}
+
+unsigned int				Grid::getColNbStone(Player const &player) const
+{
+	return (this->countTop(player) + this->countBottom(player) + 1);
+}
+
+unsigned int				Grid::getDiagLeftTopRightBottomNbStone(Player const &player) const
+{
+	return (this->countLeftTop(player) + this->countRightBottom(player) + 1);
+}
+
+unsigned int				Grid::getDiagRightTopLeftBottomNbStone(Player const &player) const
+{
+	return (this->countTopRight(player) + this->countBottomLeft(player) + 1);
 }
 
 bool						Grid::play(Player_human &player)

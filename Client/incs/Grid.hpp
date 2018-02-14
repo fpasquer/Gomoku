@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/13 15:28:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:29:01 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ class Grid
 		bool				updateGrid(Player_human &player);
 		bool				play(Player_human &player);
 		double				get_time_spend(void) const;
+		unsigned int		getLineNbStone(Player const &player) const;
+		unsigned int		getColNbStone(Player const &player) const;
+		unsigned int		getDiagLeftTopRightBottomNbStone(Player const &player) const;
+		unsigned int		getDiagRightTopLeftBottomNbStone(Player const &player) const;
 		std::string			captureIa(void) const;
 
 	private:
@@ -59,6 +63,14 @@ class Grid
 		t_way				checkBottom(Player &player);
 		t_way				checkBottomLeft(Player &player);
 		bool				play(Player_ia &player);
+		unsigned int		countLeft(Player const &player) const;
+		unsigned int		countLeftTop(Player const &player) const;
+		unsigned int		countTop(Player const &player) const;
+		unsigned int		countTopRight(Player const &player) const;
+		unsigned int		countRight(Player const &player) const;
+		unsigned int		countRightBottom(Player const &player) const;
+		unsigned int		countBottom(Player const &player) const;
+		unsigned int		countBottomLeft(Player const &player) const;
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		char				m_cell[SIZE_GRID][SIZE_GRID];

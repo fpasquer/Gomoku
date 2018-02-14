@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 15:50:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 11:27:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,10 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
 	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.capture().c_str());
 	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.captureIa().c_str());
+	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", grid.getLineNbStone(player));
+	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", grid.getColNbStone(player));
+	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", grid.getDiagLeftTopRightBottomNbStone(player));
+	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", grid.getDiagRightTopLeftBottomNbStone(player));
 	wrefresh(m_win_right);
 	return (true);
 }
