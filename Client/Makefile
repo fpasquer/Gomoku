@@ -6,14 +6,14 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/12 14:53:12 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/14 14:21:59 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Gomoku_client
 
 SRC_NAME = $(sort main.cpp Error.cpp Grid.cpp Key.cpp Player.cpp				\
-			Player_human.cpp Player_ia.cpp Window.cpp Client.cpp)
+			Player_human.cpp Player_ia.cpp Window.cpp Client.cpp FreeThree.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/

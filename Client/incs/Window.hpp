@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 07:56:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 14:26:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <string>
 # include "Grid.hpp"
 # include "Gomoku_client.hpp"
-
+# include "FreeThree.hpp"
+	
 typedef struct				s_color
 {
 	short					pair;
