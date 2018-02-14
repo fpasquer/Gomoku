@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 19:42:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 20:38:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum				e_way
 }							t_way;
 
 # define NB_WAY_POSSIBLE 8
+# define NB_STONE_CAPTURE 2
 
 class Grid
 {
@@ -44,6 +45,22 @@ class Grid
 		bool				getDiagLeftTopRightBottomNbStone(Player const &player, unsigned int &count) const;
 		bool				getDiagRightTopLeftBottomNbStone(Player const &player, unsigned int &count) const;
 		std::string			captureIa(void) const;
+		bool				countLeft(Player const &player, unsigned int &count) const;
+		bool				countLeftTop(Player const &player, unsigned int &count) const;
+		bool				countTop(Player const &player, unsigned int &count) const;
+		bool				countTopRight(Player const &player, unsigned int &count) const;
+		bool				countRight(Player const &player, unsigned int &count) const;
+		bool				countRightBottom(Player const &player, unsigned int &count) const;
+		bool				countBottom(Player const &player, unsigned int &count) const;
+		bool				countBottomLeft(Player const &player, unsigned int &count) const;
+		bool				countLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countLeftTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countRightBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countTopRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				countBottomLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
 
 	private:
 		typedef struct		s_list_way
@@ -63,14 +80,6 @@ class Grid
 		t_way				checkBottom(Player &player);
 		t_way				checkBottomLeft(Player &player);
 		bool				play(Player_ia &player);
-		bool				countLeft(Player const &player, unsigned int &count) const;
-		bool				countLeftTop(Player const &player, unsigned int &count) const;
-		bool				countTop(Player const &player, unsigned int &count) const;
-		bool				countTopRight(Player const &player, unsigned int &count) const;
-		bool				countRight(Player const &player, unsigned int &count) const;
-		bool				countRightBottom(Player const &player, unsigned int &count) const;
-		bool				countBottom(Player const &player, unsigned int &count) const;
-		bool				countBottomLeft(Player const &player, unsigned int &count) const;
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		char				m_cell[SIZE_GRID][SIZE_GRID];

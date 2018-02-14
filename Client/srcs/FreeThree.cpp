@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 19:36:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/14 21:46:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,18 @@ bool						FreeThree::checkFTLeft(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY();
 	x = m_player.getX() - 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if (
-			(
-				m_grid.getValue(c, x + 1, y) == true &&
-				c == val &&
-				m_grid.getValue(c, x - 1, y) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-			||
-			(
-				m_grid.getValue(c, x + 1, y) == true &&
-				c == EMPTY_CELL &&
-				m_grid.getValue(c, x - 1, y) == true &&
-				c == val &&
-				m_grid.getValue(c, x - 2, y) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-		)
+	count = 0;
+	if (m_grid.countLeft(y, m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x + 1, y) == true && c == EMPTY_CELL &&
+			m_grid.countLeft(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -75,35 +58,18 @@ bool						FreeThree::checkFTTopLeft(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() - 2;
 	x = m_player.getX() - 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if (
-			(
-				m_grid.getValue(c, x + 1, y + 1) == true &&
-				c == val &&
-				m_grid.getValue(c, x - 1, y - 1) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-			||
-			(
-				m_grid.getValue(c, x + 1, y + 1) == true &&
-				c == EMPTY_CELL &&
-				m_grid.getValue(c, x - 1, y - 1) == true &&
-				c == val &&
-				m_grid.getValue(c, x - 2, y - 2) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-		)
+	count = 0;
+	if (m_grid.countLeftTop(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x + 1, y + 1) == true && c == EMPTY_CELL &&
+			m_grid.countLeftTop(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -114,35 +80,18 @@ bool						FreeThree::checkFTTop(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() - 2;
 	x = m_player.getX();
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if (
-			(
-				m_grid.getValue(c, x, y + 1) == true &&
-				c == val &&
-				m_grid.getValue(c, x, y - 1) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-			||
-			(
-				m_grid.getValue(c, x, y + 1) == true &&
-				c == EMPTY_CELL &&
-				m_grid.getValue(c, x, y - 1) == true &&
-				c == val &&
-				m_grid.getValue(c, x, y - 2) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-		)
+	count = 0;
+	if (m_grid.countTop(m_player.getY(), x, val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x, y + 1) == true && c == EMPTY_CELL &&
+			m_grid.countTop(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -153,35 +102,18 @@ bool						FreeThree::checkFTRight(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY();
 	x = m_player.getX() + 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if (
-			(
-				m_grid.getValue(c, x - 1, y) == true &&
-				c == val &&
-				m_grid.getValue(c, x + 1, y) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-			||
-			(
-				m_grid.getValue(c, x - 1, y) == true &&
-				c == EMPTY_CELL &&
-				m_grid.getValue(c, x + 1, y) == true &&
-				c == val &&
-				m_grid.getValue(c, x + 2, y) == true &&
-				(
-					c == EMPTY_CELL ||
-					c == val
-				)
-			)
-		)
+	count = 0;
+	if (m_grid.countRight(y, m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x - 1, y) == true && c == EMPTY_CELL &&
+			m_grid.countRight(y, x,val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -192,14 +124,18 @@ bool						FreeThree::checkFTTopRight(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() - 2;
 	x = m_player.getX() + 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x + 1, y - 1) == true && c == val) ||
-			(m_grid.getValue(c, x - 1, y + 1) == true && c == val))
+	count = 0;
+	if (m_grid.countTopRight(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x - 1, y + 1) == true && c == EMPTY_CELL &&
+			m_grid.countTopRight(y, x, val, count) ==true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -210,17 +146,18 @@ bool						FreeThree::checkFTBottom(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() + 2;
 	x = m_player.getX();
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x, y - 1) == true && c == val &&
-			m_grid.getValue(c, x, y + 1) == true && c == EMPTY_CELL) ||
-			(m_grid.getValue(c, x, y + 1) == true && c == val &&
-			m_grid.getValue(c, x, y - 1) == true && c == EMPTY_CELL &&
-			m_grid.getValue(c, x, y + 2) == true && c == EMPTY_CELL))
+	count = 0;
+	if (m_grid.countBottom(m_player.getY(), x, val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x, y - 1) == true && c == EMPTY_CELL &&
+			m_grid.countBottom(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -231,14 +168,18 @@ bool						FreeThree::checkFTBottomLeft(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() + 2;
 	x = m_player.getX() - 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x + 1, y - 1) == true && c == val) ||
-			(m_grid.getValue(c, x - 1, y + 1) == true && c == val))
+	count = 0;
+	if (m_grid.countBottomLeft(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x + 1, y - 1) == true && c == EMPTY_CELL &&
+			m_grid.countBottomLeft(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
@@ -249,14 +190,18 @@ bool						FreeThree::checkFTBottomRight(void)
 	char					c;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	y = m_player.getY() + 2;
 	x = m_player.getX() + 2;
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
-	if ((m_grid.getValue(c, x - 1, y - 1) == true && c == val) ||
-			(m_grid.getValue(c, x + 1, y + 1) == true && c == val))
+	count = 0;
+	if (m_grid.countRightBottom(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x - 1, y - 1) == true && c == EMPTY_CELL &&
+			m_grid.countRightBottom(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
