@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 15:25:27 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/15 15:31:56 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ void						Ia_player::play
 {
 	int		max = -10000;
 	int		tmp;
+	Grid	grid_class(grid);
 
-	for(int y = 0; y < 3; y++)
+	for(int y = 0; y < SIZE_GRID; y++)
 	{
-		for(int x = 0; x < 3; x++)
+		for(int x = 0; x < SIZE_GRID; x++)
 		{
 			if(grid[y][x] == EMPTY_CELL)
 			{
-				grid[y][x] = 'X';
-				tmp = Ia_player::Min(grid,depth - 1);
+				grid[y][x] = 'O';
+				tmp = Ia_player::Min(grid_class, depth - 1, grid);
 
 				if(tmp > max)
 				{
@@ -40,24 +41,24 @@ void						Ia_player::play
 }
 
 int							Ia_player::Max
-		(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth)
+		(Grid &grid_class, unsigned int const depth, char grid[SIZE_GRID][SIZE_GRID])
 {
-	/*if(depth == 0 || gagnant(grid) !=0)
+	if(depth == 0 || grid_class.haveWin(grid_class.getLastY(), grid_class.getLastX(), 'X') == true)
 	{
-		return eval(grid);
-	}*/
+		return (-1 * depth);
+	}
 
 	int max = -10000;
 	int tmp;
 
-	for(int y = 0; y < 3; y++)
+	for(int y = 0; y < SIZE_GRID; y++)
 	{
-		for(int x = 0; x < 3; x++)
+		for(int x = 0; x < SIZE_GRID; x++)
 		{
 			if(grid[y][x] == EMPTY_CELL)
 			{
-				grid[y][x] = 'X';
-				tmp = Ia_player::Min(grid, depth - 1);
+				grid[y][x] = 'O';
+				tmp = Ia_player::Min(grid_class, depth - 1, grid);
 
 				if(tmp > max)
 				{
@@ -73,24 +74,24 @@ int							Ia_player::Max
 }
 
 int							Ia_player::Min
-		(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth)
+		(Grid &grid_class, unsigned int const depth, char grid[SIZE_GRID][SIZE_GRID])
 {
-	/*if(depth == 0 || gagnant(grid) !=0)
+	if(depth == 0 || grid_class.haveWin(grid_class.getLastY(), grid_class.getLastX(), 'O') == true)
 	{
-		return eval(grid);
-	}*/
+		return (1 * depth);
+	}
 
 	int min = 10000;
 	int tmp;
 
-	for(int y = 0; y < 3; y++)
+	for(int y = 0; y < SIZE_GRID; y++)
 	{
-		for(int x = 0; x < 3; x++)
+		for(int x = 0; x < SIZE_GRID; x++)
 		{
 			if(grid[y][x] == EMPTY_CELL)
 			{
-				grid[y][x] = 'O';
-				tmp = Ia_player::Max(grid, depth - 1);
+				grid[y][x] = 'X';
+				tmp = Ia_player::Max(grid_class, depth - 1, grid);
 
 				if(tmp < min)
 				{
@@ -104,26 +105,3 @@ int							Ia_player::Min
 	return min;
 
 }
-
-/*int		get_score(int player, char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth, unsigned int &x, unsigned int &y)
-  {
-  int		score;
-
-  y = 0;
-  while (y < SIZE_GRID && GAME_IS_NOT_OVER && depth < 0)
-  {
-  x = 0;
-  while (x < SIZE_GRID && GAME_IS_NOT_OVER && depth < 0)
-  {
-  if (grid[y][x] == EMPTY_CELL)
-  {
-  grid[y][x] = (player == 1) ? 'X' : 'O';
-  score = get_score(player * -1, grid, depth - 1, x, y);
-  grid[y][x] = EMPTY_CELL;
-  }
-  x++;
-  }
-  y++;
-  }
-  return ((player == 1)? get_max(score) : get_min(score));
-  }*/
