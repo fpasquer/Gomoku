@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 20:18:09 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/15 08:02:06 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
+							Grid::Grid(char const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0), m_ia()
+{
+	unsigned int			x;
+	unsigned int			y;
+
+	for (y = 0; y < SIZE_GRID; y++)
+		for (x = 0; x < SIZE_GRID; x++)
+			m_cell[y][x] = (grid[y][x] == PLAYER1 || grid[y][x] == PLAYER2) ? grid[y][x] : EMPTY_CELL;
+}
 
 							Grid::Grid(void) : m_time_spend(0.0), m_ia()
 {
@@ -42,6 +51,30 @@ bool						Grid::getValue(char &val, unsigned int const x, unsigned int const y) 
 		return (false);
 	val = m_cell[y][x];
 	return (true);
+}
+
+bool						Grid::haveWin(unsigned int const y, unsigned int const x, char const val)
+{
+	unsigned int			count1;
+	unsigned int			count2;
+
+	this->countLeft(y, x, val, count1);
+	this->countRight(y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	this->countTop(y, x, val, count1);
+	this->countBottom(y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	this->countLeftTop(y, x, val, count1);
+	this->countRightBottom(y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	this->countTopRight(y, x, val, count1);
+	this->countBottomLeft(y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	return (false);
 }
 
 bool						Grid::play(Player_ia &player)

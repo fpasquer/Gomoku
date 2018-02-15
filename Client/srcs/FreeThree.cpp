@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 21:46:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/15 08:18:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ bool						FreeThree::checkFTLeft(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	//m_grid.getLineNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countLeft(y, m_player.getX(), val, count) == true && count >= 2)
-		return (true);
+		return (!(this->checkFTRight()));
 	if (m_grid.getValue(c, x + 1, y) == true && c == EMPTY_CELL &&
 			m_grid.countLeft(y, x, val, count) == true && count >= 1)
-		return (true);
+		return (!(this->checkFTRight()));
 	return (false);
 }
 
@@ -65,6 +68,9 @@ bool						FreeThree::checkFTTopLeft(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getDiagLeftTopRightBottomNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countLeftTop(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
 		return (true);
@@ -87,6 +93,9 @@ bool						FreeThree::checkFTTop(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getColNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countTop(m_player.getY(), x, val, count) == true && count >= 2)
 		return (true);
@@ -109,6 +118,9 @@ bool						FreeThree::checkFTRight(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getLineNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countRight(y, m_player.getX(), val, count) == true && count >= 2)
 		return (true);
@@ -131,6 +143,9 @@ bool						FreeThree::checkFTTopRight(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getDiagRightTopLeftBottomNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countTopRight(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
 		return (true);
@@ -153,6 +168,9 @@ bool						FreeThree::checkFTBottom(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getColNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countBottom(m_player.getY(), x, val, count) == true && count >= 2)
 		return (true);
@@ -175,6 +193,9 @@ bool						FreeThree::checkFTBottomLeft(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getDiagRightTopLeftBottomNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countBottomLeft(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
 		return (true);
@@ -197,6 +218,9 @@ bool						FreeThree::checkFTBottomRight(void)
 	val = m_player.getValue();
 	if (m_grid.getValue(c, x, y) == false || c != val)
 		return (false);
+	// m_grid.getDiagLeftTopRightBottomNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
 	count = 0;
 	if (m_grid.countRightBottom(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
 		return (true);

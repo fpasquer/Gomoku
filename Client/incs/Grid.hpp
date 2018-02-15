@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 20:38:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/15 07:48:47 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class Grid
 {
 	public:
 							Grid(void);
+							Grid(char const grid[SIZE_GRID][SIZE_GRID]);
 		bool				getValue(char &val, unsigned int const x, unsigned int const y) const;
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
@@ -61,6 +62,7 @@ class Grid
 		bool				countRightBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
 		bool				countTopRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
 		bool				countBottomLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
+		bool				haveWin(unsigned int const y, unsigned int const x, char const val);
 
 	private:
 		typedef struct		s_list_way
