@@ -6,11 +6,12 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 12:34:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 15:59:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
+
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
@@ -22,7 +23,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = ((MASK_VAL_CELL & grid[y][x]) == PLAYER1 || (MASK_VAL_CELL & grid[y][x]) == PLAYER2) ? grid[y][x] : EMPTY_CELL;
+			m_cell[y][x] = (GET_VAL(grid[y][x]) == PLAYER1 || GET_VAL(grid[y][x]) == PLAYER2) ? grid[y][x] : EMPTY_CELL;
 }
 
 							Grid::Grid(void) : m_time_spend(0.0), m_ia()
@@ -32,8 +33,9 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = (short)EMPTY_CELL;
+			m_cell[y][x] = EMPTY_CELL;
 }
+
 
 unsigned int				Grid::getLastY(void) const
 {
@@ -49,7 +51,7 @@ bool						Grid::getValue(short &val, unsigned int const x, unsigned int const y)
 {
 	if (x >= SIZE_GRID || y >= SIZE_GRID)
 		return (false);
-	val = MASK_VAL_CELL & m_cell[y][x];
+	val = m_cell[y][x];
 	return (true);
 }
 
@@ -84,7 +86,7 @@ bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const 
 
 bool						Grid::play(Player_ia &player)
 {
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && (MASK_VAL_CELL & m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
 		m_last_x = player.getX();
 		m_last_y = player.getY();
@@ -129,7 +131,7 @@ bool						Grid::play(Player_human &player)
 	char					buff[SIZE_CMD + 1];
 	ssize_t					len;
 
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && (MASK_VAL_CELL & m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
 		this->checkCaptures(player);
 		m_cell[player.getY()][player.getX()] = player.getValue();

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 12:32:16 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 14:53:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ unsigned int				Player::m_count = 0;
 {
 	m_x = (m_x >= SIZE_GRID) ? 0 : m_x;
 	m_y = (m_y >= SIZE_GRID) ? 0 : m_y;
+	m_unpossible = (m_count == 0) ? CAN_NOT_PLAY1 : CAN_NOT_PLAY2;
 	m_val = (m_count++ == 0) ? PLAYER1 : PLAYER2;
 }
 
@@ -63,4 +64,9 @@ void						Player::addCapture(void)
 std::string					Player::getCapture(void) const
 {
 	return (m_capture);
+}
+
+char						Player::getUnpossible(void) const
+{
+	return (m_unpossible);
 }

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 12:21:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 15:59:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,13 @@ t_color const				Window::m_color[] = {
 
 bool						Window::show_grid(Grid const &grid, Player_human const &player)
 {
-	bool					mem;
+	short					mem;
 	short					c;
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			start_x;
 	unsigned int			start_y;
 	std::string				str;
-	FreeThree				freeThree(grid, player);
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
@@ -114,7 +113,6 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	start_x = 1;
 	start_y = 1;
 	std::string				space(start_x, ' ');
-
 //	wclear(m_win_left); a voir si on clear ou pas
 	str = m_border + "\n" + space;
 	for (y = 0; y < SIZE_GRID; y++)
@@ -127,18 +125,18 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 			{
 				str += "|";
 				mvwprintw(m_win_left, start_y, start_x, "%s", str.c_str());
-				wattron(m_win_left, (mem = freeThree.checkFreeThree()) == true ? COLOR_PAIR(2) : A_REVERSE);
+				wattron(m_win_left, (mem = (GET_PERM(c) & (short)player.getUnpossible())) != 0 ? COLOR_PAIR(2) : A_REVERSE);
 				start_y = start_y + y * 2 + 1;
 				start_x = start_x + 1 + x * (3 + 1);
-				mvwprintw(m_win_left, start_y, start_x, " %c ", MASK_VAL_CELL & c);
+				mvwprintw(m_win_left, start_y, start_x, " %c ", GET_VAL(c));
 				start_x += 3;
-				wattroff(m_win_left, mem == true ? COLOR_PAIR(2) : A_REVERSE);
+				wattroff(m_win_left, mem != 0 ? COLOR_PAIR(2) : A_REVERSE);
 				str.erase();
 			}
 			else
 			{
 				str += "| ";
-				str.push_back(MASK_VAL_CELL & c);
+				str.push_back(GET_VAL(c));
 				str += " ";
 			}
 		}

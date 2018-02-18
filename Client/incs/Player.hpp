@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 12:30:06 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 14:52:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class Player
 		short				getValue(void) const;
 		void				addCapture(void);
 		std::string			getCapture(void) const;
+		char				getUnpossible(void) const;
 
 	protected:
 		bool				setX(unsigned int const &x);
