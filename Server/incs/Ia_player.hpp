@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:29:31 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:36:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:54:17 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 class Ia_player
 {
 	public:
-		static void			play(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y);
+		static void			play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y);
 	
 	private:
 		static int			Max(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth);

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/15 08:18:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:52:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ FreeThree::t_checkFreet const
 
 bool						FreeThree::checkFTLeft(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -57,8 +57,8 @@ bool						FreeThree::checkFTLeft(void)
 
 bool						FreeThree::checkFTTopLeft(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -82,8 +82,8 @@ bool						FreeThree::checkFTTopLeft(void)
 
 bool						FreeThree::checkFTTop(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -107,8 +107,8 @@ bool						FreeThree::checkFTTop(void)
 
 bool						FreeThree::checkFTRight(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -132,8 +132,8 @@ bool						FreeThree::checkFTRight(void)
 
 bool						FreeThree::checkFTTopRight(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -157,8 +157,8 @@ bool						FreeThree::checkFTTopRight(void)
 
 bool						FreeThree::checkFTBottom(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -182,8 +182,8 @@ bool						FreeThree::checkFTBottom(void)
 
 bool						FreeThree::checkFTBottomLeft(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -207,8 +207,8 @@ bool						FreeThree::checkFTBottomLeft(void)
 
 bool						FreeThree::checkFTBottomRight(void)
 {
-	char					val;
-	char					c;
+	short					val;
+	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
@@ -232,7 +232,7 @@ bool						FreeThree::checkFTBottomRight(void)
 
 bool						FreeThree::checkFreeThree(void)
 {
-	char					c;
+	short					c;
 	unsigned int			i;
 	unsigned int			count;
 

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:27:46 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:50:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ class Grid
 {
 	public:
 							Grid(void);
-							Grid(char const grid[SIZE_GRID][SIZE_GRID]);
-		bool				getValue(char &val, unsigned int const x, unsigned int const y) const;
+							Grid(short const grid[SIZE_GRID][SIZE_GRID]);
+		bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
 		bool				updateGrid(Player_human &player);
@@ -54,15 +54,15 @@ class Grid
 		bool				countRightBottom(Player const &player, unsigned int &count) const;
 		bool				countBottom(Player const &player, unsigned int &count) const;
 		bool				countBottomLeft(Player const &player, unsigned int &count) const;
-		bool				countLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countLeftTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countRightBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countTopRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				countBottomLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				haveWin(unsigned int const y, unsigned int const x, char const val, std::string const &capture) const;
+		bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countLeftTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countRightBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countTopRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const;
 		bool				haveWin(Player const &player) const;
 	private:
 		typedef struct		s_list_way
@@ -84,7 +84,7 @@ class Grid
 		bool				play(Player_ia &player);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
-		char				m_cell[SIZE_GRID][SIZE_GRID];
+		short				m_cell[SIZE_GRID][SIZE_GRID];
 		double				m_time_spend;
 		Player_ia			m_ia;
 };

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:18:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:53:15 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_color const				Window::m_color[] = {
 bool						Window::show_grid(Grid const &grid, Player_human const &player)
 {
 	bool					mem;
-	char					c;
+	short					c;
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			start_x;

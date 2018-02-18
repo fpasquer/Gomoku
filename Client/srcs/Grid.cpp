@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:27:07 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 10:07:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(char const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0), m_ia()
+							Grid::Grid(short const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0), m_ia()
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -32,7 +32,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = EMPTY_CELL;
+			m_cell[y][x] = (short)EMPTY_CELL;
 }
 
 unsigned int				Grid::getLastY(void) const
@@ -45,11 +45,11 @@ unsigned int				Grid::getLastX(void) const
 	return (m_last_x);
 }
 
-bool						Grid::getValue(char &val, unsigned int const x, unsigned int const y) const
+bool						Grid::getValue(short &val, unsigned int const x, unsigned int const y) const
 {
 	if (x >= SIZE_GRID || y >= SIZE_GRID)
 		return (false);
-	val = m_cell[y][x];
+	val = MASK_VAL_CELL & m_cell[y][x];
 	return (true);
 }
 
@@ -58,7 +58,7 @@ bool						Grid::haveWin(Player const &player) const
 	return (this->haveWin(player.getY(), player.getX(), player.getValue(), player.getCapture()));
 }
 
-bool						Grid::haveWin(unsigned int const y, unsigned int const x, char const val, std::string const &capture) const
+bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const
 {
 	unsigned int			count1;
 	unsigned int			count2;

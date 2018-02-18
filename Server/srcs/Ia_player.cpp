@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:37:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:54:07 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Ia_player.hpp"
 
 void						Ia_player::play
-		(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y)
+		(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y)
 {
 	do
 	{

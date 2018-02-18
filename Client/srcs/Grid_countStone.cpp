@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:17:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 20:40:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:52:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
 
-bool						Grid::countLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -32,7 +32,7 @@ RETURN VALUES:
 	return (this->countLeft(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -52,7 +52,7 @@ RETURN VALUES:
 	return (this->countRight(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -66,7 +66,7 @@ bool						Grid::countTop(Player const &player, unsigned int &count) const
 	return (this->countTop(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -80,7 +80,7 @@ bool						Grid::countBottom(Player const &player, unsigned int &count) const
 	return (this->countBottom(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countLeftTop(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countLeftTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -94,7 +94,7 @@ bool						Grid::countLeftTop(Player const &player, unsigned int &count) const
 	return (this->countLeftTop(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countRightBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countRightBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -108,7 +108,7 @@ bool						Grid::countRightBottom(Player const &player, unsigned int &count) cons
 	return (this->countRightBottom(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countTopRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countTopRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 
@@ -122,7 +122,7 @@ bool						Grid::countTopRight(Player const &player, unsigned int &count) const
 	return (this->countTopRight(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::countBottomLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const
+bool						Grid::countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	unsigned int			i;
 

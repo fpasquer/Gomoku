@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:26:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:36:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:53:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void						Fork_ia::play_ia(void) const
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			depth;
-	char					grid[SIZE_GRID][SIZE_GRID];
+	short					grid[SIZE_GRID][SIZE_GRID];
 	clock_t					start, end;
 	double					time_spend;
 
