@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 15:33:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:18:12 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void						Player::addCapture(void)
 	m_capture += "**";
 }
 
-std::string					Player::capture(void) const
+std::string					Player::getCapture(void) const
 {
 	return (m_capture);
 }

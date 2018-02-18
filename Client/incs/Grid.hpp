@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/15 07:48:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:27:46 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class Grid
 		bool				getColNbStone(Player const &player, unsigned int &count) const;
 		bool				getDiagLeftTopRightBottomNbStone(Player const &player, unsigned int &count) const;
 		bool				getDiagRightTopLeftBottomNbStone(Player const &player, unsigned int &count) const;
-		std::string			captureIa(void) const;
+		std::string			getCaptureIa(void) const;
 		bool				countLeft(Player const &player, unsigned int &count) const;
 		bool				countLeftTop(Player const &player, unsigned int &count) const;
 		bool				countTop(Player const &player, unsigned int &count) const;
@@ -62,8 +62,8 @@ class Grid
 		bool				countRightBottom(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
 		bool				countTopRight(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
 		bool				countBottomLeft(unsigned int const y, unsigned int const x, char const val, unsigned int &count) const;
-		bool				haveWin(unsigned int const y, unsigned int const x, char const val);
-
+		bool				haveWin(unsigned int const y, unsigned int const x, char const val, std::string const &capture) const;
+		bool				haveWin(Player const &player) const;
 	private:
 		typedef struct		s_list_way
 		{

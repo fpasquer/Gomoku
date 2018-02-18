@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/15 07:53:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:21:55 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define PLAYER2 'O'
 # define INIT_SOCK -1
 # define NB_STONE_WIN 5
+# define NB_WIN_CAPTURE 10
 
 # define QUIT		"QUIT     "
 # define IA			"IA       "

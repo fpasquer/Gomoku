@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/15 08:02:06 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:27:07 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ bool						Grid::getValue(char &val, unsigned int const x, unsigned int const y) 
 	return (true);
 }
 
-bool						Grid::haveWin(unsigned int const y, unsigned int const x, char const val)
+bool						Grid::haveWin(Player const &player) const
+{
+	return (this->haveWin(player.getY(), player.getX(), player.getValue(), player.getCapture()));
+}
+
+bool						Grid::haveWin(unsigned int const y, unsigned int const x, char const val, std::string const &capture) const
 {
 	unsigned int			count1;
 	unsigned int			count2;
@@ -74,7 +79,7 @@ bool						Grid::haveWin(unsigned int const y, unsigned int const x, char const v
 	this->countBottomLeft(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 		return (true);
-	return (false);
+	return (capture.size() >= NB_WIN_CAPTURE ? true : false);
 }
 
 bool						Grid::play(Player_ia &player)

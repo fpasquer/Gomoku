@@ -6,37 +6,20 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 15:25:27 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:37:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Ia_player.hpp"
 
 void						Ia_player::play
-		(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth, unsigned int &max_x, unsigned int &max_y)
+		(char grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y)
 {
-	int		max = -10000;
-	int		tmp;
-
-	for(int y = 0; y < 3; y++)
+	do
 	{
-		for(int x = 0; x < 3; x++)
-		{
-			if(grid[y][x] == EMPTY_CELL)
-			{
-				grid[y][x] = 'X';
-				tmp = Ia_player::Min(grid,depth - 1);
-
-				if(tmp > max)
-				{
-					max = tmp;
-					max_y = y;
-					max_x = x;
-				}
-				grid[y][x] = EMPTY_CELL;
-			}
-		}
-	}
+		x = rand() % SIZE_GRID;
+		y = rand() % SIZE_GRID;
+	}	while (grid[y][x] != EMPTY_CELL);
 }
 
 int							Ia_player::Max

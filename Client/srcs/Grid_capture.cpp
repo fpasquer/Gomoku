@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 20:15:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:19:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,9 @@ t_way						Grid::checkBottomLeft(Player &player)
 	return (BOTTOM_LEFT);
 }
 
-std::string					Grid::captureIa(void) const
+std::string					Grid::getCaptureIa(void) const
 {
-	return (m_ia.capture());
+	return (m_ia.getCapture());
 }
 
 t_way						Grid::checkCaptures(Player &player)

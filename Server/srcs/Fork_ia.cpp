@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:26:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 15:30:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 09:36:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void						Fork_ia::play_ia(void) const
 	m_player.read_from_client(&depth, sizeof(depth));
 	m_player.read_from_client(&grid, sizeof(grid));
 	start = clock();
-	Ia_player::play(grid, depth, x, y);
+	Ia_player::play(grid, x, y);
 	end = clock();
 	time_spend = ((double) (end - start)) / CLOCKS_PER_SEC;
 #ifdef DEBUG
