@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 12:24:22 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:34:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = (grid[y][x] == PLAYER1 || grid[y][x] == PLAYER2) ? grid[y][x] : EMPTY_CELL;
+			m_cell[y][x] = ((MASK_VAL_CELL & grid[y][x]) == PLAYER1 || (MASK_VAL_CELL & grid[y][x]) == PLAYER2) ? grid[y][x] : EMPTY_CELL;
 }
 
 							Grid::Grid(void) : m_time_spend(0.0), m_ia()

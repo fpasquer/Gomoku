@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:17:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:52:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:40:25 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ bool						Grid::countLeft(unsigned int const y, unsigned int const x, short cons
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; x - i - 1 < SIZE_GRID && m_cell[y][x - i - 1] == val; i++)
+	for (count = 0, i = 0; x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y][x - i - 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (x - i - 1 < SIZE_GRID && m_cell[y][x - i - 1] == EMPTY_CELL ? true : false);
+	return (x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y][x - i - 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countLeft(Player const &player, unsigned int &count) const
@@ -36,9 +36,9 @@ bool						Grid::countRight(unsigned int const y, unsigned int const x, short con
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; x + i + 1 < SIZE_GRID && m_cell[y][x + i + 1] == val; i++)
+	for (count = 0, i = 0; x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y][x + i + 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (x + i + 1 < SIZE_GRID && m_cell[y][x + i + 1] == EMPTY_CELL ? true : false);
+	return (x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y][x + i + 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countRight(Player const &player, unsigned int &count) const
@@ -56,9 +56,9 @@ bool						Grid::countTop(unsigned int const y, unsigned int const x, short const
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == val; i++)
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == EMPTY_CELL ? true : false);
+	return (y - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y - i - 1][x]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countTop(Player const &player, unsigned int &count) const
@@ -70,9 +70,9 @@ bool						Grid::countBottom(unsigned int const y, unsigned int const x, short co
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && m_cell[y + i + 1][x] == val; i++)
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y + i + 1 < SIZE_GRID && m_cell[y + i + 1][x] == EMPTY_CELL ? true : false);
+	return (y + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countBottom(Player const &player, unsigned int &count) const
@@ -84,9 +84,9 @@ bool						Grid::countLeftTop(unsigned int const y, unsigned int const x, short c
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y - i - 1][x - i - 1] == val; i++)
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y - i - 1][x - i - 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y - i - 1][x - i - 1] == EMPTY_CELL ? true : false);
+	return (y - i - 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y - i - 1][x - i - 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countLeftTop(Player const &player, unsigned int &count) const
@@ -98,9 +98,9 @@ bool						Grid::countRightBottom(unsigned int const y, unsigned int const x, sho
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y + i + 1][x + i + 1] == val; i++)
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x + i + 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y + i + 1][x + i + 1] == EMPTY_CELL ? true : false);
+	return (y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x + i + 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countRightBottom(Player const &player, unsigned int &count) const
@@ -112,9 +112,9 @@ bool						Grid::countTopRight(unsigned int const y, unsigned int const x, short 
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y - i - 1][x + i + 1] == val; i++)
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y - i - 1][x + i + 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && m_cell[y - i - 1][x + i + 1] == EMPTY_CELL ? true : false);
+	return (y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y - i - 1][x + i + 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countTopRight(Player const &player, unsigned int &count) const
@@ -126,9 +126,9 @@ bool						Grid::countBottomLeft(unsigned int const y, unsigned int const x, shor
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y + i + 1][x - i - 1] == val; i++)
+	for (count = 0, i = 0; y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x - i - 1]) == (MASK_VAL_CELL & val); i++)
 		count ++;
-	return (y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && m_cell[y + i + 1][x - i - 1] == EMPTY_CELL ? true : false);
+	return (y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID && (MASK_VAL_CELL & m_cell[y + i + 1][x - i - 1]) == EMPTY_CELL ? true : false);
 }
 
 bool						Grid::countBottomLeft(Player const &player, unsigned int &count) const
