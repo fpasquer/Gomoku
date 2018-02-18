@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 15:59:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 21:01:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = EMPTY_CELL;
+			m_cell[y][x] = SET_VAL(CAN_NOT_PLAY1 << 8, EMPTY_CELL);
 }
 
 

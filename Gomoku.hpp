@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 15:37:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 21:50:09 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define SET_PERM(cell, perm) ((GET_PERM(cell) | perm) << 8) + GET_VAL(cell)
 # define CLEAR_VAL(cell) SET_VAL(cell, 0)
 # define CLEAR_PERM(cell) (0x0 << 8) + GET_VAL(cell)
+# define CLEAR_PERM_PLAYER(cell, val, perm) SET_VAL(cell, val); SET_PERM(cell, (GET_PERM(cell) ^ perm))
 
 # define SIZE_CMD 10
 # define SIZE_GRID 19
