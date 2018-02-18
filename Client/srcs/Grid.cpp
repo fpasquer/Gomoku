@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 10:07:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:24:22 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const 
 
 bool						Grid::play(Player_ia &player)
 {
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && (MASK_VAL_CELL & m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
 		m_last_x = player.getX();
 		m_last_y = player.getY();
@@ -129,7 +129,7 @@ bool						Grid::play(Player_human &player)
 	char					buff[SIZE_CMD + 1];
 	ssize_t					len;
 
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && m_cell[player.getY()][player.getX()] == EMPTY_CELL)
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && (MASK_VAL_CELL & m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
 		this->checkCaptures(player);
 		m_cell[player.getY()][player.getX()] = player.getValue();

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:53:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:21:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	start_y = 1;
 	std::string				space(start_x, ' ');
 
-	wclear(m_win_left);
+//	wclear(m_win_left); a voir si on clear ou pas
 	str = m_border + "\n" + space;
 	for (y = 0; y < SIZE_GRID; y++)
 	{
@@ -130,7 +130,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 				wattron(m_win_left, (mem = freeThree.checkFreeThree()) == true ? COLOR_PAIR(2) : A_REVERSE);
 				start_y = start_y + y * 2 + 1;
 				start_x = start_x + 1 + x * (3 + 1);
-				mvwprintw(m_win_left, start_y, start_x, " %c ", c);
+				mvwprintw(m_win_left, start_y, start_x, " %c ", MASK_VAL_CELL & c);
 				start_x += 3;
 				wattroff(m_win_left, mem == true ? COLOR_PAIR(2) : A_REVERSE);
 				str.erase();
@@ -138,7 +138,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 			else
 			{
 				str += "| ";
-				str.push_back(c);
+				str.push_back(MASK_VAL_CELL & c);
 				str += " ";
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:17:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:30:06 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class Player
 							Player(unsigned int const &x = 0, unsigned int const &y = 0);
 		unsigned int		getX(void) const;
 		unsigned int		getY(void) const;
-		char				getValue(void) const;
+		short				getValue(void) const;
 		void				addCapture(void);
 		std::string			getCapture(void) const;
 
@@ -31,6 +31,7 @@ class Player
 		bool				setX(unsigned int const &x);
 		bool				setY(unsigned int const &y);
 		static unsigned int	m_count;
+		char				m_unpossible;
 		char				m_val;
 		unsigned int		m_x;
 		unsigned int		m_y;

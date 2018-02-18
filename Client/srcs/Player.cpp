@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:35:27 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:18:12 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:30:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 unsigned int				Player::m_count = 0;
 
-							Player::Player(unsigned int const &x, unsigned int const &y) : m_x(x), m_y(y), m_capture("")
+							Player::Player(unsigned int const &x, unsigned int const &y) : m_unpossible(-1), m_x(x), m_y(y), m_capture("")
 {
 	m_x = (m_x >= SIZE_GRID) ? 0 : m_x;
 	m_y = (m_y >= SIZE_GRID) ? 0 : m_y;
@@ -47,9 +47,12 @@ unsigned int				Player::getY(void) const
 	return (m_y);
 }
 
-char						Player::getValue(void) const
+short						Player::getValue(void) const
 {
-	return (m_val);
+	short					val;
+
+	val = (m_unpossible << 8) + m_val;
+	return (val);
 }
 
 void						Player::addCapture(void)
