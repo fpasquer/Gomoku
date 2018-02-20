@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:52:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 11:03:49 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,233 +14,219 @@
 
 FreeThree::t_checkFreet const
 							FreeThree::m_func[] = {
-	{&FreeThree::checkFTTop},
+
 	{&FreeThree::checkFTLeft},
-	{&FreeThree::checkFTRight},
-	{&FreeThree::checkFTBottom},
 	{&FreeThree::checkFTTopLeft},
+	{&FreeThree::checkFTTop},
 	{&FreeThree::checkFTTopRight},
+	{&FreeThree::checkFTRight},
 	{&FreeThree::checkFTBottomRight},
+	{&FreeThree::checkFTBottom},
 	{&FreeThree::checkFTBottomLeft},
 	{NULL}
 };
 
-							FreeThree::FreeThree(Grid const &grid, Player const &player) : m_grid(grid), m_player(player)
+							FreeThree::FreeThree(Grid const &grid) : m_grid(grid)
 {
 	
 }
 
-bool						FreeThree::checkFTLeft(void)
+bool						FreeThree::checkFTLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY();
-	x = m_player.getX() - 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp;
+	x = x_tmp - 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
 	//m_grid.getLineNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countLeft(y, m_player.getX(), val, count) == true && count >= 2)
-		return (!(this->checkFTRight()));
-	if (m_grid.getValue(c, x + 1, y) == true && c == EMPTY_CELL &&
+	if (m_grid.countLeft(y_tmp, x_tmp, val, count) == true && count >= 2)
+		return(true);
+	if (m_grid.getValue(c, x + 1, y) == true && GET_VAL(c) == EMPTY_CELL &&
 			m_grid.countLeft(y, x, val, count) == true && count >= 1)
-		return (!(this->checkFTRight()));
+		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFTTopLeft(void)
+bool						FreeThree::checkFTTopLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY() - 2;
-	x = m_player.getX() - 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp - 2;
+	x = x_tmp - 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
 	// m_grid.getDiagLeftTopRightBottomNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countLeftTop(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+	if (m_grid.countLeftTop(y_tmp, x_tmp, val, count) == true && count >= 2)
 		return (true);
-	if (m_grid.getValue(c, x + 1, y + 1) == true && c == EMPTY_CELL &&
+	if (m_grid.getValue(c, x + 1, y + 1) == true && GET_VAL(c) == EMPTY_CELL &&
 			m_grid.countLeftTop(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFTTop(void)
+bool						FreeThree::checkFTTop(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY() - 2;
-	x = m_player.getX();
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp - 2;
+	x = x_tmp;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
 	// m_grid.getColNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countTop(m_player.getY(), x, val, count) == true && count >= 2)
+	if (m_grid.countTop(y_tmp, x_tmp, val, count) == true && count >= 2)
 		return (true);
-	if (m_grid.getValue(c, x, y + 1) == true && c == EMPTY_CELL &&
+	if (m_grid.getValue(c, x, y + 1) == true && GET_VAL(c) == EMPTY_CELL &&
 			m_grid.countTop(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFTRight(void)
+bool						FreeThree::checkFTTopRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY();
-	x = m_player.getX() + 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
-		return (false);
-	// m_grid.getLineNbStone(m_player, count);
-	// if (count >= NB_STONE_WIN)
-	// 	return (false);
-	count = 0;
-	if (m_grid.countRight(y, m_player.getX(), val, count) == true && count >= 2)
-		return (true);
-	if (m_grid.getValue(c, x - 1, y) == true && c == EMPTY_CELL &&
-			m_grid.countRight(y, x,val, count) == true && count >= 1)
-		return (true);
-	return (false);
-}
-
-bool						FreeThree::checkFTTopRight(void)
-{
-	short					val;
-	short					c;
-	unsigned int			y;
-	unsigned int			x;
-	unsigned int			count;
-
-	y = m_player.getY() - 2;
-	x = m_player.getX() + 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp - 2;
+	x = x_tmp + 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
 	// m_grid.getDiagRightTopLeftBottomNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countTopRight(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+	if (m_grid.countTopRight(y_tmp, x_tmp, val, count) == true && count >= 2)
 		return (true);
-	if (m_grid.getValue(c, x - 1, y + 1) == true && c == EMPTY_CELL &&
+	if (m_grid.getValue(c, x - 1, y + 1) == true && GET_VAL(c) == EMPTY_CELL &&
 			m_grid.countTopRight(y, x, val, count) ==true && count >= 1)
 		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFTBottom(void)
+bool						FreeThree::checkFTRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY() + 2;
-	x = m_player.getX();
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp;
+	x = x_tmp + 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
-	// m_grid.getColNbStone(m_player, count);
+	// m_grid.getLineNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countBottom(m_player.getY(), x, val, count) == true && count >= 2)
+	if (m_grid.countRight(y_tmp, x_tmp, val, count) == true && count >= 2)
 		return (true);
-	if (m_grid.getValue(c, x, y - 1) == true && c == EMPTY_CELL &&
-			m_grid.countBottom(y, x, val, count) == true && count >= 1)
+	if (m_grid.getValue(c, x - 1, y) == true && GET_VAL(c) == EMPTY_CELL &&
+			m_grid.countRight(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFTBottomLeft(void)
+bool						FreeThree::checkFTBottomRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
 {
-	short					val;
 	short					c;
 	unsigned int			y;
 	unsigned int			x;
 	unsigned int			count;
 
-	y = m_player.getY() + 2;
-	x = m_player.getX() - 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
-		return (false);
-	// m_grid.getDiagRightTopLeftBottomNbStone(m_player, count);
-	// if (count >= NB_STONE_WIN)
-	// 	return (false);
-	count = 0;
-	if (m_grid.countBottomLeft(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
-		return (true);
-	if (m_grid.getValue(c, x + 1, y - 1) == true && c == EMPTY_CELL &&
-			m_grid.countBottomLeft(y, x, val, count) == true && count >= 1)
-		return (true);
-	return (false);
-}
-
-bool						FreeThree::checkFTBottomRight(void)
-{
-	short					val;
-	short					c;
-	unsigned int			y;
-	unsigned int			x;
-	unsigned int			count;
-
-	y = m_player.getY() + 2;
-	x = m_player.getX() + 2;
-	val = m_player.getValue();
-	if (m_grid.getValue(c, x, y) == false || c != val)
+	y = y_tmp + 2;
+	x = x_tmp + 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
 		return (false);
 	// m_grid.getDiagLeftTopRightBottomNbStone(m_player, count);
 	// if (count >= NB_STONE_WIN)
 	// 	return (false);
 	count = 0;
-	if (m_grid.countRightBottom(m_player.getY(), m_player.getX(), val, count) == true && count >= 2)
+	if (m_grid.countRightBottom(y_tmp, x_tmp, val, count) == true && count >= 2)
 		return (true);
-	if (m_grid.getValue(c, x - 1, y - 1) == true && c == EMPTY_CELL &&
+	if (m_grid.getValue(c, x - 1, y - 1) == true && GET_VAL(c) == EMPTY_CELL &&
 			m_grid.countRightBottom(y, x, val, count) == true && count >= 1)
 		return (true);
 	return (false);
 }
 
-bool						FreeThree::checkFreeThree(void)
+bool						FreeThree::checkFTBottom(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
+{
+	short					c;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			count;
+
+	y = y_tmp + 2;
+	x = x_tmp;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
+		return (false);
+	// m_grid.getColNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
+	count = 0;
+	if (m_grid.countBottom(y_tmp, x_tmp, val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x, y - 1) == true && GET_VAL(c) == EMPTY_CELL &&
+			m_grid.countBottom(y, x, val, count) == true && count >= 1)
+		return (true);
+	return (false);
+}
+
+bool						FreeThree::checkFTBottomLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const
+{
+	short					c;
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			count;
+
+	y = y_tmp + 2;
+	x = x_tmp - 2;
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != GET_VAL(val))
+		return (false);
+	// m_grid.getDiagRightTopLeftBottomNbStone(m_player, count);
+	// if (count >= NB_STONE_WIN)
+	// 	return (false);
+	count = 0;
+	if (m_grid.countBottomLeft(y_tmp, x_tmp, val, count) == true && count >= 2)
+		return (true);
+	if (m_grid.getValue(c, x + 1, y - 1) == true && GET_VAL(c) == EMPTY_CELL &&
+			m_grid.countBottomLeft(y, x, val, count) == true && count >= 1)
+		return (true);
+	return (false);
+}
+
+
+
+bool						FreeThree::checkFreeThree(unsigned int const y, unsigned int const x, short const val) const
 {
 	short					c;
 	unsigned int			i;
 	unsigned int			count;
 
-	if (m_grid.getValue(c, m_player.getX(), m_player.getY()) == false ||
-			c != EMPTY_CELL)
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != EMPTY_CELL)
 		return (false);
 	for (i = 0, count = 0; m_func[i].f != NULL; i++)
-		if (((*this).*m_func[i].f)() == true)
+		if (((*this).*m_func[i].f)(y, x, val) == true)
 			count++;
 	return (count >= 2 ? true : false);
 }

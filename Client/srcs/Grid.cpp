@@ -6,12 +6,12 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 21:01:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 10:53:05 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
-
+#include "../incs/FreeThree.hpp"
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
@@ -33,7 +33,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = SET_VAL(CAN_NOT_PLAY1 << 8, EMPTY_CELL);
+			m_cell[y][x] = EMPTY_CELL;
 }
 
 
@@ -123,6 +123,47 @@ bool						Grid::updateGrid(Player_human &player)
 	return (true);
 }
 
+void						Grid::setUnavalable(Player const &player)
+{
+	FreeThree				freeThree(*this);
+	unsigned int			y;
+	unsigned int			x;
+	unsigned int			decalage;
+	unsigned int			end;
+	short					val;
+
+	val = player.getValue();
+	end = DEPTH_FREETHREE * 2 + 1;
+	for (y = player.getY() - DEPTH_FREETHREE, x = player.getX() - DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check gauche haut bas droit
+	{
+		if (y + decalage == player.getY() && x + decalage == player.getX())
+			continue ;
+		if (y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x + decalage, val) == true)
+			m_cell[y + decalage][x + decalage] = SET_PERM(m_cell[y + decalage][x + decalage], player.getUnpossible());
+	}
+	for (y = player.getY() - DEPTH_FREETHREE, x = player.getX(), decalage = 0; decalage < end; decalage++)//check haut bas
+	{
+		if (y + decalage == player.getY())
+			continue ;
+		if (y + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x, val) == true)
+			m_cell[y + decalage][x] = SET_PERM(m_cell[y + decalage][x], player.getUnpossible());
+	}
+	for (y = player.getY() - DEPTH_FREETHREE, x = player.getX() + DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check Haut droit bas gauche
+	{
+		if (y + decalage == player.getY() && x - decalage == player.getX())
+			continue ;
+		if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x - decalage, val) == true)
+			m_cell[y + decalage][x - decalage] = SET_PERM(m_cell[y + decalage][x - decalage], player.getUnpossible());
+	}
+	for (y = player.getY(), x = player.getX()  - DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check gauche droit
+	{
+		if (x + decalage == player.getX())
+			continue ;
+		if (x + decalage < SIZE_GRID && freeThree.checkFreeThree(y, x + decalage, val) == true)
+			m_cell[y][x + decalage] = SET_PERM(m_cell[y][x + decalage], player.getUnpossible());
+	}
+}
+
 bool						Grid::play(Player_human &player)
 {
 	unsigned int			x;
@@ -134,7 +175,8 @@ bool						Grid::play(Player_human &player)
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
 		this->checkCaptures(player);
-		m_cell[player.getY()][player.getX()] = player.getValue();
+		m_cell[player.getY()][player.getX()] = SET_VAL(m_cell[player.getY()][player.getX()], GET_VAL(player.getValue()));
+		this->setUnavalable(player);
 		if (player.isOnline() != OFFLINE)
 		{
 			deep = player.getDeep();

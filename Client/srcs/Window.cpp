@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 15:59:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/19 09:50:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 			{
 				str += "|";
 				mvwprintw(m_win_left, start_y, start_x, "%s", str.c_str());
-				wattron(m_win_left, (mem = (GET_PERM(c) & (short)player.getUnpossible())) != 0 ? COLOR_PAIR(2) : A_REVERSE);
+				wattron(m_win_left, (mem = (GET_PERM(c) & player.getUnpossible())) != 0 ? COLOR_PAIR(2) : A_REVERSE);
 				start_y = start_y + y * 2 + 1;
 				start_x = start_x + 1 + x * (3 + 1);
 				mvwprintw(m_win_left, start_y, start_x, " %c ", GET_VAL(c));

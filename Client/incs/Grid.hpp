@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:50:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 10:45:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef enum				e_way
 
 # define NB_WAY_POSSIBLE 8
 # define NB_STONE_CAPTURE 2
+# define DEPTH_FREETHREE 3
 
 class Grid
 {
@@ -64,6 +65,7 @@ class Grid
 		bool				countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const;
 		bool				haveWin(Player const &player) const;
+		void				setUnavalable(Player const &player);
 	private:
 		typedef struct		s_list_way
 		{

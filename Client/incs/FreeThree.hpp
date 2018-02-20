@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 15:45:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 11:01:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,25 @@
 class FreeThree
 {
 	public:
-							FreeThree(Grid const &grid, Player const &player);
-		bool				checkFreeThree(void);
+							FreeThree(Grid const &grid);
+		bool				checkFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 
 	private:
 		typedef struct		s_checkFreeT
 		{
-			bool			(FreeThree::*f)(void);
+			bool			(FreeThree::*f)(unsigned const int, unsigned const int, short const) const;
 		}					t_checkFreet;
 		static t_checkFreet const
 							m_func[];
 		Grid const			m_grid;
-		Player const		m_player;
-		bool				checkFTLeft(void);
-		bool				checkFTTopLeft(void);
-		bool				checkFTTop(void);
-		bool				checkFTTopRight(void);
-		bool				checkFTRight(void);
-		bool				checkFTBottom(void);
-		bool				checkFTBottomRight(void);
-		bool				checkFTBottomLeft(void);
+		bool				checkFTLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTTopLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTTop(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTTopRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTBottomRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTBottom(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTBottomLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
 };
 
 #endif
