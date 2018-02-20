@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 10:45:39 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 11:31:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ class Grid
 		bool				updateGrid(Player_human &player);
 		bool				play(Player_human &player);
 		double				get_time_spend(void) const;
-		bool				getLineNbStone(Player const &player, unsigned int &count) const;
-		bool				getColNbStone(Player const &player, unsigned int &count) const;
-		bool				getDiagLeftTopRightBottomNbStone(Player const &player, unsigned int &count) const;
-		bool				getDiagRightTopLeftBottomNbStone(Player const &player, unsigned int &count) const;
+		bool				getLineNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				getColNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				getDiagLeftTopRightBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				getDiagRightTopLeftBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		std::string			getCaptureIa(void) const;
 		bool				countLeft(Player const &player, unsigned int &count) const;
 		bool				countLeftTop(Player const &player, unsigned int &count) const;

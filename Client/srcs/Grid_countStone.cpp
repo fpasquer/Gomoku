@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:17:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 14:46:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 11:43:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,20 +136,20 @@ bool						Grid::countBottomLeft(Player const &player, unsigned int &count) const
 	return (this->countBottomLeft(player.getY(), player.getX(), player.getValue(), count));
 }
 
-bool						Grid::getLineNbStone(Player const &player, unsigned int &count) const
+bool						Grid::getLineNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	bool					left_end;
 	bool					right_end;
 	unsigned int			count_left = 0;
 	unsigned int			count_right = 0;
 
-	left_end = this->countLeft(player, count_left);
-	right_end = this->countRight(player, count_right);
+	left_end = this->countLeft(y, x, val, count_left);
+	right_end = this->countRight(y, x, val, count_right);
 	count = count_left + count_right + 1;
 	return (left_end == true && right_end == true ? true : false);
 }
 
-bool						Grid::getColNbStone(Player const &player, unsigned int &count) const
+bool						Grid::getColNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 /*
 DESCRIPTION:
 	count the number of stone aline of the player on the collumn
@@ -162,34 +162,34 @@ RETURN VALUES:
 	unsigned int			count_above = 0;
 	unsigned int			count_below = 0;
 
-	above_end = this->countTop(player, count_above);
-	below_end = this->countBottom(player, count_below);
+	above_end = this->countTop(y, x, val, count_above);
+	below_end = this->countBottom(y, x, val, count_below);
 	count = count_above + count_below + 1;
 	return (above_end == true && below_end == true ? true : false);
 }
 
-bool						Grid::getDiagLeftTopRightBottomNbStone(Player const &player, unsigned int &count) const
+bool						Grid::getDiagLeftTopRightBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	bool					left_end;
 	bool					right_end;
 	unsigned int			count_left = 0;
 	unsigned int			count_right = 0;
 
-	left_end = this->countLeftTop(player, count_left);
-	right_end = this->countRightBottom(player, count_right);
+	left_end = this->countLeftTop(y, x, val, count_left);
+	right_end = this->countRightBottom(y, x, val, count_right);
 	count = count_right + count_left + 1;
 	return (left_end == true && right_end == true ? true : false);
 }
 
-bool						Grid::getDiagRightTopLeftBottomNbStone(Player const &player, unsigned int &count) const
+bool						Grid::getDiagRightTopLeftBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const
 {
 	bool					left_end;
 	bool					right_end;
 	unsigned int			count_left = 0;
 	unsigned int			count_right = 0;
 
-	left_end = this->countBottomLeft(player, count_left);
-	right_end = this->countTopRight(player, count_right);
+	left_end = this->countBottomLeft(y, x, val, count_left);
+	right_end = this->countTopRight(y, x, val, count_right);
 	count = count_left + count_right + 1;
 	return (left_end == true && right_end == true ? true : false);
 }
