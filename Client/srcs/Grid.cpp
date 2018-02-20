@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 10:53:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:52:21 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ bool						Grid::play(Player_ia &player)
 		m_last_y = player.getY();
 		m_cell[m_last_y][m_last_x] = player.getValue();
 		this->checkCaptures(player);
+		//this->setUnavalable(player);
 		return (true);
 	}
 	return (false);
@@ -172,10 +173,11 @@ bool						Grid::play(Player_human &player)
 	char					buff[SIZE_CMD + 1];
 	ssize_t					len;
 
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
+	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL &&
+			(GET_PERM(m_cell[player.getY()][player.getX()]) & player.getUnpossible()) == 0)
 	{
-		this->checkCaptures(player);
 		m_cell[player.getY()][player.getX()] = SET_VAL(m_cell[player.getY()][player.getX()], GET_VAL(player.getValue()));
+		this->checkCaptures(player);
 		this->setUnavalable(player);
 		if (player.isOnline() != OFFLINE)
 		{
