@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:26:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 15:30:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 13:30:16 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void						Fork_ia::play_ia(void) const
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			depth;
-	char					grid[SIZE_GRID][SIZE_GRID];
+	short					grid[SIZE_GRID][SIZE_GRID];
 	clock_t					start, end;
 	double					time_spend;
 
@@ -41,6 +41,7 @@ void						Fork_ia::play_ia(void) const
 	m_player.read_from_client(&grid, sizeof(grid));
 	start = clock();
 	Ia_player::play(grid, depth, x, y);
+	std::cout << "x :" << x << " y :" << y <<std::endl;
 	end = clock();
 	time_spend = ((double) (end - start)) / CLOCKS_PER_SEC;
 #ifdef DEBUG

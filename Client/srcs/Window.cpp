@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 20:00:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/20 11:31:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,13 @@ t_color const				Window::m_color[] = {
 
 bool						Window::show_grid(Grid const &grid, Player_human const &player)
 {
-	bool					mem;
-	char					c;
+	short					mem;
+	short					c;
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			start_x;
 	unsigned int			start_y;
 	std::string				str;
-	FreeThree				freeThree(grid, player);
 
 	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
 		return (false);
@@ -114,8 +113,7 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	start_x = 1;
 	start_y = 1;
 	std::string				space(start_x, ' ');
-
-	wclear(m_win_left);
+//	wclear(m_win_left); a voir si on clear ou pas
 	str = m_border + "\n" + space;
 	for (y = 0; y < SIZE_GRID; y++)
 	{
@@ -127,18 +125,18 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 			{
 				str += "|";
 				mvwprintw(m_win_left, start_y, start_x, "%s", str.c_str());
-				wattron(m_win_left, (mem = freeThree.checkFreeThree()) == true ? COLOR_PAIR(2) : A_REVERSE);
+				wattron(m_win_left, (mem = (GET_PERM(c) & player.getUnpossible())) != 0 ? COLOR_PAIR(2) : A_REVERSE);
 				start_y = start_y + y * 2 + 1;
 				start_x = start_x + 1 + x * (3 + 1);
-				mvwprintw(m_win_left, start_y, start_x, " %c ", c);
+				mvwprintw(m_win_left, start_y, start_x, " %c ", GET_VAL(c));
 				start_x += 3;
-				wattroff(m_win_left, mem == true ? COLOR_PAIR(2) : A_REVERSE);
+				wattroff(m_win_left, mem != 0 ? COLOR_PAIR(2) : A_REVERSE);
 				str.erase();
 			}
 			else
 			{
 				str += "| ";
-				str.push_back(c);
+				str.push_back(GET_VAL(c));
 				str += " ";
 			}
 		}
@@ -166,15 +164,15 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
 	mvwprintw(m_win_right, 16, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
 	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
-	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.capture().c_str());
-	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.captureIa().c_str());
-	grid.getLineNbStone(player, count);
+	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.getCapture().c_str());
+	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.getCaptureIa().c_str());
+	grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count);
 	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", count);
-	grid.getColNbStone(player, count);
+	grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count);
 	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", count);
-	grid.getDiagLeftTopRightBottomNbStone(player, count);
+	grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
 	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", count);
-	grid.getDiagRightTopLeftBottomNbStone(player, count);
+	grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
 	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", count);
 	wrefresh(m_win_right);
 	return (true);

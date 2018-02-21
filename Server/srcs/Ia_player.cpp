@@ -6,26 +6,36 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/15 15:31:56 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/21 15:59:44 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Ia_player.hpp"
 
 void						Ia_player::play
-		(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth, unsigned int &max_x, unsigned int &max_y)
+		(short grid[SIZE_GRID][SIZE_GRID], unsigned int const depth, unsigned int &max_x, unsigned int &max_y)
 {
 	int		max = -10000;
 	int		tmp;
+	short	val;
 	Grid	grid_class(grid);
 
 	for(int y = 0; y < SIZE_GRID; y++)
 	{
 		for(int x = 0; x < SIZE_GRID; x++)
 		{
-			if(grid[y][x] == EMPTY_CELL)
+			grid_class.getValue(val, x, y);
+			if(val == EMPTY_CELL)
 			{
-				grid[y][x] = 'O';
+				grid_class.setValue('O', x, y);
+				//std::cout << "START x :" << x << " y :" << y <<std::endl;
+				/*if(grid_class.haveWin(y, x, 'O', "") == true)
+				{
+					std::cout << "START won" <<std::endl;
+					max = 10000;
+					max_y = y;
+					max_x = x;
+				}*/
 				tmp = Ia_player::Min(grid_class, depth - 1, grid);
 
 				if(tmp > max)
@@ -34,37 +44,48 @@ void						Ia_player::play
 					max_y = y;
 					max_x = x;
 				}
-				grid[y][x] = EMPTY_CELL;
+				grid_class.setValue(EMPTY_CELL, x, y);
 			}
 		}
 	}
 }
 
 int							Ia_player::Max
-		(Grid &grid_class, unsigned int const depth, char grid[SIZE_GRID][SIZE_GRID])
+		(Grid &grid_class, unsigned int const depth, short grid[SIZE_GRID][SIZE_GRID])
 {
-	if(depth == 0 || grid_class.haveWin(grid_class.getLastY(), grid_class.getLastX(), 'X') == true)
+	//std::cout << "MAX" <<std::endl;
+	if(depth == 0)
 	{
-		return (-1 * depth);
+		//std::cout << "Depth" <<std::endl;
+		return (0);
 	}
 
-	int max = -10000;
-	int tmp;
+	int		max = -10000;
+	int		tmp;
+	short	val;
 
 	for(int y = 0; y < SIZE_GRID; y++)
 	{
 		for(int x = 0; x < SIZE_GRID; x++)
 		{
-			if(grid[y][x] == EMPTY_CELL)
+			grid_class.getValue(val, x, y);
+			if(val == EMPTY_CELL)
 			{
-				grid[y][x] = 'O';
+				grid_class.setValue('O', x, y);
+				//std::cout << "MAX x :" << x << " y :" << y <<std::endl;
+				if(grid_class.haveWin(y, x, 'O', "") == true)
+				{
+					grid_class.setValue(EMPTY_CELL, x, y);
+					std::cout << "MAX won" <<std::endl;
+					return (1 * depth);
+				}
 				tmp = Ia_player::Min(grid_class, depth - 1, grid);
 
 				if(tmp > max)
 				{
 					max = tmp;
 				}
-				grid[y][x] = EMPTY_CELL;
+				grid_class.setValue(EMPTY_CELL, x, y);
 			}
 		}
 	}
@@ -74,30 +95,41 @@ int							Ia_player::Max
 }
 
 int							Ia_player::Min
-		(Grid &grid_class, unsigned int const depth, char grid[SIZE_GRID][SIZE_GRID])
+		(Grid &grid_class, unsigned int const depth, short grid[SIZE_GRID][SIZE_GRID])
 {
-	if(depth == 0 || grid_class.haveWin(grid_class.getLastY(), grid_class.getLastX(), 'O') == true)
+	//std::cout << "MIN" <<std::endl;
+	if(depth == 0)
 	{
-		return (1 * depth);
+		//std::cout << "Depth" <<std::endl;
+		return (0);
 	}
 
-	int min = 10000;
-	int tmp;
+	int		min = 10000;
+	int		tmp;
+	short	val;
 
 	for(int y = 0; y < SIZE_GRID; y++)
 	{
 		for(int x = 0; x < SIZE_GRID; x++)
 		{
-			if(grid[y][x] == EMPTY_CELL)
+			grid_class.getValue(val, x, y);
+			if(val == EMPTY_CELL)
 			{
-				grid[y][x] = 'X';
+				grid_class.setValue('X', x, y);
+				if(grid_class.haveWin(y, x, 'X', "") == true)
+				{
+					grid_class.setValue(EMPTY_CELL, x, y);
+					std::cout << "MIN x :" << x << " y :" << y <<std::endl;
+					std::cout << "MIN won" <<std::endl;
+					return (-1 * depth);
+				}
 				tmp = Ia_player::Max(grid_class, depth - 1, grid);
 
 				if(tmp < min)
 				{
 					min = tmp;
 				}
-				grid[y][x] = EMPTY_CELL;
+				grid_class.setValue(EMPTY_CELL, x, y);
 			}
 		}
 	}

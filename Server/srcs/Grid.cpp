@@ -6,17 +6,17 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 10:47:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 15:30:42 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
-#include "../incs/FreeThree.hpp"
+//#include "../incs/FreeThree.hpp"
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(short const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0), m_ia()
+							Grid::Grid(short const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0)
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -26,7 +26,7 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 			m_cell[y][x] = (GET_VAL(grid[y][x]) == PLAYER1 || GET_VAL(grid[y][x]) == PLAYER2) ? grid[y][x] : EMPTY_CELL;
 }
 
-							Grid::Grid(void) : m_time_spend(0.0), m_ia()
+							Grid::Grid(void) : m_time_spend(0.0)
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -55,10 +55,18 @@ bool						Grid::getValue(short &val, unsigned int const x, unsigned int const y)
 	return (true);
 }
 
-bool						Grid::haveWin(Player const &player) const
+bool						Grid::setValue(short val, unsigned int const x, unsigned int const y)
+{
+	if (x >= SIZE_GRID || y >= SIZE_GRID)
+		return (false);
+	m_cell[y][x] = val;
+	return (true);
+}
+
+/*bool						Grid::haveWin(Player const &player) const
 {
 	return (this->haveWin(player.getY(), player.getX(), player.getValue(), player.getCapture()));
-}
+}*/
 
 bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const
 {
@@ -84,7 +92,7 @@ bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const 
 	return (capture.size() >= NB_WIN_CAPTURE ? true : false);
 }
 
-bool						Grid::play(Player_ia &player)
+/*bool						Grid::play(Player_ia &player)
 {
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
 	{
@@ -122,9 +130,9 @@ bool						Grid::updateGrid(Player_human &player)
 		player.setEnable();
 	}
 	return (true);
-}
+}*/
 
-void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible, short const val2, char const unpossible2)
+/*void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible, short const val2, char const unpossible2)
 {
 	FreeThree				freeThree(*this);
 	unsigned int			y;
@@ -169,9 +177,9 @@ void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp
 		if (x + decalage < SIZE_GRID && freeThree.updateFreeThree(y, x + decalage, val) == true)
 			this->setUnavalable(y, x + decalage, val2, unpossible2, val, unpossible);
 	}
-}
+}*/
 
-bool						Grid::play(Player_human &player, Player const &player2)
+/*bool						Grid::play(Player_human &player, Player const &player2)
 {
 	unsigned int			x;
 	unsigned int			y;
@@ -223,7 +231,7 @@ bool						Grid::play(Player_human &player, Player const &player2)
 		return (true);
 	}
 	return (false);
-}
+}*/
 
 double						Grid::get_time_spend(void) const
 {
