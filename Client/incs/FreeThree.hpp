@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 11:01:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 10:13:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class FreeThree
 	public:
 							FreeThree(Grid const &grid);
 		bool				checkFreeThree(unsigned int const y, unsigned int const x, short const val) const;
+		bool				updateFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 
 	private:
 		typedef struct		s_checkFreeT

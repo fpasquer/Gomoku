@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 11:40:49 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 10:13:47 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,4 +205,15 @@ bool						FreeThree::checkFreeThree(unsigned int const y, unsigned int const x, 
 		if (((*this).*m_func[i].f)(y, x, val) == true)
 			count++;
 	return (count >= 2 ? true : false);
+}
+
+bool						FreeThree::updateFreeThree(unsigned int const y, unsigned int const x, short const val) const
+{
+	short					c;
+	char					tmp_perm;
+	
+	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != EMPTY_CELL || GET_PERM(c) == 0)
+		return (false);
+	tmp_perm = (GET_PERM(val) == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
+	return ((GET_PERM(c) & tmp_perm) != 0 ? true : false);
 }
