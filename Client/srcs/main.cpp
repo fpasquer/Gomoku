@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 14:03:21 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:23:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int							main(int argc, char **argv)
 			return (-1);
 		if (player->checkKeySelect(key) == true && grid.play(*player) == true)
 		{
-			if (grid.haveWin(*player) == true)
+			if (grid.haveWin(*player) == true || grid.checkIaWin(*player) == true)
 				break ;
 			if (player1.isOnline() == OFFLINE)
 				player = (player == &player1) ? &player2 : &player1;

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 14:04:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:21:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class Grid
 		bool				countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const;
 		bool				haveWin(Player const &player) const;
+		bool				checkIaWin(Player_human const &player) const;
 
 	private:
 		typedef struct		s_list_way

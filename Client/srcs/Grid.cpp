@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 14:35:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:22:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const 
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 		return (true);
 	return (capture.size() >= NB_WIN_CAPTURE ? true : false);
+}
+
+bool						Grid::checkIaWin(Player_human const &player) const
+{
+	if (player.isOnline() == OFFLINE)
+		return (false);
+	return (this->haveWin(m_ia.getY(), m_ia.getX(), m_ia.getValue(), m_ia.getCapture()));
 }
 
 bool						Grid::play(Player_ia &player)
