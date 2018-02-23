@@ -6,12 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 16:22:56 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/23 09:57:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
 #include "../incs/FreeThree.hpp"
+																				#include <fstream>
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
@@ -138,6 +139,7 @@ bool						Grid::updateGrid(Player_human &player)
 
 void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible)
 {
+	short					c;
 	FreeThree				freeThree(*this);
 	unsigned int			y;
 	unsigned int			x;
@@ -149,34 +151,35 @@ void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp
 	{
 		if (y + decalage == y_tmp && x + decalage == x_tmp)
 			continue ;
-		if (y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x + decalage, val) == true)
+		if (y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x + decalage, val) == true && this->getValue(c, x + decalage, y + decalage) == true && (GET_PERM(c) & GET_PERM(val)) == 0)
 			m_cell[y + decalage][x + decalage] = SET_PERM(m_cell[y + decalage][x + decalage], unpossible);
 	}
 	for (y = y_tmp - DEPTH_FREETHREE, x = x_tmp, decalage = 0; decalage < end; decalage++)//check haut bas
 	{
 		if (y + decalage == y_tmp)
 			continue ;
-		if (y + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x, val) == true)
+		if (y + decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x, val) == true && this->getValue(c, x, y + decalage) == true && (GET_PERM(c) & GET_PERM(val)) == 0)
 			m_cell[y + decalage][x] = SET_PERM(m_cell[y + decalage][x], unpossible);
 	}
 	for (y = y_tmp - DEPTH_FREETHREE, x = x_tmp + DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check Haut droit bas gauche
 	{
 		if (y + decalage == y_tmp && x - decalage == x_tmp)
 			continue ;
-		if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x - decalage, val) == true)
+		if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.checkFreeThree(y + decalage, x - decalage, val) == true && this->getValue(c, x - decalage, y + decalage) == true && (GET_PERM(c) & GET_PERM(val)) == 0)
 			m_cell[y + decalage][x - decalage] = SET_PERM(m_cell[y + decalage][x - decalage], unpossible);
 	}
 	for (y = y_tmp, x = x_tmp  - DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check gauche droit
 	{
 		if (x + decalage == x_tmp)
 			continue ;
-		if (x + decalage < SIZE_GRID && freeThree.checkFreeThree(y, x + decalage, val) == true)
+		if (x + decalage < SIZE_GRID && freeThree.checkFreeThree(y, x + decalage, val) == true && this->getValue(c, x + decalage, y) == true && (GET_PERM(c) & GET_PERM(val)) == 0)
 			m_cell[y][x + decalage] = SET_PERM(m_cell[y][x + decalage], unpossible);
 	}
 }
 
 void						Grid::setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible2)
 {
+	short					c;
 	FreeThree				freeThree(*this);
 	unsigned int			y;
 	unsigned int			x;
@@ -188,28 +191,28 @@ void						Grid::setAvailable(unsigned int const y_tmp, unsigned int const x_tmp,
 	{
 		if (y + decalage == y_tmp && x + decalage == x_tmp)
 			continue ;
-		if ((y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x + decalage, val) == true))
+		if (y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x + decalage, val) == true && this->getValue(c, x + decalage, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
 			m_cell[y + decalage][x + decalage] = SET_PERM(m_cell[y + decalage][x + decalage], unpossible2);
 	}
 	for (y = y_tmp - DEPTH_FREETHREE, x = x_tmp, decalage = 0; decalage < end; decalage++)//check haut bas
 	{
 		if (y + decalage == y_tmp)
 			continue ;
-		if (y + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x, val) == true)
+		if (y + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x, val) == true && this->getValue(c, x, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
 			m_cell[y + decalage][x] = SET_PERM(m_cell[y + decalage][x], unpossible2);
 	}
 	for (y = y_tmp - DEPTH_FREETHREE, x = x_tmp + DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check Haut droit bas gauche
 	{
 		if (y + decalage == y_tmp && x - decalage == x_tmp)
 			continue ;
-		if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x - decalage, val) == true)
+		if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x - decalage, val) == true && this->getValue(c, x - decalage, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
 			m_cell[y + decalage][x - decalage] = SET_PERM(m_cell[y + decalage][x - decalage], unpossible2);
 	}
 	for (y = y_tmp, x = x_tmp  - DEPTH_FREETHREE, decalage = 0; decalage < end; decalage++)//check gauche droit
 	{
 		if (x + decalage == x_tmp)
 			continue ;
-		if (x + decalage < SIZE_GRID && freeThree.updateFreeThree(y, x + decalage, val) == true)
+		if (x + decalage < SIZE_GRID && freeThree.updateFreeThree(y, x + decalage, val) == true && this->getValue(c, x + decalage, y) == true && (GET_PERM(c) & unpossible2) != 0)
 			m_cell[y][x + decalage] = SET_PERM(m_cell[y][x + decalage], unpossible2);
 	}
 }
