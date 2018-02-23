@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 10:41:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/21 16:21:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ class Grid
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
 		bool				updateGrid(Player_human &player);
-		bool				play(Player_human &player, Player const &player2);
+		bool				play(Player_human &player);
 		double				get_time_spend(void) const;
 		bool				getLineNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				getColNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
@@ -65,6 +65,7 @@ class Grid
 		bool				countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const;
 		bool				haveWin(Player const &player) const;
+		bool				checkIaWin(Player_human const &player) const;
 
 	private:
 		typedef struct		s_list_way
@@ -84,7 +85,8 @@ class Grid
 		t_way				checkBottom(Player &player);
 		t_way				checkBottomLeft(Player &player);
 		bool				play(Player_ia &player);
-		void				setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible, short const val2, char const unpossible2);
+		void				setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible);
+		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible2);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		short				m_cell[SIZE_GRID][SIZE_GRID];

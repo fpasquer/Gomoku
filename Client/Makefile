@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/14 20:19:13 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/21 12:59:56 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC = $(addprefix -I,$(INC_PATH))
 
 CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 LDFLAGS = $(addprefix -L,)
 LDLIBS = -I/usr/local/opt/qt/include -lncurses
 

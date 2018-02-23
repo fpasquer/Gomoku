@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 15:59:44 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/23 16:31:08 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void						Ia_player::play
 	short	val;
 	Grid	grid_class(grid);
 
-	for(int y = 0; y < SIZE_GRID; y++)
+	for(int y = 0; y < SIZE_GRID; y++)//a remplacer par un tableau des cases vides
 	{
 		for(int x = 0; x < SIZE_GRID; x++)
 		{
@@ -28,14 +28,14 @@ void						Ia_player::play
 			if(val == EMPTY_CELL)
 			{
 				grid_class.setValue('O', x, y);
-				//std::cout << "START x :" << x << " y :" << y <<std::endl;
-				/*if(grid_class.haveWin(y, x, 'O', "") == true)
+				if(grid_class.haveWin(y, x, 'O', "") == true)
 				{
+					std::cout << "START x :" << x << " y :" << y <<std::endl;
 					std::cout << "START won" <<std::endl;
-					max = 10000;
 					max_y = y;
 					max_x = x;
-				}*/
+					return ;
+				}
 				tmp = Ia_player::Min(grid_class, depth - 1, grid);
 
 				if(tmp > max)

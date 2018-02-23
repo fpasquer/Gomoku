@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 10:13:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/23 09:54:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,10 +210,13 @@ bool						FreeThree::checkFreeThree(unsigned int const y, unsigned int const x, 
 bool						FreeThree::updateFreeThree(unsigned int const y, unsigned int const x, short const val) const
 {
 	short					c;
-	char					tmp_perm;
-	
+	short					new_val;
+
 	if (m_grid.getValue(c, x, y) == false || GET_VAL(c) != EMPTY_CELL || GET_PERM(c) == 0)
 		return (false);
-	tmp_perm = (GET_PERM(val) == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
-	return ((GET_PERM(c) & tmp_perm) != 0 ? true : false);
+	new_val = SET_VAL(0, GET_VAL(val) == PLAYER1 ? PLAYER2 : PLAYER1);
+	new_val = SET_PERM(new_val, (GET_PERM(val) == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
+	if (((GET_PERM(c)) & (GET_PERM(new_val))) == 0)
+		return (false);
+	return (!(this->checkFreeThree(y, x, new_val)));
 }
