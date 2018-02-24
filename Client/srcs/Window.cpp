@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 11:31:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 11:03:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ t_color const				Window::m_color[] = {
 	{2, COLOR_BLACK, COLOR_RED}, 
 	{0, 0, 0}
 };
+
+void						Window::write_title(void) const
+{
+	wclear(m_win_title);
+	mvwprintw(m_win_title, 1, 0, "      ********    ********    ***  ***    ********    **    **    **    **\n      ********    ********    ********    ********    **   **     **    **\n      **    **    **    **    ** ** **    **    **    **  **      **    **\n      **          **    **    **    **    **    **    ** **       **    **\n      **  ****    **    **    **    **    **    **    ****        **    **\n      **  ****    **    **    **    **    **    **    ****        **    **\n      **    **    **    **    **    **    **    **    ** **       **    **\n      **    **    **    **    **    **    **    **    **  **      **    **\n      ********    ********    **    **    ********    **   **     ********\n      ********    ********    **    **    ********    **    **    ********");
+	box(m_win_title, ACS_VLINE, ACS_HLINE);
+	wrefresh(m_win_title);
+}
 
 							Window::Window(void) : m_border(SIZE_GRID * 4 + 1, '-')
 {
@@ -34,8 +42,11 @@ t_color const				Window::m_color[] = {
 		else if (m_lines < MIN_LINES)
 			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
-		if ((m_win_right = subwin(stdscr, MIN_LINES, MIN_COLS, 0, MIN_COLS)) == NULL || m_win_left == NULL)
+		m_win_title = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, 0, MIN_COLS);
+		if ((m_win_right = subwin(stdscr, MIN_LINES - HEIGHT_TITLE, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
 			throw Error("Allocation window failled");
+		if ((m_win_refresh_each_loop = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL)
+			throw Error("Allocation window failled 2");
 	}
 	catch (std::exception const&e)
 	{
@@ -48,10 +59,12 @@ t_color const				Window::m_color[] = {
 	}
 	wclear(m_win_left);
 	wclear(m_win_right);
+	wclear(m_win_refresh_each_loop);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);
 	box(m_win_right, ACS_VLINE, ACS_HLINE);
 	wrefresh(m_win_left);
 	wrefresh(m_win_right);
+	this->write_title();
 	curs_set(false);
 	for (i = 0; m_color[i].pair != 0; i++)
 		init_pair(m_color[i].pair, m_color[i].font, m_color[i].background);
@@ -148,32 +161,51 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	return (true);
 }
 
-bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key)
+void						Window::show_each_loop(Grid const &grid,Player_human const &player, std::string const &key) const
 {
+	char					buff[4];
 	unsigned int			i;
-	unsigned int			count;
+	unsigned int			count_line;
+	unsigned int			count_col;
+	unsigned int			count_dlr;
+	unsigned int			count_drl;
+	std::string				keys = "";
+
+	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
+	{
+		snprintf(buff, sizeof(buff), "%d", key[i]);
+		keys.push_back(' ');
+		keys += buff;
+	}
+	count_line = (grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count_line) == false) ? 1 : count_line;
+	count_col = (grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count_col) == false) ? 1 : count_col;
+	count_dlr = (grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count_dlr) == false) ? 1 : count_dlr;
+	count_drl = (grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count_drl) == false) ? 1 : count_drl;
+	mvwprintw(m_win_refresh_each_loop, 1, 1, "Player y : %3d\n Player x : %3d\n Turn     : %3c\n\n Number stone LINE : %5u\n Number stone COL  : %5u\n Number Stone DLR  : %5u\n Number Stone DRL  : %5u\n\n Key :%20s",
+			player.getY(), player.getX(), GET_VAL(player.getValue()), count_line, count_col, count_dlr, count_drl, keys.c_str());
+	box(m_win_refresh_each_loop, ACS_VLINE, ACS_HLINE);
+	wrefresh(m_win_refresh_each_loop);
+
+}
+
+bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_oder)
+{
 
 	this->show_grid(grid, player);
-	wclear(m_win_right);
-	box(m_win_right, ACS_VLINE, ACS_HLINE);
-	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
-		mvwprintw(m_win_right, i + 1, 1, "%d", key[i]);
-	mvwprintw(m_win_right, 10, 1, "x = %d", player.getX());
-	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
-	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
-	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
-	mvwprintw(m_win_right, 16, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
-	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
-	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.getCapture().c_str());
-	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.getCaptureIa().c_str());
-	grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", count);
-	grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", count);
-	grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", count);
-	grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", count);
+	this->show_each_loop(grid, player, key);
+	if (player.isOnline() == OFFLINE)
+	{
+		if (GET_VAL(player.getValue()) == PLAYER1)
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
+					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_oder.getCapture().c_str());
+		else
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
+					grid.get_time_spend(), player.getDeep(), player_oder.getCapture().c_str(), player.getCapture().c_str());
+	}
+	else
+		mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
+			grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), grid.getCaptureIa().c_str());
+	box(m_win_right, ACS_VLINE, ACS_HLINE);	
 	wrefresh(m_win_right);
 	return (true);
 }
@@ -190,6 +222,10 @@ int							Window::disconnected(void) const
 {
 	free(m_win_left);
 	free(m_win_right);
+	free(m_win_title);
+	free(m_win_refresh_each_loop);
+	m_win_refresh_each_loop = NULL;
+	m_win_title = NULL;
 	m_win_left = NULL;
 	m_win_right = NULL;
 	curs_set(true);
