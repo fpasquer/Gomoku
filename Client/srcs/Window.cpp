@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 11:03:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 11:57:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	start_x = 1;
 	start_y = 1;
 	std::string				space(start_x, ' ');
-//	wclear(m_win_left); a voir si on clear ou pas
 	str = m_border + "\n" + space;
 	for (y = 0; y < SIZE_GRID; y++)
 	{
