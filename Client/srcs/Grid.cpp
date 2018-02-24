@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 08:14:07 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 12:10:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,8 @@ bool						Grid::play(Player_human &player)
 		this->checkCaptures(player);
 		this->setUnavalable(player.getY(), player.getX(), player.getValue(), player.getUnpossible());
 		this->setAvailable(player.getY(), player.getX(), player.getValue(), player.getUnpossible() == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
+		m_last_x = player.getX();
+		m_last_y = player.getY();
 		if (player.isOnline() != OFFLINE)
 		{
 			deep = player.getDeep();

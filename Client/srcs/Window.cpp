@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 11:57:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 12:07:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void						Window::write_title(void) const
 			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
 		m_win_title = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, 0, MIN_COLS);
-		if ((m_win_right = subwin(stdscr, MIN_LINES - HEIGHT_TITLE, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
+		if ((m_win_right = subwin(stdscr, HEIGHT_TITLE * 2, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
 			throw Error("Allocation window failled");
 		if ((m_win_refresh_each_loop = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL)
 			throw Error("Allocation window failled 2");
@@ -195,15 +195,15 @@ bool						Window::show(Grid const &grid, Player_human const &player, std::string
 	if (player.isOnline() == OFFLINE)
 	{
 		if (GET_VAL(player.getValue()) == PLAYER1)
-			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
-					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_oder.getCapture().c_str());
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_oder.getCapture().c_str(), grid.getLastY(), grid.getLastX());
 		else
-			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
-					grid.get_time_spend(), player.getDeep(), player_oder.getCapture().c_str(), player.getCapture().c_str());
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+					grid.get_time_spend(), player.getDeep(), player_oder.getCapture().c_str(), player.getCapture().c_str(), grid.getLastY(), grid.getLastX());
 	}
 	else
-		mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s",
-			grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), grid.getCaptureIa().c_str());
+		mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+			grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), grid.getCaptureIa().c_str(), grid.getLastY(), grid.getLastX());
 	box(m_win_right, ACS_VLINE, ACS_HLINE);	
 	wrefresh(m_win_right);
 	return (true);
