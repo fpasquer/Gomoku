@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 12:07:38 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 14:55:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void						Window::write_title(void) const
 	wrefresh(m_win_title);
 }
 
-							Window::Window(void) : m_border(SIZE_GRID * 4 + 1, '-')
+							Window::Window(void) : m_last_grid(NULL), m_last_player(NULL), m_last_player_other(NULL), m_last_key(NULL), m_border(SIZE_GRID * 4 + 1, '-')
 {
 	unsigned int			i;
 
@@ -37,10 +37,6 @@ void						Window::write_title(void) const
 	m_lines = LINES;
 	try
 	{
-		if (m_cols < MIN_COLS)
-			throw Error("Window not enough larg");
-		else if (m_lines < MIN_LINES)
-			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
 		m_win_title = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, 0, MIN_COLS);
 		if ((m_win_right = subwin(stdscr, HEIGHT_TITLE * 2, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
@@ -170,6 +166,7 @@ void						Window::show_each_loop(Grid const &grid,Player_human const &player, st
 	unsigned int			count_drl;
 	std::string				keys = "";
 
+
 	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
 	{
 		snprintf(buff, sizeof(buff), "%d", key[i]);
@@ -187,25 +184,48 @@ void						Window::show_each_loop(Grid const &grid,Player_human const &player, st
 
 }
 
-bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_oder)
+bool						Window::show_resize(void)
+{
+	if (m_last_grid == NULL || m_last_player == NULL || m_last_player_other == NULL)
+		return (false);
+	m_cols = COLS / 2;
+	m_lines = LINES;
+	wclear(m_win_refresh_each_loop);
+	wclear(m_win_left);
+	wclear(m_win_right);
+	return (this->show(*m_last_grid, *m_last_player, *m_last_key, *m_last_player_other));
+}
+
+bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_other)
 {
 
+	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
+	{
+		clear();
+		printw("Window too small");
+		getch();
+		return (true);
+	}
 	this->show_grid(grid, player);
 	this->show_each_loop(grid, player, key);
 	if (player.isOnline() == OFFLINE)
 	{
 		if (GET_VAL(player.getValue()) == PLAYER1)
 			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
-					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_oder.getCapture().c_str(), grid.getLastY(), grid.getLastX());
+					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_other.getCapture().c_str(), grid.getLastY(), grid.getLastX());
 		else
 			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
-					grid.get_time_spend(), player.getDeep(), player_oder.getCapture().c_str(), player.getCapture().c_str(), grid.getLastY(), grid.getLastX());
+					grid.get_time_spend(), player.getDeep(), player_other.getCapture().c_str(), player.getCapture().c_str(), grid.getLastY(), grid.getLastX());
 	}
 	else
 		mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
 			grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), grid.getCaptureIa().c_str(), grid.getLastY(), grid.getLastX());
 	box(m_win_right, ACS_VLINE, ACS_HLINE);	
 	wrefresh(m_win_right);
+	m_last_grid = &grid;
+	m_last_key = &key;
+	m_last_player = &player;
+	m_last_player_other = &player_other;
 	return (true);
 }
 

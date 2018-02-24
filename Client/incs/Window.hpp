@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 11:00:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 14:55:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ class Window
 {
 	public:
 							Window(void);
-		bool				show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_oder);
+		bool				show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_other);
+		bool				show_resize(void);
 							~Window(void);
 		int					disconnected(void) const;
 	private:
@@ -49,6 +50,10 @@ class Window
 		WINDOW				*m_win_right;
 		WINDOW				*m_win_title;
 		WINDOW				*m_win_refresh_each_loop;
+		Grid const			*m_last_grid;
+		Player_human const 	*m_last_player;
+		Player_human const	*m_last_player_other;
+		std::string	const	*m_last_key;
 		std::string const	m_border;
 };
 
