@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/14 14:26:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 08:53:49 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Window
 		unsigned int		m_lines;
 		WINDOW				*m_win_left;
 		WINDOW				*m_win_right;
+		WINDOW				*m_win_title;
 		std::string const	m_border;
 };
 

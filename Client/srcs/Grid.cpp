@@ -6,13 +6,12 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/23 09:57:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 08:14:07 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
 #include "../incs/FreeThree.hpp"
-																				#include <fstream>
 
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
@@ -24,8 +23,11 @@ unsigned int				Grid::m_last_y = SIZE_GRID;
 
 	for (y = 0; y < SIZE_GRID; y++)
 		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = ((GET_VAL(grid[y][x]) == PLAYER1 || GET_VAL(grid[y][x]) == PLAYER2) &&
-					(GET_PERM(grid[y][x]) == CAN_NOT_PLAY1 || GET_PERM(grid[y][x]) == CAN_NOT_PLAY2)) ? grid[y][x] : EMPTY_CELL;
+			m_cell[y][x] = ((GET_VAL(grid[y][x]) == PLAYER1 ||
+					GET_VAL(grid[y][x]) == PLAYER2) &&
+					(GET_PERM(grid[y][x]) == CAN_NOT_PLAY1 ||
+					GET_PERM(grid[y][x]) == CAN_NOT_PLAY2))
+					? grid[y][x] : EMPTY_CELL;
 }
 
 							Grid::Grid(void) : m_time_spend(0.0), m_ia()
@@ -49,7 +51,8 @@ unsigned int				Grid::getLastX(void) const
 	return (m_last_x);
 }
 
-bool						Grid::getValue(short &val, unsigned int const x, unsigned int const y) const
+bool						Grid::getValue(short &val, unsigned int const x,
+		unsigned int const y) const
 {
 	if (x >= SIZE_GRID || y >= SIZE_GRID)
 		return (false);
@@ -59,10 +62,12 @@ bool						Grid::getValue(short &val, unsigned int const x, unsigned int const y)
 
 bool						Grid::haveWin(Player const &player) const
 {
-	return (this->haveWin(player.getY(), player.getX(), player.getValue(), player.getCapture()));
+	return (this->haveWin(player.getY(), player.getX(), player.getValue(),
+			player.getCapture()));
 }
 
-bool						Grid::haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const
+bool						Grid::haveWin(unsigned int const y,
+		unsigned int const x, short const val, std::string const &capture) const
 {
 	unsigned int			count1;
 	unsigned int			count2;
@@ -90,22 +95,31 @@ bool						Grid::checkIaWin(Player_human const &player) const
 {
 	if (player.isOnline() == OFFLINE)
 		return (false);
-	return (this->haveWin(m_ia.getY(), m_ia.getX(), m_ia.getValue(), m_ia.getCapture()));
+	return (this->haveWin(m_ia.getY(), m_ia.getX(), m_ia.getValue(),
+			m_ia.getCapture()));
 }
 
 bool						Grid::play(Player_ia &player)
 {
+	char					unpossible;
 	short					val;
+	unsigned int			y;
+	unsigned int			x;
 
-	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL)
+	x = player.getX();
+	y = player.getY();
+	val = player.getValue();
+	unpossible = player.getUnpossible();
+	if (x < SIZE_GRID && y < SIZE_GRID && GET_VAL(m_cell[y][x]) == EMPTY_CELL &&
+			(GET_PERM(m_cell[y][x]) & GET_PERM(val)) == 0)
 	{
-		m_last_x = player.getX();
-		m_last_y = player.getY();
-		val = player.getValue();
-		m_cell[m_last_y][m_last_x] = val;
+		m_last_x = x;
+		m_last_y = y;
+		m_cell[m_last_y][m_last_x] = SET_VAL(m_cell[m_last_y][m_last_x], val);
 		this->checkCaptures(player);
-		this->setUnavalable(m_last_y, m_last_x, val, player.getUnpossible());
-		this->setAvailable(m_last_y, m_last_x, val, player.getUnpossible() == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
+		this->setUnavalable(m_last_y, m_last_x, val, unpossible);
+		this->setAvailable(m_last_y, m_last_x, val,
+				(unpossible == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
 		return (true);
 	}
 	return (false);
@@ -131,13 +145,15 @@ bool						Grid::updateGrid(Player_human &player)
 		player.read_from_server(&x, sizeof(x));
 		m_ia.setY(y);
 		m_ia.setX(x);
-		this->play(m_ia);
+		if (this->play(m_ia) == false)
+			return (false);
 		player.setEnable();
 	}
 	return (true);
 }
 
-void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible)
+void						Grid::setUnavalable(unsigned int const y_tmp,
+		unsigned int const x_tmp, short const val, char const unpossible)
 {
 	short					c;
 	FreeThree				freeThree(*this);
@@ -177,7 +193,8 @@ void						Grid::setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp
 	}
 }
 
-void						Grid::setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible2)
+void						Grid::setAvailable(unsigned int const y_tmp,
+		unsigned int const x_tmp, short const val, char const unpossible2)
 {
 	short					c;
 	FreeThree				freeThree(*this);
@@ -263,7 +280,7 @@ bool						Grid::play(Player_human &player)
 					return (false);
 				player.setDisable();
 			}
-			this->updateGrid(player);
+			return (this->updateGrid(player));
 		}
 		return (true);
 	}
