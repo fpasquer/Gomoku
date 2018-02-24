@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 14:55:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 15:13:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void						Window::write_title(void) const
 	m_lines = LINES;
 	try
 	{
+		if (m_cols < MIN_COLS)
+			throw Error("Window not enough larg");
+		else if (m_lines < MIN_LINES)
+			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
 		m_win_title = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, 0, MIN_COLS);
 		if ((m_win_right = subwin(stdscr, HEIGHT_TITLE * 2, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
@@ -234,6 +238,7 @@ int							Window::disconnected(void) const
 	clear();
 	printw("Your Opponnent is go on. Press any key to leave the program");
 	getch();
+	delete this;
 	return (0);
 }
 
