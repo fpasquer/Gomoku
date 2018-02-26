@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 16:21:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/26 12:25:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <iostream>
 # include "Client.hpp"
 # include "../../Gomoku.hpp"
+# include "CountWin.hpp"
 
 typedef enum				e_way
 {
@@ -47,14 +48,6 @@ class Grid
 		bool				getDiagLeftTopRightBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				getDiagRightTopLeftBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		std::string			getCaptureIa(void) const;
-		bool				countLeft(Player const &player, unsigned int &count) const;
-		bool				countLeftTop(Player const &player, unsigned int &count) const;
-		bool				countTop(Player const &player, unsigned int &count) const;
-		bool				countTopRight(Player const &player, unsigned int &count) const;
-		bool				countRight(Player const &player, unsigned int &count) const;
-		bool				countRightBottom(Player const &player, unsigned int &count) const;
-		bool				countBottom(Player const &player, unsigned int &count) const;
-		bool				countBottomLeft(Player const &player, unsigned int &count) const;
 		bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;

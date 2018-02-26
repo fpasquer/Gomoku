@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:29:31 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 09:54:17 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/26 11:43:54 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,18 @@
 class Ia_player
 {
 	public:
-		static void			play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y);
+		static void			play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y, int const depth);
 	
 	private:
-		static int			Max(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth);
-		static int			Min(char grid[SIZE_GRID][SIZE_GRID], unsigned int const depth);
+							Ia_player(short grid[SIZE_GRID][SIZE_GRID]);
+		short				m_grid[SIZE_GRID][SIZE_GRID];
+		static int const	start_min;
+		static int const	start_max;
+		static int const	win;
+		bool				haveWin(unsigned int const y, unsigned int const x, short const val) const;
+		int					eval(bool const retHaveWin, char const player) const;
+		int					max(int const depth, unsigned int const y, unsigned int const x);
+		int					min(int const depth, unsigned int const y, unsigned int const x);
 };
 
 #endif
