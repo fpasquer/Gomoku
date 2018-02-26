@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:25:51 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 11:44:03 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/26 13:24:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GOMOKU_CLIENT_HPP
 # define GOMOKU_CLIENT_HPP
 
-# define INIT_DEEP 5
+# define INIT_DEEP 2
 # define MAX_DEEP 10
 # define SIZE_BUFF 7
 # define MIN_LINES SIZE_GRID * 2 + 1 + 2
