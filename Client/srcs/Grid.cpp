@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/27 15:05:39 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/27 15:18:25 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,48 +197,6 @@ void						Grid::setUnavalable(unsigned int const y_tmp,
 void						Grid::setAvailable(unsigned int const y_tmp,
 		unsigned int const x_tmp, short const val, char const unpossible2)
 {
-	// std::ofstream			file("tata", std::ios::app);
-	// short					c;
-	// FreeThree				freeThree(*this);
-	// unsigned int			y;
-	// unsigned int			x;
-	// unsigned int			decalage;
-	// unsigned int			end;
-
-	// end = (DEPTH_FREETHREE + 1) * 2 + 1;
-	// for (y = y_tmp - DEPTH_FREETHREE - 1, x = x_tmp - DEPTH_FREETHREE - 1, decalage = 0; decalage < end; decalage++)//check gauche haut bas droit
-	// {
-	// 	if (y + decalage == y_tmp && x + decalage == x_tmp)
-	// 		continue ;
-	// 	if (y + decalage < SIZE_GRID && x + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x + decalage, val) == true && this->getValue(c, x + decalage, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
-	// 		m_cell[y + decalage][x + decalage] = SET_PERM(m_cell[y + decalage][x + decalage], unpossible2);
-
-	// }
-	// for (y = y_tmp - DEPTH_FREETHREE - 1, x = x_tmp, decalage = 0; decalage < end; decalage++)//check haut bas
-	// {
-	// 	if (y + decalage == y_tmp)
-	// 		continue ;
-	// 	if (y + decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x, val) == true && this->getValue(c, x, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
-	// 	{
-	// 		m_cell[y + decalage][x] = SET_PERM(m_cell[y + decalage][x], unpossible2);
-	// 		file << "y = " <<  y << " x = " << x <<std::endl;
-	// 	}
-	// }
-	// for (y = y_tmp - DEPTH_FREETHREE - 1, x = x_tmp + DEPTH_FREETHREE + 1, decalage = 0; decalage < end; decalage++)//check Haut droit bas gauche
-	// {
-	// 	if (y + decalage == y_tmp && x - decalage == x_tmp)
-	// 		continue ;
-	// 	if (y + decalage < SIZE_GRID && x - decalage < SIZE_GRID && freeThree.updateFreeThree(y + decalage, x - decalage, val) == true && this->getValue(c, x - decalage, y + decalage) == true && (GET_PERM(c) & unpossible2) != 0)
-	// 		m_cell[y + decalage][x - decalage] = SET_PERM(m_cell[y + decalage][x - decalage], unpossible2);
-	// }
-	// for (y = y_tmp, x = x_tmp  - DEPTH_FREETHREE - 1 , decalage = 0; decalage < end; decalage++)//check gauche droit
-	// {
-	// 	if (x + decalage == x_tmp)
-	// 		continue ;
-	// 	if (x + decalage < SIZE_GRID && freeThree.updateFreeThree(y, x + decalage, val) == true && this->getValue(c, x + decalage, y) == true && (GET_PERM(c) & unpossible2) != 0)
-	// 		m_cell[y][x + decalage] = SET_PERM(m_cell[y][x + decalage], unpossible2);
-	// }
-
 	short					c;
 	short					other_perm;
 	char					other_val;
@@ -254,7 +212,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp - 3, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp, x_tmp - 3, other_val) == false)
 			m_cell[y_tmp][x_tmp - 3] = SET_PERM(m_cell[y_tmp][x_tmp - 3], other_perm);
-		if (this->getValue(c, x_tmp - 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp, x_tmp - 4, other_val) == false)
 			m_cell[y_tmp][x_tmp - 4] = SET_PERM(m_cell[y_tmp][x_tmp - 4], other_perm);
 	}
@@ -265,7 +223,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp - 3, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 3, x_tmp - 3, other_val) == false)
 			m_cell[y_tmp - 3][x_tmp - 3] = SET_PERM(m_cell[y_tmp - 3][x_tmp - 3], other_perm);
-		if (this->getValue(c, x_tmp - 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 4, x_tmp - 4, other_val) == false)
 			m_cell[y_tmp - 4][x_tmp - 4] = SET_PERM(m_cell[y_tmp - 4][x_tmp - 4], other_perm);
 	}
@@ -276,7 +234,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 3, x_tmp, other_val) == false)
 			m_cell[y_tmp - 3][x_tmp] = SET_PERM(m_cell[y_tmp - 3][x_tmp], other_perm);
-		if (this->getValue(c, x_tmp, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 4, x_tmp, other_val) == false)
 			m_cell[y_tmp - 4][x_tmp] = SET_PERM(m_cell[y_tmp - 4][x_tmp], other_perm);
 	}
@@ -287,7 +245,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp + 3, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 3, x_tmp + 3, other_val) == false)
 			m_cell[y_tmp - 3][x_tmp + 3] = SET_PERM(m_cell[y_tmp - 3][x_tmp + 3], other_perm);
-		if (this->getValue(c, x_tmp + 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp - 4, x_tmp + 4, other_val) == false)
 			m_cell[y_tmp - 4][x_tmp + 4] = SET_PERM(m_cell[y_tmp - 4][x_tmp + 4], other_perm);
 	}
@@ -298,7 +256,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp + 3, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp, x_tmp + 3, other_val) == false)
 			m_cell[y_tmp][x_tmp + 3] = SET_PERM(m_cell[y_tmp][x_tmp + 3], other_perm);
-		if (this->getValue(c, x_tmp + 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp, x_tmp + 4, other_val) == false)
 			m_cell[y_tmp][x_tmp + 4] = SET_PERM(m_cell[y_tmp][x_tmp + 4], other_perm);
 	}
@@ -309,7 +267,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp + 3, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 3, x_tmp + 3, other_val) == false)
 			m_cell[y_tmp + 3][x_tmp + 3] = SET_PERM(m_cell[y_tmp + 3][x_tmp + 3], other_perm);
-		if (this->getValue(c, x_tmp + 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 4, x_tmp + 4, other_val) == false)
 			m_cell[y_tmp + 4][x_tmp + 4] = SET_PERM(m_cell[y_tmp + 4][x_tmp + 4], other_perm);
 	}
@@ -320,7 +278,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 3, x_tmp, other_val) == false)
 			m_cell[y_tmp + 3][x_tmp] = SET_PERM(m_cell[y_tmp + 3][x_tmp], other_perm);
-		if (this->getValue(c, x_tmp, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 4, x_tmp, other_val) == false)
 			m_cell[y_tmp + 4][x_tmp] = SET_PERM(m_cell[y_tmp + 4][x_tmp], other_perm);
 	}
@@ -331,7 +289,7 @@ void						Grid::setAvailable(unsigned int const y_tmp,
 		if (this->getValue(c, x_tmp - 3, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 3, x_tmp - 3, other_val) == false)
 			m_cell[y_tmp + 3][x_tmp - 3] = SET_PERM(m_cell[y_tmp + 3][x_tmp - 3], other_perm);
-		if (this->getValue(c, x_tmp - 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
+		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
 				freeThree.checkFreeThree(y_tmp + 4, x_tmp - 4, other_val) == false)
 			m_cell[y_tmp + 4][x_tmp - 4] = SET_PERM(m_cell[y_tmp + 4][x_tmp - 4], other_perm);
 	}
