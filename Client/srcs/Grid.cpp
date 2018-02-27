@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/27 15:18:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/27 16:34:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ bool						Grid::play(Player_ia &player)
 		m_cell[m_last_y][m_last_x] = SET_VAL(m_cell[m_last_y][m_last_x], val);
 		this->checkCaptures(player);
 		this->setUnavalable(m_last_y, m_last_x, val, unpossible);
-		this->setAvailable(m_last_y, m_last_x, val,
-				(unpossible == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
+		this->setAvailable(m_last_y, m_last_x, val);
 		return (true);
 	}
 	return (false);
@@ -194,109 +193,81 @@ void						Grid::setUnavalable(unsigned int const y_tmp,
 	}
 }
 
-void						Grid::setAvailable(unsigned int const y_tmp,
-		unsigned int const x_tmp, short const val, char const unpossible2)
+void						Grid::checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
+		unsigned int const y2, unsigned int const x2, short const other_perm, short const other_val)
 {
+	short					c;
+	FreeThree				freeThree(*this);
+
+	if (this->getValue(c, x1, y1) == true && (GET_PERM(c) & other_perm) != 0 &&
+			freeThree.checkFreeThree(y1, x1, other_val) == false)
+		m_cell[y1][x1] = SET_PERM(m_cell[y1][x1], other_perm);
+	if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x2, y2) == true && (GET_PERM(c) & other_perm) != 0 &&
+			freeThree.checkFreeThree(y2, x2, other_val) == false)
+		m_cell[y2][x2] = SET_PERM(m_cell[y2][x2], other_perm);
+}
+
+void						Grid::setAvailable(unsigned int const y_tmp,
+		unsigned int const x_tmp, short const val)
+{
+	unsigned int			y;
+	unsigned int			x;
 	short					c;
 	short					other_perm;
 	char					other_val;
 	FreeThree				freeThree(*this);
-	std::ofstream			file("tata", std::ios::app);
 
 	other_val = GET_VAL(val) == PLAYER1 ? PLAYER2 : PLAYER1;
 	other_perm = GET_PERM(val) == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
 	
 	//check gauche
-	if (this->getValue(c, x_tmp - 2, y_tmp) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp - 1, y_tmp) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp - 3, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp, x_tmp - 3, other_val) == false)
-			m_cell[y_tmp][x_tmp - 3] = SET_PERM(m_cell[y_tmp][x_tmp - 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp, x_tmp - 4, other_val) == false)
-			m_cell[y_tmp][x_tmp - 4] = SET_PERM(m_cell[y_tmp][x_tmp - 4], other_perm);
-	}
+	for (x = 1; this->getValue(c, x_tmp - x, y_tmp) == true && GET_VAL(c) == other_val; x++)
+		;
+	if (x >= 3)
+		this->checkFreethreeAgent(y_tmp, x_tmp - x, y_tmp, x_tmp - (x + 1), other_perm, other_val);
 
 	//check haut gauche
-	if (this->getValue(c, x_tmp - 2, y_tmp - 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp - 1, y_tmp - 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp - 3, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 3, x_tmp - 3, other_val) == false)
-			m_cell[y_tmp - 3][x_tmp - 3] = SET_PERM(m_cell[y_tmp - 3][x_tmp - 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 4, x_tmp - 4, other_val) == false)
-			m_cell[y_tmp - 4][x_tmp - 4] = SET_PERM(m_cell[y_tmp - 4][x_tmp - 4], other_perm);
-	}
+	for (y = 1, x = 1; this->getValue(c, x_tmp - x, y_tmp - y) == true && GET_VAL(c) == other_val; y++, x++)
+		;
+	if (x >= 3 && y >= 3)
+		this->checkFreethreeAgent(y_tmp - y, x_tmp - x, y_tmp - (y + 1), x_tmp - (x + 1), other_perm, other_val);
 
 	//check haut
-	if (this->getValue(c, x_tmp, y_tmp - 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp, y_tmp - 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 3, x_tmp, other_val) == false)
-			m_cell[y_tmp - 3][x_tmp] = SET_PERM(m_cell[y_tmp - 3][x_tmp], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 4, x_tmp, other_val) == false)
-			m_cell[y_tmp - 4][x_tmp] = SET_PERM(m_cell[y_tmp - 4][x_tmp], other_perm);
-	}
+	for (y = 1; this->getValue(c, x_tmp, y_tmp - y) == true && GET_VAL(c) == other_val; y++)
+		;
+	if (y >= 3)
+		this->checkFreethreeAgent(y_tmp - y, x_tmp, y_tmp - (y + 1), x_tmp, other_perm, other_val);
 
 	//check haut droite
-	if (this->getValue(c, x_tmp + 2, y_tmp - 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp + 1, y_tmp - 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp + 3, y_tmp - 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 3, x_tmp + 3, other_val) == false)
-			m_cell[y_tmp - 3][x_tmp + 3] = SET_PERM(m_cell[y_tmp - 3][x_tmp + 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp - 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - 4, x_tmp + 4, other_val) == false)
-			m_cell[y_tmp - 4][x_tmp + 4] = SET_PERM(m_cell[y_tmp - 4][x_tmp + 4], other_perm);
-	}
+	for (y = 1, x = 1; this->getValue(c, x_tmp + x, y_tmp - y) == true && GET_VAL(c) == other_val; y++, x++)
+		;
+	if (y >= 3 && x >= 3)
+		this->checkFreethreeAgent(y_tmp - y, x_tmp + x, y_tmp - (y + 1), x_tmp + (x + 1), other_perm, other_val);
 
 	//check droite
-	if (this->getValue(c, x_tmp + 2, y_tmp) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp + 1, y_tmp) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp + 3, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp, x_tmp + 3, other_val) == false)
-			m_cell[y_tmp][x_tmp + 3] = SET_PERM(m_cell[y_tmp][x_tmp + 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp, x_tmp + 4, other_val) == false)
-			m_cell[y_tmp][x_tmp + 4] = SET_PERM(m_cell[y_tmp][x_tmp + 4], other_perm);
-	}
+	for (x = 1; this->getValue(c, x_tmp + x, y_tmp) == true && GET_VAL(c) == other_val; x++)
+		;
+	if (x >= 3)
+		this->checkFreethreeAgent(y_tmp, x_tmp + x, y_tmp, x_tmp + (x + 1), other_perm, other_val);
 
 	//check bas droite
-	if (this->getValue(c, x_tmp + 2, y_tmp + 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp + 1, y_tmp + 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp + 3, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 3, x_tmp + 3, other_val) == false)
-			m_cell[y_tmp + 3][x_tmp + 3] = SET_PERM(m_cell[y_tmp + 3][x_tmp + 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp + 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 4, x_tmp + 4, other_val) == false)
-			m_cell[y_tmp + 4][x_tmp + 4] = SET_PERM(m_cell[y_tmp + 4][x_tmp + 4], other_perm);
-	}
+	for (y = 1, x = 1; this->getValue(c, x_tmp + x, y_tmp + y) == true && GET_VAL(c) == other_val; y++, x++)
+		;
+	if (y >= 3 && x >= 3)
+		this->checkFreethreeAgent(y_tmp + y, x_tmp + x, y_tmp + (y + 1), x_tmp + (x + 1), other_perm, other_val);
 
 	//check bas
-	if (this->getValue(c, x_tmp, y_tmp + 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp, y_tmp + 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 3, x_tmp, other_val) == false)
-			m_cell[y_tmp + 3][x_tmp] = SET_PERM(m_cell[y_tmp + 3][x_tmp], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 4, x_tmp, other_val) == false)
-			m_cell[y_tmp + 4][x_tmp] = SET_PERM(m_cell[y_tmp + 4][x_tmp], other_perm);
-	}
+	for (y = 1; this->getValue(c, x_tmp, y_tmp + y) == true && GET_VAL(c) == other_val; y++)
+		;
+	if (y >= 3)
+		this->checkFreethreeAgent(y_tmp + y, x_tmp, y_tmp + (y + 1), x_tmp, other_perm, other_val);
 
 	//check bas gauche
-	if (this->getValue(c, x_tmp - 2, y_tmp + 2) == true && GET_VAL(c) == other_val && this->getValue(c, x_tmp - 1, y_tmp + 1) == true && GET_VAL(c) == other_val)
-	{
-		if (this->getValue(c, x_tmp - 3, y_tmp + 3) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 3, x_tmp - 3, other_val) == false)
-			m_cell[y_tmp + 3][x_tmp - 3] = SET_PERM(m_cell[y_tmp + 3][x_tmp - 3], other_perm);
-		if (GET_VAL(c) == EMPTY_CELL && this->getValue(c, x_tmp - 4, y_tmp + 4) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + 4, x_tmp - 4, other_val) == false)
-			m_cell[y_tmp + 4][x_tmp - 4] = SET_PERM(m_cell[y_tmp + 4][x_tmp - 4], other_perm);
-	}
+	for (y = 1, x = 1; this->getValue(c, x_tmp - x, y_tmp + y) == true && GET_VAL(c) == other_val; y++, x++)
+		;
+	if (y >= 3 && x >= 3)
+		this->checkFreethreeAgent(y_tmp + y, x_tmp - x, y_tmp + (y + 1), x_tmp - (x + 1), other_perm, other_val);
 
-	file.close();
-	return ;
-	c = unpossible2;
 }
 
 bool						Grid::play(Player_human &player)
@@ -313,7 +284,7 @@ bool						Grid::play(Player_human &player)
 		m_cell[player.getY()][player.getX()] = SET_VAL(m_cell[player.getY()][player.getX()], GET_VAL(player.getValue()));
 		this->checkCaptures(player);
 		this->setUnavalable(player.getY(), player.getX(), player.getValue(), player.getUnpossible());
-		this->setAvailable(player.getY(), player.getX(), player.getValue(), player.getUnpossible() == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1);
+		this->setAvailable(player.getY(), player.getX(), player.getValue());
 		m_last_x = player.getX();
 		m_last_y = player.getY();
 		if (player.isOnline() != OFFLINE)

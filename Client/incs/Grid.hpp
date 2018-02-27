@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/26 12:25:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/27 16:33:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ class Grid
 		t_way				checkBottomLeft(Player &player);
 		bool				play(Player_ia &player);
 		void				setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible);
-		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible2);
+		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
+		void				checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
+				unsigned int const y2, unsigned int const x2, short const other_perm, short const other_val);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		short				m_cell[SIZE_GRID][SIZE_GRID];
