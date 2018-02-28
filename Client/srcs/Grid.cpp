@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 13:42:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/28 14:17:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool						Grid::checkIaWin(Player_human const &player) const
 	if (player.isOnline() == OFFLINE)
 		return (false);
 	return (this->haveWin(m_ia.getY(), m_ia.getX(), m_ia.getValue(),
-			m_ia.getCapture()));
+		m_ia.getCapture()));
 }
 
 bool						Grid::play(Player_ia &player)
