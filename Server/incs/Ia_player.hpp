@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:29:31 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 11:52:30 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:59:43 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define IA_PLAYER_HPP
 
 # include "../../Gomoku.hpp"
-# include "../incs/Grid.hpp"
 # include <stdlib.h>
 # include "CountWin.hpp"
 # include <iostream>
