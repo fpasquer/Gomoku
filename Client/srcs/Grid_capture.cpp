@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/18 22:07:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:25:42 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Grid::t_list_way const		Grid::m_list_way[] = {
 	{NONE, NULL}
 };
 
-t_way						Grid::checkLeft(Player &player)
+t_way						Grid::checkLeft(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -44,7 +44,7 @@ t_way						Grid::checkLeft(Player &player)
 	return (LEFT);
 }
 
-t_way						Grid::checkLeftTop(Player &player)
+t_way						Grid::checkLeftTop(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -64,7 +64,7 @@ t_way						Grid::checkLeftTop(Player &player)
 	return (LEFT_TOP);
 }
 
-t_way						Grid::checkTop(Player &player)
+t_way						Grid::checkTop(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -84,7 +84,7 @@ t_way						Grid::checkTop(Player &player)
 	return (TOP);
 }
 
-t_way						Grid::checkTopRight(Player &player)
+t_way						Grid::checkTopRight(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -104,7 +104,7 @@ t_way						Grid::checkTopRight(Player &player)
 	return (TOP_RIGHT);
 }
 
-t_way						Grid::checkRight(Player &player)
+t_way						Grid::checkRight(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -124,7 +124,7 @@ t_way						Grid::checkRight(Player &player)
 	return (RIGHT);
 }
 
-t_way						Grid::checkRightBottom(Player &player)
+t_way						Grid::checkRightBottom(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -144,7 +144,7 @@ t_way						Grid::checkRightBottom(Player &player)
 	return (RIGHT_BOTTOM);
 }
 
-t_way						Grid::checkBottom(Player &player)
+t_way						Grid::checkBottom(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -164,7 +164,7 @@ t_way						Grid::checkBottom(Player &player)
 	return (BOTTOM);
 }
 
-t_way						Grid::checkBottomLeft(Player &player)
+t_way						Grid::checkBottomLeft(Player const &player)
 {
 	char					val;
 	unsigned int			y;
