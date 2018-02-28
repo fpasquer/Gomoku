@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 11:53:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/28 13:58:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ class Grid
 		t_way				checkBottomLeft(Player const &player);
 		bool				play(Player_ia &player);
 		void				destroyFreeThree(Player const &player);
+		void				captureFreethree(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 		void				setUnavailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 		void				checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
