@@ -6,13 +6,14 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/21 13:21:33 by amaindro         ###   ########.fr        #
+#    Updated: 2018/02/28 11:55:52 by amaindro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Gomoku_server
 
-SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_abstract.cpp Fork_ia.cpp Client.cpp Ia_player.cpp Fork_lan.cpp Grid.cpp Grid_countStone.cpp)
+SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_abstract.cpp Fork_ia.cpp	\
+			Client.cpp Ia_player.cpp Fork_lan.cpp CountWin.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/

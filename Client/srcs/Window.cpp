@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/20 11:31:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 15:13:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ t_color const				Window::m_color[] = {
 	{0, 0, 0}
 };
 
-							Window::Window(void) : m_border(SIZE_GRID * 4 + 1, '-')
+void						Window::write_title(void) const
+{
+	wclear(m_win_title);
+	mvwprintw(m_win_title, 1, 0, "      ********    ********    ***  ***    ********    **    **    **    **\n      ********    ********    ********    ********    **   **     **    **\n      **    **    **    **    ** ** **    **    **    **  **      **    **\n      **          **    **    **    **    **    **    ** **       **    **\n      **  ****    **    **    **    **    **    **    ****        **    **\n      **  ****    **    **    **    **    **    **    ****        **    **\n      **    **    **    **    **    **    **    **    ** **       **    **\n      **    **    **    **    **    **    **    **    **  **      **    **\n      ********    ********    **    **    ********    **   **     ********\n      ********    ********    **    **    ********    **    **    ********");
+	box(m_win_title, ACS_VLINE, ACS_HLINE);
+	wrefresh(m_win_title);
+}
+
+							Window::Window(void) : m_last_grid(NULL), m_last_player(NULL), m_last_player_other(NULL), m_last_key(NULL), m_border(SIZE_GRID * 4 + 1, '-')
 {
 	unsigned int			i;
 
@@ -34,8 +42,11 @@ t_color const				Window::m_color[] = {
 		else if (m_lines < MIN_LINES)
 			throw Error("Window not enough hight");
 		m_win_left = subwin(stdscr, MIN_LINES, MIN_COLS, 0, 0);
-		if ((m_win_right = subwin(stdscr, MIN_LINES, MIN_COLS, 0, MIN_COLS)) == NULL || m_win_left == NULL)
+		m_win_title = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, 0, MIN_COLS);
+		if ((m_win_right = subwin(stdscr, HEIGHT_TITLE * 2, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL || m_win_left == NULL)
 			throw Error("Allocation window failled");
+		if ((m_win_refresh_each_loop = subwin(stdscr, HEIGHT_TITLE, MIN_COLS, HEIGHT_TITLE, MIN_COLS)) == NULL)
+			throw Error("Allocation window failled 2");
 	}
 	catch (std::exception const&e)
 	{
@@ -48,10 +59,12 @@ t_color const				Window::m_color[] = {
 	}
 	wclear(m_win_left);
 	wclear(m_win_right);
+	wclear(m_win_refresh_each_loop);
 	box(m_win_left, ACS_VLINE, ACS_HLINE);
 	box(m_win_right, ACS_VLINE, ACS_HLINE);
 	wrefresh(m_win_left);
 	wrefresh(m_win_right);
+	this->write_title();
 	curs_set(false);
 	for (i = 0; m_color[i].pair != 0; i++)
 		init_pair(m_color[i].pair, m_color[i].font, m_color[i].background);
@@ -113,7 +126,6 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	start_x = 1;
 	start_y = 1;
 	std::string				space(start_x, ' ');
-//	wclear(m_win_left); a voir si on clear ou pas
 	str = m_border + "\n" + space;
 	for (y = 0; y < SIZE_GRID; y++)
 	{
@@ -148,33 +160,76 @@ bool						Window::show_grid(Grid const &grid, Player_human const &player)
 	return (true);
 }
 
-bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key)
+void						Window::show_each_loop(Grid const &grid,Player_human const &player, std::string const &key) const
 {
+	char					buff[4];
 	unsigned int			i;
-	unsigned int			count;
+	unsigned int			count_line;
+	unsigned int			count_col;
+	unsigned int			count_dlr;
+	unsigned int			count_drl;
+	std::string				keys = "";
 
-	this->show_grid(grid, player);
-	wclear(m_win_right);
-	box(m_win_right, ACS_VLINE, ACS_HLINE);
+
 	for (i = 0; i < SIZE_BUFF && key[i] != '\0'; i++)
-		mvwprintw(m_win_right, i + 1, 1, "%d", key[i]);
-	mvwprintw(m_win_right, 10, 1, "x = %d", player.getX());
-	mvwprintw(m_win_right, 11, 1, "y = %d", player.getY());
-	mvwprintw(m_win_right, 13, 1, "Time = %f", grid.get_time_spend());
-	mvwprintw(m_win_right, 15, 1, "Deep = %u", player.getDeep());
-	mvwprintw(m_win_right, 16, 1, "ONLINE %s", player.isOnline() != OFFLINE ? "Yes" : "No");
-	mvwprintw(m_win_right, 18, 1, "Your turn %s", player.enable() == true ? "Yes" : "No");
-	mvwprintw(m_win_right, 19, 1, "Playe1 Capture(s) : %s", player.getCapture().c_str());
-	mvwprintw(m_win_right, 20, 1, "Playe2 Capture(s) : %s", grid.getCaptureIa().c_str());
-	grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 21, 1, "Player aligne line : %u", count);
-	grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 22, 1, "Player aligne col : %u", count);
-	grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 23, 1, "Player Left top right bottom col : %u", count);
-	grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count);
-	mvwprintw(m_win_right, 24, 1, "Player Right top left bottom col : %u", count);
+	{
+		snprintf(buff, sizeof(buff), "%d", key[i]);
+		keys.push_back(' ');
+		keys += buff;
+	}
+	count_line = (grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count_line) == false) ? 1 : count_line;
+	count_col = (grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count_col) == false) ? 1 : count_col;
+	count_dlr = (grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count_dlr) == false) ? 1 : count_dlr;
+	count_drl = (grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count_drl) == false) ? 1 : count_drl;
+	mvwprintw(m_win_refresh_each_loop, 1, 1, "Player y : %3d\n Player x : %3d\n Turn     : %3c\n\n Number stone LINE : %5u\n Number stone COL  : %5u\n Number Stone DLR  : %5u\n Number Stone DRL  : %5u\n\n Key :%20s",
+			player.getY(), player.getX(), GET_VAL(player.getValue()), count_line, count_col, count_dlr, count_drl, keys.c_str());
+	box(m_win_refresh_each_loop, ACS_VLINE, ACS_HLINE);
+	wrefresh(m_win_refresh_each_loop);
+
+}
+
+bool						Window::show_resize(void)
+{
+	if (m_last_grid == NULL || m_last_player == NULL || m_last_player_other == NULL)
+		return (false);
+	m_cols = COLS / 2;
+	m_lines = LINES;
+	wclear(m_win_refresh_each_loop);
+	wclear(m_win_left);
+	wclear(m_win_right);
+	return (this->show(*m_last_grid, *m_last_player, *m_last_key, *m_last_player_other));
+}
+
+bool						Window::show(Grid const &grid, Player_human const &player, std::string const &key, Player_human const &player_other)
+{
+
+	if (m_lines < MIN_LINES || m_cols < MIN_COLS)
+	{
+		clear();
+		printw("Window too small");
+		getch();
+		return (true);
+	}
+	this->show_grid(grid, player);
+	this->show_each_loop(grid, player, key);
+	if (player.isOnline() == OFFLINE)
+	{
+		if (GET_VAL(player.getValue()) == PLAYER1)
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+					grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), player_other.getCapture().c_str(), grid.getLastY(), grid.getLastX());
+		else
+			mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+					grid.get_time_spend(), player.getDeep(), player_other.getCapture().c_str(), player.getCapture().c_str(), grid.getLastY(), grid.getLastX());
+	}
+	else
+		mvwprintw(m_win_right, 13, 1, "Time  : %9.5f\n Depth : %3u\n\n Playe1 Capture(s) : %10s\n Playe2 Capture(s) : %10s\n\n Last stone y : %3u\n Last stone x : %3u",
+			grid.get_time_spend(), player.getDeep(), player.getCapture().c_str(), grid.getCaptureIa().c_str(), grid.getLastY(), grid.getLastX());
+	box(m_win_right, ACS_VLINE, ACS_HLINE);	
 	wrefresh(m_win_right);
+	m_last_grid = &grid;
+	m_last_key = &key;
+	m_last_player = &player;
+	m_last_player_other = &player_other;
 	return (true);
 }
 
@@ -183,6 +238,7 @@ int							Window::disconnected(void) const
 	clear();
 	printw("Your Opponnent is go on. Press any key to leave the program");
 	getch();
+	delete this;
 	return (0);
 }
 
@@ -190,6 +246,10 @@ int							Window::disconnected(void) const
 {
 	free(m_win_left);
 	free(m_win_right);
+	free(m_win_title);
+	free(m_win_refresh_each_loop);
+	m_win_refresh_each_loop = NULL;
+	m_win_title = NULL;
 	m_win_left = NULL;
 	m_win_right = NULL;
 	curs_set(true);

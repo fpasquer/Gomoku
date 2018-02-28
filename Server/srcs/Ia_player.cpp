@@ -6,134 +6,176 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/23 16:31:08 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:52:36 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Ia_player.hpp"
+//#define DEBUG
 
-void						Ia_player::play
-		(short grid[SIZE_GRID][SIZE_GRID], unsigned int const depth, unsigned int &max_x, unsigned int &max_y)
+int const					Ia_player::start_min = 10000;
+int const					Ia_player::start_max = -10000;
+int const					Ia_player::win = 1;
+
+							Ia_player::Ia_player(short grid[SIZE_GRID][SIZE_GRID])
 {
-	int		max = -10000;
-	int		tmp;
-	short	val;
-	Grid	grid_class(grid);
-
-	for(int y = 0; y < SIZE_GRID; y++)//a remplacer par un tableau des cases vides
-	{
-		for(int x = 0; x < SIZE_GRID; x++)
-		{
-			grid_class.getValue(val, x, y);
-			if(val == EMPTY_CELL)
-			{
-				grid_class.setValue('O', x, y);
-				if(grid_class.haveWin(y, x, 'O', "") == true)
-				{
-					std::cout << "START x :" << x << " y :" << y <<std::endl;
-					std::cout << "START won" <<std::endl;
-					max_y = y;
-					max_x = x;
-					return ;
-				}
-				tmp = Ia_player::Min(grid_class, depth - 1, grid);
-
-				if(tmp > max)
-				{
-					max = tmp;
-					max_y = y;
-					max_x = x;
-				}
-				grid_class.setValue(EMPTY_CELL, x, y);
-			}
-		}
-	}
+	unsigned int			y_ia;
+	unsigned int			x_ia;
+	
+	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
+		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
+			m_grid[y_ia][x_ia] = grid[y_ia][x_ia];
 }
 
-int							Ia_player::Max
-		(Grid &grid_class, unsigned int const depth, short grid[SIZE_GRID][SIZE_GRID])
+void						Ia_player::play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y, int const depth)
 {
-	//std::cout << "MAX" <<std::endl;
-	if(depth == 0)
+#ifdef RAND
+	do
 	{
-		//std::cout << "Depth" <<std::endl;
-		return (0);
-	}
+		x = rand() % SIZE_GRID;
+		y = rand() % SIZE_GRID;
+	}	while (grid[y][x] != EMPTY_CELL);
+#else
+	unsigned int			y_ia;
+	unsigned int			x_ia;
+	int						max = Ia_player::start_max;
+	int						tmp;
+	Ia_player				ia_player(grid);
 
-	int		max = -10000;
-	int		tmp;
-	short	val;
-
-	for(int y = 0; y < SIZE_GRID; y++)
-	{
-		for(int x = 0; x < SIZE_GRID; x++)
+	std::cout << "Line : " << __LINE__ << std::endl << "\t";
+	ia_player.show(0, 0);
+	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
+		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
-			grid_class.getValue(val, x, y);
-			if(val == EMPTY_CELL)
+			if (GET_VAL(ia_player.m_grid[y_ia][x_ia]) != EMPTY_CELL ||
+					(GET_PERM(ia_player.m_grid[y_ia][x_ia]) & CAN_NOT_PLAY2) != 0)
+				continue ;
+			ia_player.m_grid[y_ia][x_ia] = SET_VAL(ia_player.m_grid[y_ia][x_ia], PLAYER2);
+#ifdef DEBUG
+				std::cout << "Line : " << __LINE__ << std::endl << "\t";
+				ia_player.show(y_ia, x_ia);
+#endif
+			if ((tmp = ia_player.min(depth - 1, y_ia, x_ia)) > max)
 			{
-				grid_class.setValue('O', x, y);
-				//std::cout << "MAX x :" << x << " y :" << y <<std::endl;
-				if(grid_class.haveWin(y, x, 'O', "") == true)
-				{
-					grid_class.setValue(EMPTY_CELL, x, y);
-					std::cout << "MAX won" <<std::endl;
-					return (1 * depth);
-				}
-				tmp = Ia_player::Min(grid_class, depth - 1, grid);
-
-				if(tmp > max)
-				{
-					max = tmp;
-				}
-				grid_class.setValue(EMPTY_CELL, x, y);
+				max = tmp;
+				y = y_ia;
+				x = x_ia;
 			}
+			ia_player.m_grid[y_ia][x_ia] = SET_VAL(ia_player.m_grid[y_ia][x_ia], EMPTY_CELL);
 		}
-	}
-
-	return max;
-
+	std::cout << "Line : " << __LINE__ << std::endl << "\t";
+	ia_player.show(0, 0);
+	std::cout << std::endl<< std::endl;
+#endif
 }
 
-int							Ia_player::Min
-		(Grid &grid_class, unsigned int const depth, short grid[SIZE_GRID][SIZE_GRID])
+int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x)
 {
-	//std::cout << "MIN" <<std::endl;
-	if(depth == 0)
-	{
-		//std::cout << "Depth" <<std::endl;
-		return (0);
-	}
+	bool					retHaveWin = false;
+	unsigned int			y_ia;
+	unsigned int			x_ia;
+	int						min = Ia_player::start_min;
+	int						tmp;
 
-	int		min = 10000;
-	int		tmp;
-	short	val;
-
-	for(int y = 0; y < SIZE_GRID; y++)
-	{
-		for(int x = 0; x < SIZE_GRID; x++)
+	if ((retHaveWin = this->haveWin(y, x, PLAYER2)) == true || depth <= 0)
+		return (this->eval(retHaveWin, PLAYER2, depth));
+	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
+		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
-			grid_class.getValue(val, x, y);
-			if(val == EMPTY_CELL)
-			{
-				grid_class.setValue('X', x, y);
-				if(grid_class.haveWin(y, x, 'X', "") == true)
-				{
-					grid_class.setValue(EMPTY_CELL, x, y);
-					std::cout << "MIN x :" << x << " y :" << y <<std::endl;
-					std::cout << "MIN won" <<std::endl;
-					return (-1 * depth);
-				}
-				tmp = Ia_player::Max(grid_class, depth - 1, grid);
-
-				if(tmp < min)
-				{
-					min = tmp;
-				}
-				grid_class.setValue(EMPTY_CELL, x, y);
-			}
+			if (GET_VAL(this->m_grid[y_ia][x_ia]) != EMPTY_CELL ||
+					(GET_PERM(this->m_grid[y_ia][x_ia]) & CAN_NOT_PLAY1) != 0)
+				continue ;
+			this->m_grid[y_ia][x_ia] = SET_VAL(this->m_grid[y_ia][x_ia], PLAYER1);
+#ifdef DEBUG
+				std::cout << "Line : " << __LINE__ << std::endl << "\t";
+				this->show(y_ia, x_ia);
+#endif
+			if ((tmp = this->max(depth -1, y_ia, x_ia)) < min)
+				min = tmp;
+			this->m_grid[y_ia][x_ia] = SET_VAL(this->m_grid[y_ia][x_ia], EMPTY_CELL);
 		}
+	return (min);
+}
+
+int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x)
+{
+	bool					retHaveWin = false;
+	unsigned int			y_ia;
+	unsigned int			x_ia;
+	int						max = Ia_player::start_max;
+	int						tmp;
+
+	if ((retHaveWin = this->haveWin(y, x, PLAYER1)) == true || depth <= 0)
+		return (this->eval(retHaveWin, PLAYER1, depth));
+	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
+		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
+		{
+			if (GET_VAL(this->m_grid[y_ia][x_ia]) != EMPTY_CELL ||
+					(GET_PERM(this->m_grid[y_ia][x_ia]) & CAN_NOT_PLAY2) != 0)
+				continue ;
+				this->m_grid[y_ia][x_ia] = SET_VAL(this->m_grid[y_ia][x_ia], PLAYER2);
+#ifdef DEBUG
+				std::cout << "Line : " << __LINE__ << std::endl << "\t";
+				this->show(y_ia, x_ia);
+#endif
+			if ((tmp = this->min(depth -1, y_ia, x_ia)) > max)
+				max = tmp;
+			this->m_grid[y_ia][x_ia] = SET_VAL(this->m_grid[y_ia][x_ia], EMPTY_CELL);
+		}
+	return (max);
+}
+
+bool						Ia_player::haveWin(unsigned int const y, unsigned int const x, short const val) const
+{
+	unsigned int			count1;
+	unsigned int			count2;
+
+	CountWin::countLeft(m_grid, y, x, val, count1);
+	CountWin::countRight(m_grid, y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	CountWin::countTop(m_grid, y, x, val, count1);
+	CountWin::countBottom(m_grid, y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	CountWin::countLeftTop(m_grid, y, x, val, count1);
+	CountWin::countRightBottom(m_grid, y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	CountWin::countTopRight(m_grid, y, x, val, count1);
+	CountWin::countBottomLeft(m_grid, y, x, val, count2);
+	if (count1 + count2 + 1 >= NB_STONE_WIN)
+		return (true);
+	return (false);
+}
+
+void						Ia_player::show(unsigned int const y, unsigned int const x) const
+{
+	char					buff[5];
+	unsigned int			y_ia;
+	unsigned int			x_ia;
+	std::string				str = "";
+
+	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
+	{
+		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
+		{
+			if (y == y_ia && x == x_ia)
+				str += "\033[31m";
+			if (snprintf(buff, 5, "%4d", (int)m_grid[y_ia][x_ia]) > 0)
+				str += m_grid[y_ia][x_ia] == ' ' ? "  . " : buff;
+			if (y == y_ia && x == x_ia)
+				str += "\033[0m";
+		}
+		str += "\n\t";
 	}
+	std::cout << str;
+}
 
-	return min;
+int							Ia_player::eval(bool const retHaveWin, char const player, int const depth) const
+{
+	int						ret;
 
+	ret = retHaveWin == true ? Ia_player::win : 0;
+	return (player == PLAYER1 ? ret * -1 * (depth + 1): ret * (depth + 1));
 }

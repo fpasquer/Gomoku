@@ -1,12 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/21 12:59:56 by fpasquer         ###   ########.fr        #
+#    Updated: 2018/02/26 12:24:48 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +12,7 @@ NAME = Gomoku_client
 
 SRC_NAME = $(sort main.cpp Error.cpp Grid.cpp Key.cpp Player.cpp Grid_capture.cpp	\
 			Player_human.cpp Player_ia.cpp Window.cpp Client.cpp FreeThree.cpp		\
-			Grid_countStone.cpp)
+			Grid_countStone.cpp CountWin.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/
@@ -25,7 +23,7 @@ OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC = $(addprefix -I,$(INC_PATH))
 
 CC = clang++
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = $(addprefix -L,)
 LDLIBS = -I/usr/local/opt/qt/include -lncurses
 

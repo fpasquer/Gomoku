@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:22:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 16:23:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/24 15:12:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,58 @@
 #include <signal.h>
 #include <exception>
 
+Window						*get_win(void)
+{
+	static Window			*win = NULL;
+	
+	if (win == NULL)
+	{
+		try
+		{
+			if ((win = new Window) == NULL)
+				throw Error("Error window create");
+		}
+		catch (std::exception const&e)
+		{
+			clear();
+			printw("%s", e.what());
+			getch();
+			exit(-1);
+		}
+	}
+	return (win);
+}
+
+typedef struct				s_sig_func
+{
+	int						sig;
+	void					(*f)(int);
+}							t_sig_func;
+
+void						resize_win(int val)
+{
+	Window					*win = get_win();
+
+	win->show_resize();
+	val = (int)val;
+}
+
+void						init_signaux(void)
+{
+	unsigned int			i;
+	t_sig_func const		sig_funcs[] = {
+		{SIGWINCH, resize_win},
+		{0, NULL}
+	};
+
+	for (i = 0; sig_funcs[i].f != NULL; i++)
+		if (signal(sig_funcs[i].sig, sig_funcs[i].f) == SIG_ERR)
+		{
+			std::cout << "Signal error : " << strerror(errno) << std::endl;
+			exit(-1);
+		}
+}
+
 int							main(int argc, char **argv)
 {
 	int						port;
@@ -32,16 +84,17 @@ int							main(int argc, char **argv)
 
 	std::string				key = "";
 	Grid					grid;
-	Window					win;
+	Window					*win = get_win() ;
+	init_signaux();
 
 	player = &player1;
 	while (key != KEY_ESC_)
 	{
 		if (grid.updateGrid(*player) == false)
-			return (win.disconnected());
-		win.show(grid, *player, key);
+			return (win->disconnected());
+		win->show(grid, *player, key, (player == &player1) ? player2 : player1);
 		if (Key::getKey(key) == false)
-			return (-1);
+			break ;
 		if (player->checkKeySelect(key) == true && grid.play(*player) == true)
 		{
 			if (grid.haveWin(*player) == true || grid.checkIaWin(*player) == true)
@@ -50,5 +103,6 @@ int							main(int argc, char **argv)
 				player = (player == &player1) ? &player2 : &player1;
 		}
 	}
+	delete win;
 	return (0);
 }

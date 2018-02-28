@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 16:21:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/02/27 16:33:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <iostream>
 # include "Client.hpp"
 # include "../../Gomoku.hpp"
+# include "CountWin.hpp"
 
 typedef enum				e_way
 {
@@ -47,14 +48,6 @@ class Grid
 		bool				getDiagLeftTopRightBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				getDiagRightTopLeftBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		std::string			getCaptureIa(void) const;
-		bool				countLeft(Player const &player, unsigned int &count) const;
-		bool				countLeftTop(Player const &player, unsigned int &count) const;
-		bool				countTop(Player const &player, unsigned int &count) const;
-		bool				countTopRight(Player const &player, unsigned int &count) const;
-		bool				countRight(Player const &player, unsigned int &count) const;
-		bool				countRightBottom(Player const &player, unsigned int &count) const;
-		bool				countBottom(Player const &player, unsigned int &count) const;
-		bool				countBottomLeft(Player const &player, unsigned int &count) const;
 		bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
@@ -86,7 +79,9 @@ class Grid
 		t_way				checkBottomLeft(Player &player);
 		bool				play(Player_ia &player);
 		void				setUnavalable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible);
-		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char const unpossible2);
+		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
+		void				checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
+				unsigned int const y2, unsigned int const x2, short const other_perm, short const other_val);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		short				m_cell[SIZE_GRID][SIZE_GRID];
