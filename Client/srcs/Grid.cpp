@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:01:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 16:12:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ bool						Grid::updateGrid(Player_human &player)
 
 bool						Grid::play(Player_human &player)
 {
+	size_t					len_capture;
 	unsigned int			x;
 	unsigned int			y;
 	unsigned int			deep;
@@ -118,6 +119,9 @@ bool						Grid::play(Player_human &player)
 			{
 				player.send_to_server(&deep, sizeof(deep));
 				player.send_to_server(m_cell, sizeof(m_cell));
+				player.send_to_server(&(len_capture = player.getCapture().size()), sizeof(len_capture));
+				player.send_to_server(&(len_capture = m_ia.getCapture().size()), sizeof(len_capture));
+
 			}
 			else if (player.isOnline() == ONLINE_LAN)
 			{

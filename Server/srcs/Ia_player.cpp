@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 11:59:15 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:36:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int const					Ia_player::win = 1;
 			m_grid[y_ia][x_ia] = grid[y_ia][x_ia];
 }
 
-void						Ia_player::play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, unsigned int &y, int const depth)
+void						Ia_player::play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x,
+				unsigned int &y, int const depth, size_t const nb_capture_player,
+				size_t const  nb_capture_ia)
 {
 #ifdef RAND
 	do
@@ -42,7 +44,7 @@ void						Ia_player::play(short grid[SIZE_GRID][SIZE_GRID], unsigned int &x, uns
 	int						tmp;
 	Ia_player				ia_player(grid);
 
-	std::cout << "Line : " << __LINE__ << std::endl << "\t";
+	std::cout << "Line : " << __LINE__ << " Player_capture : "<< nb_capture_player << " IA capture : " << nb_capture_ia << std::endl << "\t";
 	ia_player.show(0, 0);
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
