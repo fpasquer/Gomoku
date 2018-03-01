@@ -10,7 +10,7 @@
 
 NAME = Gomoku_client
 
-SRC_NAME = $(sort main.cpp Error.cpp Grid.cpp Key.cpp Player.cpp Grid_capture.cpp	\
+SRC_NAME = $(sort main.cpp Error.cpp Grid.cpp Key.cpp Player.cpp Captures.cpp		\
 			Player_human.cpp Player_ia.cpp Window.cpp Client.cpp FreeThree.cpp		\
 			Cell.cpp CountStone.cpp)
 SRC_PATH = ./srcs/

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/21 10:13:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:49:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FREE_THREE_HPP
 
 # include "Player.hpp"
-# include "Grid.hpp"
+# include "CountStone.hpp"
 
-class FreeThree
+class FreeThree : public CountStone
 {
 	public:
-							FreeThree(Grid const &grid);
+							FreeThree(void);
 		bool				checkFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 		bool				updateFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 
@@ -30,7 +30,6 @@ class FreeThree
 		}					t_checkFreet;
 		static t_checkFreet const
 							m_func[];
-		Grid const			m_grid;
 		bool				checkFTLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
 		bool				checkFTTopLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
 		bool				checkFTTop(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
