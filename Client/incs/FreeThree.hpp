@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 10:42:21 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 11:52:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define DEPTH_FREETHREE 3
 
-class FreeThree : public CountStone
+class FreeThree : public virtual CountStone
 {
 	protected:
 							FreeThree(void);

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cell.hpp                                           :+:      :+:    :+:   */
+/*   HaveWin.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/01 09:12:58 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 11:28:03 by fpasquer         ###   ########.fr       */
+/*   Created: 2018/03/01 11:33:37 by fpasquer          #+#    #+#             */
+/*   Updated: 2018/03/01 11:52:44 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CELL_HPP
-# define CELL_HPP
-# include "../../Gomoku.hpp"
+#ifndef HAVE_WIN_HPP
+# define HAVE_WIN_HPP
 
-class Cell
+# include "CountStone.hpp"
+# include "Player.hpp"
+
+class HaveWin : public virtual CountStone
 {
     public:
-                            Cell(void);
-        bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
-    protected:
-        short               m_cell[SIZE_GRID][SIZE_GRID];
-        static unsigned int	m_last_x;
-		static unsigned int	m_last_y;
+                            HaveWin();
+        bool				haveWin(Player const &player) const;
+        bool				haveWin(unsigned int const y, unsigned int const x,
+                short const val, std::string const &capture) const;
 };
 
 #endif

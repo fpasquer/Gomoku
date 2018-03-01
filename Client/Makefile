@@ -12,7 +12,7 @@ NAME = Gomoku_client
 
 SRC_NAME = $(sort main.cpp Error.cpp Grid.cpp Key.cpp Player.cpp Captures.cpp		\
 			Player_human.cpp Player_ia.cpp Window.cpp Client.cpp FreeThree.cpp		\
-			Cell.cpp CountStone.cpp)
+			Cell.cpp CountStone.cpp HaveWin.cpp)
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/
 INC_PATH = ./incs/

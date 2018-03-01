@@ -6,11 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:15:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:19:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 11:07:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Cell.hpp"
+
+unsigned int				Cell::m_last_x = SIZE_GRID;
+unsigned int				Cell::m_last_y = SIZE_GRID;
 
 							Cell::Cell(void)
 {
