@@ -6,21 +6,15 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 11:44:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 12:58:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:11:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/HaveWin.hpp"
+#include "../Tools_incs/HaveWin.hpp"
 
                             HaveWin::HaveWin(void) : CountStone()
 {
     
-}
-
-bool						HaveWin::haveWin(Player const &player) const
-{
-	return (this->haveWin(player.getY(), player.getX(), player.getValue(),
-			player.getCapture()));
 }
 
 bool						HaveWin::haveWin(unsigned int const y,

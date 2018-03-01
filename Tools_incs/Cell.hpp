@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:12:58 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 11:28:03 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:08:54 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CELL_HPP
 # define CELL_HPP
-# include "../../Gomoku.hpp"
+# include "Gomoku.hpp"
 
 class Cell
 {

@@ -6,14 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 11:52:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:31:55 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FREE_THREE_HPP
 # define FREE_THREE_HPP
 
-# include "Player.hpp"
 # include "CountStone.hpp"
 
 # define DEPTH_FREETHREE 3
@@ -24,7 +23,7 @@ class FreeThree : public virtual CountStone
 							FreeThree(void);
 		bool				checkFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 		bool				updateFreeThree(unsigned int const y, unsigned int const x, short const val) const;
-		void				destroyFreeThree(Player const &player);
+		void				destroyFreeThree(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 		void				setUnavailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 

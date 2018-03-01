@@ -6,11 +6,11 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:54:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:28:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/Captures.hpp"
+#include "../Tools_incs/Captures.hpp"
 
 Captures::t_list_way const		Captures::m_list_way[] = {
 	{LEFT, &Captures::checkLeft},
@@ -29,186 +29,138 @@ Captures::t_list_way const		Captures::m_list_way[] = {
 	
 }
 
-t_way						Captures::checkLeft(Player const &player)
+t_way						Captures::checkLeft(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && x - i - 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y][x - i - 1]) == val || GET_VAL(m_cell[y][x - i - 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y][x - i - 1]) == GET_VAL(val) || GET_VAL(m_cell[y][x - i - 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || x - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y][x - i - 1]) != val)
+	if (i != NB_STONE_CAPTURE || x - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y][x - i - 1]) != GET_VAL(val) )
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y][x - i - 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y, x - i - 1, player.getValue());
+		m_cell[y][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y][x - i - 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y, x - i - 1, val);
 	}
 	return (LEFT);
 }
 
-t_way						Captures::checkLeftTop(Player const &player)
+t_way						Captures::checkLeftTop(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && x - i - 1 < SIZE_GRID && y - i - 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y - i - 1][x - i - 1]) == val || GET_VAL(m_cell[y - i - 1][x - i - 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y - i - 1][x - i - 1]) == GET_VAL(val) || GET_VAL(m_cell[y - i - 1][x - i - 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || x - i - 1 >=  SIZE_GRID|| y - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x - i - 1]) != val)
+	if (i != NB_STONE_CAPTURE || x - i - 1 >=  SIZE_GRID|| y - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x - i - 1]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y - i - 1][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x - i - 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y - i - 1, x - i - 1, player.getValue());
+		m_cell[y - i - 1][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x - i - 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y - i - 1, x - i - 1, val);
 	}
 	return (LEFT_TOP);
 }
 
-t_way						Captures::checkTop(Player const &player)
+t_way						Captures::checkTop(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && y - i - 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y - i - 1][x]) == val || GET_VAL(m_cell[y - i - 1][x]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y - i - 1][x]) == GET_VAL(val) || GET_VAL(m_cell[y - i - 1][x]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x]) != val)
+	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y - i - 1][x] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y - i - 1, x, player.getValue());
+		m_cell[y - i - 1][x] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y - i - 1, x, val);
 	}
 	return (TOP);
 }
 
-t_way						Captures::checkTopRight(Player const &player)
+t_way						Captures::checkTopRight(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && y - i - 1 < SIZE_GRID && x + i + 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y - i - 1][x + i + 1]) == val || GET_VAL(m_cell[y - i - 1][x + i + 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y - i - 1][x + i + 1]) == GET_VAL(val) || GET_VAL(m_cell[y - i - 1][x + i + 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || x + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x + i + 1]) != val)
+	if (i != NB_STONE_CAPTURE || y - i - 1 >= SIZE_GRID || x + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y - i - 1][x + i + 1]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y - i - 1][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x + i + 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y - i - 1, x + i + 1, player.getValue());
+		m_cell[y - i - 1][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y - i - 1][x + i + 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y - i - 1, x + i + 1, val);
 	}
 	return (TOP_RIGHT);
 }
 
-t_way						Captures::checkRight(Player const &player)
+t_way						Captures::checkRight(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && x + i + 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y][x + i + 1]) == val || GET_VAL(m_cell[y][x + i + 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y][x + i + 1]) == GET_VAL(val) || GET_VAL(m_cell[y][x + i + 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y][x + i + 1]) != val)
+	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y][x + i + 1]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y][x + i + 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y, x + i + 1, player.getValue());
+		m_cell[y][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y][x + i + 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y, x + i + 1, val);
 	}
 	return (RIGHT);
 }
 
-t_way						Captures::checkRightBottom(Player const &player)
+t_way						Captures::checkRightBottom(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID && x + i + 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y + i + 1][x + i + 1]) == val || GET_VAL(m_cell[y + i + 1][x + i + 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y + i + 1][x + i + 1]) == GET_VAL(val) || GET_VAL(m_cell[y + i + 1][x + i + 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || y + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x + i + 1]) != val)
+	if (i != NB_STONE_CAPTURE || x + i + 1 >= SIZE_GRID || y + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x + i + 1]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y + i + 1][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x + i + 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y + i + 1, x + i + 1, player.getValue());
+		m_cell[y + i + 1][x + i + 1] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x + i + 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y + i + 1, x + i + 1, val);
 	}
 	return (RIGHT_BOTTOM);
 }
 
-t_way						Captures::checkBottom(Player const &player)
+t_way						Captures::checkBottom(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y + i + 1][x]) == val || GET_VAL(m_cell[y + i + 1][x]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y + i + 1][x]) == GET_VAL(val) || GET_VAL(m_cell[y + i + 1][x]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x]) != val)
+	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y + i + 1][x] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y + i + 1, x, player.getValue());
+		m_cell[y + i + 1][x] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y + i + 1, x, val);
 	}
 	return (BOTTOM);
 }
 
-t_way						Captures::checkBottomLeft(Player const &player)
+t_way						Captures::checkBottomLeft(unsigned int const y, unsigned int const x, short const val)
 {
-	char					val;
-	unsigned int			y;
-	unsigned int			x;
 	unsigned int			i;
 
-	y = player.getY();
-	x = player.getX();
-	val = GET_VAL(player.getValue());
 	for (i = 0; i < NB_STONE_CAPTURE && y + i + 1 < SIZE_GRID && x - i - 1 < SIZE_GRID; i++)
-		if (GET_VAL(m_cell[y + i + 1][x - i - 1]) == val || GET_VAL(m_cell[y + i + 1][x - i - 1]) == EMPTY_CELL)
+		if (GET_VAL(m_cell[y + i + 1][x - i - 1]) == GET_VAL(val) || GET_VAL(m_cell[y + i + 1][x - i - 1]) == EMPTY_CELL)
 			break ;
-	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || x - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x - i - 1]) != val)
+	if (i != NB_STONE_CAPTURE || y + i + 1 >= SIZE_GRID || x - i - 1 >= SIZE_GRID || GET_VAL(m_cell[y + i + 1][x - i - 1]) != GET_VAL(val))
 		return (NONE);
 	for (i = 0; i < NB_STONE_CAPTURE; i++)
 	{
-		m_cell[y + i + 1][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x - i - 1], EMPTY_CELL, player.getUnpossible());
-		this->captureFreethree(y + i + 1, x - i - 1, player.getValue());
+		m_cell[y + i + 1][x - i - 1] = CLEAR_PERM_PLAYER(m_cell[y + i + 1][x - i - 1], EMPTY_CELL, GET_PERM(val));
+		this->captureFreethree(y + i + 1, x - i - 1, val);
 	}
 	return (BOTTOM_LEFT);
 }
@@ -267,16 +219,13 @@ void						Captures::captureFreethree(unsigned int const y_tmp, unsigned int cons
 			m_cell[y_tmp + i][x_tmp - i] = SET_PERM(m_cell[y_tmp + i][x_tmp - i], other_perm);
 }
 
-t_way						Captures::checkCaptures(Player &player)
+unsigned int				Captures::checkCaptures(unsigned int const y_tmp, unsigned int const x_tmp, short const val)
 {
 	unsigned int			i;
-	t_way					way;
+	unsigned int			count;
 
-	for (way = NONE, i = 0; m_list_way[i].f != NULL; i++)
-		if (((*this).*m_list_way[i].f)(player) == m_list_way[i].way)
-		{
-			player.addCapture();
-			way = m_list_way[i].way;
-		}
-	return (way);
+	for (count = 0, i = 0; m_list_way[i].f != NULL; i++)
+		if (((*this).*m_list_way[i].f)(y_tmp, x_tmp, val) == m_list_way[i].way)
+			count++;
+	return (count);
 }

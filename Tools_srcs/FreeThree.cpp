@@ -6,11 +6,11 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 10:42:24 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:31:44 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/FreeThree.hpp"
+#include "../Tools_incs/FreeThree.hpp"
 
 FreeThree::t_checkFreet const
 							FreeThree::m_func[] = {
@@ -191,7 +191,7 @@ bool						FreeThree::checkFTBottomLeft(unsigned const int y_tmp, unsigned const 
 	return (false);
 }
 
-void						FreeThree::destroyFreeThree(Player const &player)
+void						FreeThree::destroyFreeThree(unsigned const int y, unsigned const int x, short const val)
 /*
 DESCRIPTION :
 	when player put his stone check if a free three of the other player have been destroyed
@@ -201,15 +201,11 @@ DESCRIPTION :
 	char					other_val;
 	short					c;
 	short					other_player;
-	unsigned int			x;
-	unsigned int			y;
 
-	other_val = GET_VAL(player.getValue()) == PLAYER1 ? PLAYER2 : PLAYER1;
-	other_perm = GET_PERM(player.getValue()) == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
+	other_val = GET_VAL(val) == PLAYER1 ? PLAYER2 : PLAYER1;
+	other_perm = GET_PERM(val) == CAN_NOT_PLAY1 ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
 	other_player = SET_VAL(0, other_val);
 	other_player = SET_PERM(other_player, other_perm);
-	y = player.getY();
-	x = player.getX();
 	//check gauche
 	if (this->getValue(c, x - 1, y) == true && (GET_PERM(c) & other_perm) != 0)
 		if (this->getValue(c, x + 1, y) == true && GET_VAL(c) == other_val &&

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 12:58:30 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:33:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ bool						Grid::putStone(Player &player)
 	short					val;
 	unsigned int			y;
 	unsigned int			x;
+	unsigned int			count;
 
 	x = player.getX();
 	y = player.getY();
@@ -55,13 +56,20 @@ bool						Grid::putStone(Player &player)
 		m_last_x = x;
 		m_last_y = y;
 		m_cell[m_last_y][m_last_x] = GET_VAL(val);
-		this->destroyFreeThree(player);
-		this->checkCaptures(player);
+		this->destroyFreeThree(y, x, val);
+		for (count = this->checkCaptures(y, x, val); count > 0; count --)
+			player.addCapture();
 		this->setUnavailable(m_last_y, m_last_x, val);
 		this->setAvailable(m_last_y, m_last_x, val);
 		return (true);
 	}
 	return (false);
+}
+
+bool						Grid::win(Player const &player) const
+{
+	return (this->haveWin(player.getY(), player.getX(), player.getValue(),
+			player.getCapture()));
 }
 
 bool						Grid::updateGrid(Player_human &player)

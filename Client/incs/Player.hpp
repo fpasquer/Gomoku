@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 20:30:15 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 11:22:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:07:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PLAYER_HPP
 
 # include "Gomoku_client.hpp"
-# include "../../Gomoku.hpp"
+# include "../../Tools_incs/Gomoku.hpp"
 # include <string>
 
 class Player

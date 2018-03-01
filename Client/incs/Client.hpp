@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 20:56:39 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 14:12:56 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:07:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <iostream>
 # include <unistd.h>
 # include "Gomoku_client.hpp"
-# include "../../Gomoku.hpp"
+# include "../../Tools_incs/Gomoku.hpp"
 
 class Client
 {
