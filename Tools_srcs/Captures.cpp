@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:28:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:08:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ Captures::t_list_way const		Captures::m_list_way[] = {
 };
 
 							Captures::Captures(void) : FreeThree()
+{
+	
+}
+
+							Captures::Captures(short const cell[SIZE_GRID][SIZE_GRID]) : FreeThree(cell)
 {
 	
 }

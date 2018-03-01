@@ -6,13 +6,18 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:24:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:30:12 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:06:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Tools_incs/CountStone.hpp"
 
                             CountStone::CountStone(void) : Cell()
+{
+
+}
+
+                            CountStone::CountStone(short const cell[SIZE_GRID][SIZE_GRID]) : Cell(cell)
 {
 
 }

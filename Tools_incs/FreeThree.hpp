@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:31:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:08:28 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ class FreeThree : public virtual CountStone
 {
 	protected:
 							FreeThree(void);
+							FreeThree(short const cell[SIZE_GRID][SIZE_GRID]);
 		bool				checkFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 		bool				updateFreeThree(unsigned int const y, unsigned int const x, short const val) const;
 		void				destroyFreeThree(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
@@ -28,7 +29,7 @@ class FreeThree : public virtual CountStone
 		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
 
 	private:
-		typedef struct		s_checkFreeT
+		typedef struct		s_checkFreet
 		{
 			bool			(FreeThree::*f)(unsigned const int, unsigned const int, short const) const;
 		}					t_checkFreet;

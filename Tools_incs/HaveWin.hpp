@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 11:33:37 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:11:03 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:07:30 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 class HaveWin : public virtual CountStone
 {
     public:
-                            HaveWin();
+                            HaveWin(void);
+                            HaveWin(short const cell[SIZE_GRID][SIZE_GRID]);
         bool				haveWin(unsigned int const y, unsigned int const x,
                 short const val, std::string const &capture) const;
 };

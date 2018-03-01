@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:36:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:29:22 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:09:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class Captures : public FreeThree
 {
 	protected:
 							Captures(void);
+							Captures(short const cell[SIZE_GRID][SIZE_GRID]);
         typedef struct		s_list_way
 		{
 			t_way			way;

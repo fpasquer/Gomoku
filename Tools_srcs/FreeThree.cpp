@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:31:44 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:08:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ FreeThree::t_checkFreet const
 };
 
 							FreeThree::FreeThree(void) : CountStone()
+{
+	
+}
+
+							FreeThree::FreeThree(short const cell[SIZE_GRID][SIZE_GRID]) : CountStone(cell)
 {
 	
 }
