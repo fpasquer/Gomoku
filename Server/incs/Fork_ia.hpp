@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:11:30 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/10 20:30:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:59:47 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FORK_IA_HPP
 
 # include "Fork_abstract.hpp"
-# include "../../Gomoku.hpp"
+# include "../../Tools_incs/Gomoku.hpp"
 # include "Ia_player.hpp"
 # include "Client.hpp"
 # include "Error.hpp"

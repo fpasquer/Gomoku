@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 11:47:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/26 12:36:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:59:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COUNT_WIN_HPP
 # define COUNT_WIN_HPP
 
-# include "../../Gomoku.hpp"
+# include "../../Tools_incs/Gomoku.hpp"
 
 class CountWin
 {

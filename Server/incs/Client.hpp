@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 07:57:33 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/11 14:25:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:59:27 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
-# include "../../Gomoku.hpp"
+# include "../../Tools_incs/Gomoku.hpp"
 # include "Server.hpp"
 
 class Client
