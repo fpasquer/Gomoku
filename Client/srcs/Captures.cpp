@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Grid_capture.cpp                                   :+:      :+:    :+:   */
+/*   Captures.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 15:17:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:54:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/Grid.hpp"
-#include "../incs/FreeThree.hpp"
+#include "../incs/Captures.hpp"
 
-Grid::t_list_way const		Grid::m_list_way[] = {
-	{LEFT, &Grid::checkLeft},
-	{LEFT_TOP, &Grid::checkLeftTop},
-	{TOP, &Grid::checkTop},
-	{TOP_RIGHT, &Grid::checkTopRight},
-	{RIGHT, &Grid::checkRight},
-	{RIGHT_BOTTOM, &Grid::checkRightBottom},
-	{BOTTOM, &Grid::checkBottom},
-	{BOTTOM_LEFT, &Grid::checkBottomLeft},
+Captures::t_list_way const		Captures::m_list_way[] = {
+	{LEFT, &Captures::checkLeft},
+	{LEFT_TOP, &Captures::checkLeftTop},
+	{TOP, &Captures::checkTop},
+	{TOP_RIGHT, &Captures::checkTopRight},
+	{RIGHT, &Captures::checkRight},
+	{RIGHT_BOTTOM, &Captures::checkRightBottom},
+	{BOTTOM, &Captures::checkBottom},
+	{BOTTOM_LEFT, &Captures::checkBottomLeft},
 	{NONE, NULL}
 };
 
-t_way						Grid::checkLeft(Player const &player)
+							Captures::Captures(void) : FreeThree()
+{
+	
+}
+
+t_way						Captures::checkLeft(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -48,7 +52,7 @@ t_way						Grid::checkLeft(Player const &player)
 	return (LEFT);
 }
 
-t_way						Grid::checkLeftTop(Player const &player)
+t_way						Captures::checkLeftTop(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -71,7 +75,7 @@ t_way						Grid::checkLeftTop(Player const &player)
 	return (LEFT_TOP);
 }
 
-t_way						Grid::checkTop(Player const &player)
+t_way						Captures::checkTop(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -94,7 +98,7 @@ t_way						Grid::checkTop(Player const &player)
 	return (TOP);
 }
 
-t_way						Grid::checkTopRight(Player const &player)
+t_way						Captures::checkTopRight(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -117,7 +121,7 @@ t_way						Grid::checkTopRight(Player const &player)
 	return (TOP_RIGHT);
 }
 
-t_way						Grid::checkRight(Player const &player)
+t_way						Captures::checkRight(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -140,7 +144,7 @@ t_way						Grid::checkRight(Player const &player)
 	return (RIGHT);
 }
 
-t_way						Grid::checkRightBottom(Player const &player)
+t_way						Captures::checkRightBottom(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -163,7 +167,7 @@ t_way						Grid::checkRightBottom(Player const &player)
 	return (RIGHT_BOTTOM);
 }
 
-t_way						Grid::checkBottom(Player const &player)
+t_way						Captures::checkBottom(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -186,7 +190,7 @@ t_way						Grid::checkBottom(Player const &player)
 	return (BOTTOM);
 }
 
-t_way						Grid::checkBottomLeft(Player const &player)
+t_way						Captures::checkBottomLeft(Player const &player)
 {
 	char					val;
 	unsigned int			y;
@@ -209,14 +213,13 @@ t_way						Grid::checkBottomLeft(Player const &player)
 	return (BOTTOM_LEFT);
 }
 
-void						Grid::captureFreethree(unsigned int const y_tmp, unsigned int const x_tmp, short const val)
+void						Captures::captureFreethree(unsigned int const y_tmp, unsigned int const x_tmp, short const val)
 {
 	unsigned int			i;
 	char					other_perm;
 	char					other_val;
 	short					c;
 	short					other_player;
-	FreeThree				freeThree(*this);
 	
 	other_val = GET_VAL(val) == PLAYER1 ? PLAYER2 : PLAYER1;
 	other_perm = (GET_PERM(val) == CAN_NOT_PLAY1) ? CAN_NOT_PLAY2 : CAN_NOT_PLAY1;
@@ -225,55 +228,46 @@ void						Grid::captureFreethree(unsigned int const y_tmp, unsigned int const x_
 	//check gauche
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp - i, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-			freeThree.checkFreeThree(y_tmp, x_tmp - i, other_player) == false)
+			this->checkFreeThree(y_tmp, x_tmp - i, other_player) == false)
 		m_cell[y_tmp][x_tmp - i] = SET_PERM(m_cell[y_tmp][x_tmp - i], other_perm);
 	//check haut gauche
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp - i, y_tmp - i) == true && (GET_PERM(c) & other_perm) != 0 &&
-	 			freeThree.checkFreeThree(y_tmp - i, x_tmp - i, other_player) == false)
+	 			this->checkFreeThree(y_tmp - i, x_tmp - i, other_player) == false)
 	 		m_cell[y_tmp - i][x_tmp - i] = SET_PERM(m_cell[y_tmp - i][x_tmp - i], other_perm);
 	//check haut
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp, y_tmp - i) == true && (GET_PERM(c) & other_perm) != 0 &&
-			freeThree.checkFreeThree(y_tmp - i, x_tmp, other_player) == false)
+			this->checkFreeThree(y_tmp - i, x_tmp, other_player) == false)
 		m_cell[y_tmp - i][x_tmp] = SET_PERM(m_cell[y_tmp - i][x_tmp], other_perm);
 	//check haut droit
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp + i, y_tmp - i) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp - i, x_tmp + i, other_player) == false)
+				this->checkFreeThree(y_tmp - i, x_tmp + i, other_player) == false)
 			m_cell[y_tmp - i][x_tmp + i] = SET_PERM(m_cell[y_tmp - i][x_tmp + i], other_perm);
 	//check droit
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp + i, y_tmp) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp, x_tmp + i, other_player) == false)
+				this->checkFreeThree(y_tmp, x_tmp + i, other_player) == false)
 			m_cell[y_tmp][x_tmp + i] = SET_PERM(m_cell[y_tmp][x_tmp + i], other_perm);
 	//check bas droit
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp + i, y_tmp + i) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + i, x_tmp + i, other_player) == false)
+				this->checkFreeThree(y_tmp + i, x_tmp + i, other_player) == false)
 			m_cell[y_tmp + i][x_tmp + i] = SET_PERM(m_cell[y_tmp + i][x_tmp + i], other_perm);
 	//check bas
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp, y_tmp + i) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + i, x_tmp, other_player) == false)
+				this->checkFreeThree(y_tmp + i, x_tmp, other_player) == false)
 			m_cell[y_tmp + i][x_tmp] = SET_PERM(m_cell[y_tmp + i][x_tmp], other_perm);
 	//check bas gauche
 	for (i = 1; i <= 3 ; i++)
 		if (this->getValue(c, x_tmp - i, y_tmp + i) == true && (GET_PERM(c) & other_perm) != 0 &&
-				freeThree.checkFreeThree(y_tmp + i, x_tmp - i, other_player) == false)
+				this->checkFreeThree(y_tmp + i, x_tmp - i, other_player) == false)
 			m_cell[y_tmp + i][x_tmp - i] = SET_PERM(m_cell[y_tmp + i][x_tmp - i], other_perm);
-
-
-
-
 }
 
-std::string					Grid::getCaptureIa(void) const
-{
-	return (m_ia.getCapture());
-}
-
-t_way						Grid::checkCaptures(Player &player)
+t_way						Captures::checkCaptures(Player &player)
 {
 	unsigned int			i;
 	t_way					way;
