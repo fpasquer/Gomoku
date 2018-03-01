@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:42 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 14:55:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 15:17:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <string>
 # include "Grid.hpp"
 # include "Gomoku_client.hpp"
-# include "FreeThree.hpp"
 
 # define HEIGHT_TITLE 12
 
