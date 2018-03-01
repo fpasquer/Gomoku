@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:15:42 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:18:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ unsigned int				Grid::getLastY(void) const
 unsigned int				Grid::getLastX(void) const
 {
 	return (m_last_x);
-}
-
-bool						Grid::getValue(short &val, unsigned int const x,
-		unsigned int const y) const
-{
-	if (x >= SIZE_GRID || y >= SIZE_GRID)
-		return (false);
-	val = m_cell[y][x];
-	return (true);
 }
 
 bool						Grid::haveWin(Player const &player) const

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:16:12 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:18:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ class Grid : public Cell
 {
 	public:
 							Grid(void);
-		bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
 		bool				updateGrid(Player_human &player);
