@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:18:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:32:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 # include <iostream>
 # include "Client.hpp"
 # include "../../Gomoku.hpp"
-# include "CountWin.hpp"
-# include "Cell.hpp"
+# include "CountStone.hpp"
 
 typedef enum				e_way
 {
@@ -34,7 +33,7 @@ typedef enum				e_way
 # define DEPTH_FREETHREE 3
 # define DECALAGE_TAKE_OFF_CAPTURE 2
 
-class Grid : public Cell
+class Grid : public CountStone
 {
 	public:
 							Grid(void);
@@ -42,21 +41,9 @@ class Grid : public Cell
 		unsigned int		getLastX(void) const;
 		bool				updateGrid(Player_human &player);
 		bool				play(Player_human &player);
-		double				get_time_spend(void) const;
-		bool				getLineNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				getColNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				getDiagLeftTopRightBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				getDiagRightTopLeftBottomNbStone(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		std::string			getCaptureIa(void) const;
-		bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countLeftTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countRightBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countTopRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
-		bool				countBottomLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				haveWin(unsigned int const y, unsigned int const x, short const val, std::string const &capture) const;
+		double				get_time_spend(void) const;
+		std::string			getCaptureIa(void) const;
 		bool				haveWin(Player const &player) const;
 		bool				checkIaWin(Player_human const &player) const;
 

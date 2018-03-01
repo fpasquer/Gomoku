@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:18:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:28:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(void) : Cell(), m_time_spend(0.0), m_ia()
+							Grid::Grid(void) : CountStone(), m_time_spend(0.0), m_ia()
 {
 }
 
