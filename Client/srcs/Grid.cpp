@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 15:27:56 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:15:42 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,8 @@
 unsigned int				Grid::m_last_x = SIZE_GRID;
 unsigned int				Grid::m_last_y = SIZE_GRID;
 
-							Grid::Grid(short const grid[SIZE_GRID][SIZE_GRID]) : m_time_spend(0.0), m_ia()
+							Grid::Grid(void) : Cell(), m_time_spend(0.0), m_ia()
 {
-	unsigned int			x;
-	unsigned int			y;
-
-	for (y = 0; y < SIZE_GRID; y++)
-		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = ((GET_VAL(grid[y][x]) == PLAYER1 ||
-					GET_VAL(grid[y][x]) == PLAYER2) &&
-					(GET_PERM(grid[y][x]) == CAN_NOT_PLAY1 ||
-					GET_PERM(grid[y][x]) == CAN_NOT_PLAY2))
-					? grid[y][x] : EMPTY_CELL;
-}
-
-							Grid::Grid(void) : m_time_spend(0.0), m_ia()
-{
-	unsigned int			x;
-	unsigned int			y;
-
-	for (y = 0; y < SIZE_GRID; y++)
-		for (x = 0; x < SIZE_GRID; x++)
-			m_cell[y][x] = EMPTY_CELL;
 }
 
 

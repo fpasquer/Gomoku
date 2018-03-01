@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/28 13:58:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 09:16:12 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "Client.hpp"
 # include "../../Gomoku.hpp"
 # include "CountWin.hpp"
+# include "Cell.hpp"
 
 typedef enum				e_way
 {
@@ -33,11 +34,10 @@ typedef enum				e_way
 # define DEPTH_FREETHREE 3
 # define DECALAGE_TAKE_OFF_CAPTURE 2
 
-class Grid
+class Grid : public Cell
 {
 	public:
 							Grid(void);
-							Grid(short const grid[SIZE_GRID][SIZE_GRID]);
 		bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
 		unsigned int		getLastY(void) const;
 		unsigned int		getLastX(void) const;
@@ -87,7 +87,6 @@ class Grid
 				unsigned int const y2, unsigned int const x2, char const other_perm, char const other_val);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
-		short				m_cell[SIZE_GRID][SIZE_GRID];
 		double				m_time_spend;
 		Player_ia			m_ia;
 };
