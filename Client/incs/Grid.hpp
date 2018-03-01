@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:51:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 10:43:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@
 # include "../../Gomoku.hpp"
 # include "Captures.hpp"
 
-# define NB_WAY_POSSIBLE 8
-# define DEPTH_FREETHREE 3
-# define DECALAGE_TAKE_OFF_CAPTURE 2
-
 class Grid : public Captures
 {
 	public:
@@ -42,13 +38,7 @@ class Grid : public Captures
 		bool				checkIaWin(Player_human const &player) const;
 
 	private:
-
-		bool				play(Player_ia &player);
-		void				destroyFreeThree(Player const &player);
-		void				setUnavailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
-		void				setAvailable(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
-		void				checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
-				unsigned int const y2, unsigned int const x2, char const other_perm, char const other_val);
+		bool				putStone(Player &player);
 		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 		double				m_time_spend;

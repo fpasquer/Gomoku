@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:36:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 09:51:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/01 10:23:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ typedef enum				e_way
 
 class Captures : public FreeThree
 {
-    public:
-                            Captures(void);
-    protected:
+	protected:
+							Captures(void);
         typedef struct		s_list_way
 		{
 			t_way			way;
