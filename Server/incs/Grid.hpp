@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 07:57:19 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 09:28:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 10:41:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@
 # include "../../Tools_incs/Gomoku.hpp"
 # include "../../Tools_incs/HaveWin.hpp"
 # include "Client.hpp"
+# include <string>
 
 class Grid :  public Captures , public HaveWin
 {
     public:
                             Grid(void);
-        bool                updateInfoGrid(Client const & player);
+        bool                readInfoGrid(Client const & player);
+        bool                setValue(short const val, unsigned int const y, unsigned int const x);
         unsigned int        getDepth(void) const;
-        size_t              getNbCaptureIa(void) const;
-        size_t              getNbCapturePlayer(void) const;
+        std::string         getNbCaptureIa(void) const;
+        std::string         getNbCapturePlayer(void) const;
+        void				show(unsigned int const y, unsigned int const x) const;
 
     private:
         unsigned int        m_depth;
-        size_t				m_nb_capture_ia;
-        size_t              m_nb_capture_player;
+        std::string			m_nb_capture_ia;
+        std::string	        m_nb_capture_player;
 };
 
 #endif

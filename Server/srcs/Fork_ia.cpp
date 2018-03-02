@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:26:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 09:29:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:46:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,15 @@ void						Fork_ia::play_ia(void)
 	clock_t					start, end;
 	double					time_spend;
 
-	m_grid.updateInfoGrid(m_player);
+	m_grid.readInfoGrid(m_player);
 	start = clock();
-	Ia_player::play(m_grid.m_cell, x, y, m_grid.getDepth(), m_grid.getNbCapturePlayer(), m_grid.getNbCaptureIa());
+	Ia_player::play(m_grid, x, y);
 	end = clock();
 	time_spend = ((double) (end - start)) / CLOCKS_PER_SEC;
 	m_player.send_to_client((void*)TIME_SPEND, SIZE_CMD);
 	m_player.send_to_client(&time_spend, sizeof(time_spend));
 	m_player.send_to_client(&y, sizeof(y));
 	m_player.send_to_client(&x, sizeof(x));
-	std::cout << __FILE__ << " " << __LINE__  << " y = " << y << " x = " << x << std::endl;
 }
 
 void						Fork_ia::run_loop(void)
