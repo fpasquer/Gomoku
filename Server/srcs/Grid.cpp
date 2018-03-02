@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 11:50:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 13:27:46 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 
 bool                        Grid::setValue(short const val, unsigned int const y, unsigned int const x)
 {
-    std::string             *ptr;
-    unsigned int			count;
+    // std::string             *ptr;
+    // unsigned int			count;
     
     m_cell[y][x] = SET_VAL(m_cell[y][x], GET_VAL(val));
-    this->destroyFreeThree(y, x, val);
-    ptr = GET_VAL(val) == PLAYER1 ? &m_nb_capture_player : &m_nb_capture_ia;
-    for (count = this->checkCaptures(y, x, val); count > 0; count --)
-        (*ptr) += "**";
-    this->setUnavailable(m_last_y, m_last_x, val);
-    this->setAvailable(m_last_y, m_last_x, val);
+    // this->destroyFreeThree(y, x, val);
+    // ptr = GET_VAL(val) == PLAYER1 ? &m_nb_capture_player : &m_nb_capture_ia;
+    // for (count = this->checkCaptures(y, x, val); count > 0; count --)
+    //     (*ptr) += "**";
+    // this->setUnavailable(m_last_y, m_last_x, val);
+    // this->setAvailable(m_last_y, m_last_x, val);
     return (true);
 }
 
