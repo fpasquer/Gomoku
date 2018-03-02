@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:10:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:59:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:02:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ class Fork_abstract
 							Fork_abstract(Client const &player);
 
 	protected:
-		virtual void		run_loop(void) const = 0;
+		virtual void		run_loop(void) = 0;
 		Client				m_player;
 		pid_t				m_pid;
 };

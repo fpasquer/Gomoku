@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:11:30 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:59:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:02:24 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "Error.hpp"
 # include <signal.h>
 # include <time.h>
+# include "Grid.hpp"
 
 class Fork_ia : public Fork_abstract
 {
@@ -27,8 +28,11 @@ class Fork_ia : public Fork_abstract
 							Fork_ia(Client const &player);
 
 	protected:
-		void				play_ia(void) const;
-		virtual void		run_loop(void) const;
+		void				play_ia(void);
+		virtual void		run_loop(void);
+	
+	private:
+		Grid				m_grid;
 };
 
 #endif
