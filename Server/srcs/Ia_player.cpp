@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 11:06:49 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 11:16:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 #endif
 			if ((tmp = ia_player.min(ia_player.m_grid.getDepth() - 1, y_ia, x_ia)) > max)
 			{
-				ia_player.show(__LINE__, y_ia, x_ia);
+				ia_player.show(__LINE__, y_ia, x_ia, tmp);
 				max = tmp;
 				y = y_ia;
 				x = x_ia;
@@ -120,9 +120,9 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 	return (max);
 }
 
-void						Ia_player::show(unsigned int const line, unsigned int const y, unsigned int const x) const
+void						Ia_player::show(unsigned int const line, unsigned int const y, unsigned int const x, int const max) const
 {
-	std::cout << "Line : " << line << std::endl << "\t";
+	std::cout << "Line : " << line << " MAX = " << max << std::endl << "\t";
 	this->m_grid.show(y, x);
 	std::cout << std::endl<< std::endl;
 }

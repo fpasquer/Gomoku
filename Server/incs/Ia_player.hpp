@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:29:31 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 10:55:22 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 11:16:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class Ia_player
 		int					eval(bool const retHaveWin, char const player, int const depth) const;
 		int					max(int const depth, unsigned int const y, unsigned int const x);
 		int					min(int const depth, unsigned int const y, unsigned int const x);
-		void				show(unsigned int const line, unsigned int const y, unsigned int const x) const;
+		void				show(unsigned int const line, unsigned int const y, unsigned int const x, int const max) const;
 };
 
 #endif
