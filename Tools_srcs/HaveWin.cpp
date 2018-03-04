@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 11:44:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:07:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 15:08:32 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ bool						HaveWin::haveWin(unsigned int const y,
 	unsigned int			x_tmp;
 	bool					countered;
 
-	countered = false;
-
 	this->countLeft(y, x, val, count1);
 	this->countRight(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 	{
-		for (x_tmp = x - count1, y_tmp = y; countered == false && x_tmp < x + count2; x_tmp++)
+		for (countered = false, x_tmp = x - count1, y_tmp = y; countered == false && x_tmp < x + count2; x_tmp++)
 		{
 			if ((this->countTop(y_tmp, x_tmp, val, count_tmp1) ^ this->countBottom(y_tmp, x_tmp, val, count_tmp2))
 					&& count_tmp1 + count_tmp2 == 1)
@@ -58,7 +56,7 @@ bool						HaveWin::haveWin(unsigned int const y,
 	this->countBottom(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 	{
-		for (x_tmp = x, y_tmp = y - count1; countered == false && y_tmp < y + count2; y_tmp++)
+		for (countered = false, x_tmp = x, y_tmp = y - count1; countered == false && y_tmp < y + count2; y_tmp++)
 		{
 			if ((this->countLeft(y_tmp, x_tmp, val, count_tmp1) ^ this->countRight(y_tmp, x_tmp, val, count_tmp2))
 					&& count_tmp1 + count_tmp2 == 1)
@@ -77,7 +75,7 @@ bool						HaveWin::haveWin(unsigned int const y,
 	this->countRightBottom(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 	{
-		for (x_tmp = x - count1, y_tmp = y - count1; countered == false && x_tmp < x + count2; x_tmp++, y_tmp++)
+		for (countered = false, x_tmp = x - count1, y_tmp = y - count1; countered == false && x_tmp < x + count2; x_tmp++, y_tmp++)
 		{
 			if ((this->countTop(y_tmp, x_tmp, val, count_tmp1) ^ this->countBottom(y_tmp, x_tmp, val, count_tmp2))
 					&& count_tmp1 + count_tmp2 == 1)
@@ -96,7 +94,7 @@ bool						HaveWin::haveWin(unsigned int const y,
 	this->countBottomLeft(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
 	{
-		for (x_tmp = x + count1, y_tmp = y - count1; countered == false && y_tmp < y + count2; x_tmp--, y_tmp++)
+		for (countered = false, x_tmp = x + count1, y_tmp = y - count1; countered == false && y_tmp < y + count2; x_tmp--, y_tmp++)
 		{
 			if ((this->countTop(y_tmp, x_tmp, val, count_tmp1) ^ this->countBottom(y_tmp, x_tmp, val, count_tmp2))
 					&& count_tmp1 + count_tmp2 == 1)

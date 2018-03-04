@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:08:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:04:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ bool						FreeThree::checkFTTopRight(unsigned const int y_tmp, unsigned const in
 		return (false);
 	count = 0;
 	if (this->countTopRight(y_tmp, x_tmp, val, count) == true && count >= 2)
-		return (true);
+		return (!(this->checkFTBottomLeft(y_tmp, x_tmp, val)));
 	if (this->getValue(c, x - 1, y + 1) == true && GET_VAL(c) == EMPTY_CELL &&
 			this->countTopRight(y, x, val, count) ==true && count >= 1)
-		return (true);
+		return (!(this->checkFTBottomLeft(y_tmp, x_tmp, val)));
 	return (false);
 }
 

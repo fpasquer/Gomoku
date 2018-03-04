@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:26:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 16:13:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:46:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Fork_ia.hpp"
 
-							Fork_ia::Fork_ia(Client const &player) : Fork_abstract(player)
+							Fork_ia::Fork_ia(Client const &player) : Fork_abstract(player), m_grid()
 {
 	try
 	{
@@ -28,23 +28,16 @@
 		this->run_loop();
 }
 
-void						Fork_ia::play_ia(void) const
+void						Fork_ia::play_ia(void)
 {
-	size_t					nb_capture_ia;
-	size_t					nb_capture_player;
 	unsigned int			x;
 	unsigned int			y;
-	unsigned int			depth;
-	short					grid[SIZE_GRID][SIZE_GRID];
 	clock_t					start, end;
 	double					time_spend;
 
-	m_player.read_from_client(&depth, sizeof(depth));
-	m_player.read_from_client(&grid, sizeof(grid));
-	m_player.read_from_client(&nb_capture_player, sizeof(nb_capture_player));
-	m_player.read_from_client(&nb_capture_ia, sizeof(nb_capture_ia));
+	m_grid.readInfoGrid(m_player);
 	start = clock();
-	Ia_player::play(grid, x, y, depth, nb_capture_player, nb_capture_ia);
+	Ia_player::play(m_grid, x, y);
 	end = clock();
 	time_spend = ((double) (end - start)) / CLOCKS_PER_SEC;
 	m_player.send_to_client((void*)TIME_SPEND, SIZE_CMD);
@@ -53,7 +46,7 @@ void						Fork_ia::play_ia(void) const
 	m_player.send_to_client(&x, sizeof(x));
 }
 
-void						Fork_ia::run_loop(void) const
+void						Fork_ia::run_loop(void)
 {
 	pid_t					pid = getpid();
 	char					buff[SIZE_CMD + 1];

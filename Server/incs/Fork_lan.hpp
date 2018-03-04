@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 09:09:06 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 14:59:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:06:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Fork_lan : public Fork_abstract
 
 	protected:
 		bool				in_loop(Client const &src, Client const &dest) const;
-		virtual void		run_loop(void) const;
+		virtual void		run_loop(void);
 		Client				m_player2;
 };
 

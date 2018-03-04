@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 20:33:57 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/12 08:08:06 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/02 09:06:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool						Fork_lan::in_loop(Client const &src, Client const &dest) const
 	return (true);
 }
 
-void						Fork_lan::run_loop(void) const
+void						Fork_lan::run_loop(void)
 {
 	bool					ret1;
 	bool					ret2;
