@@ -30,7 +30,7 @@ SRC_TOOL = $(addprefix $(SRC_PATH_TOOL),$(SRC_NAME_TOOL))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 OBJ_TOOL = $(addprefix $(OBJ_PATH_TOOL),$(OBJ_NAME_TOOL))
 INC = $(addprefix -I,$(INC_PATH))
-INC = $(addprefix -I,$(INC_PATH_TOOL))
+INC_TOOL = $(addprefix -I,$(INC_PATH_TOOL))
 
 CC = g++
 CFLAGS = -Wall -Wextra -Werror -O3 -march=native
@@ -55,7 +55,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.cpp
 $(OBJ_PATH_TOOL)%.o: $(SRC_PATH_TOOL)%.cpp
 	@printf "%-50s" "compiling "$(notdir $<)...
 	@mkdir -p $(OBJ_PATH_TOOL)
-	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(INC_TOOL) -o $@ -c $<
 	@printf "\e[1;32m[OK]\e[0m\n"
 
 clean:
