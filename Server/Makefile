@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/03/02 08:53:19 by fpasquer         ###   ########.fr        #
+#*   Updated: 2018/03/04 07:39:41 by fpasquer         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_abstract.cpp Fork_ia.cpp	\
 			Client.cpp Ia_player.cpp Fork_lan.cpp CountWin.cpp Grid.cpp)
 
 SRC_NAME_TOOL = $(sort Captures.cpp Cell.cpp CountStone.cpp FreeThree.cpp		\
-			haveWin.cpp)
+			HaveWin.cpp)
 
 SRC_PATH = ./srcs/
 SRC_PATH_TOOL = ../Tools_srcs/
@@ -34,10 +34,10 @@ OBJ_TOOL = $(addprefix $(OBJ_PATH_TOOL),$(OBJ_NAME_TOOL))
 INC = $(addprefix -I,$(INC_PATH))
 INC = $(addprefix -I,$(INC_PATH_TOOL))
 
-CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -O3 -march=native
 LDFLAGS = $(addprefix -L,)
-LDLIBS = -I/usr/local/opt/qt/include -lncurses
+LDLIBS =
 
 .PHONY: all clean fclean re
 

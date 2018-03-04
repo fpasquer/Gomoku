@@ -32,8 +32,8 @@ OBJ_TOOL = $(addprefix $(OBJ_PATH_TOOL),$(OBJ_NAME_TOOL))
 INC = $(addprefix -I,$(INC_PATH))
 INC = $(addprefix -I,$(INC_PATH_TOOL))
 
-CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -O3 -march=native
 LDFLAGS = $(addprefix -L,)
 LDLIBS = -I/usr/local/opt/qt/include -lncurses
 
