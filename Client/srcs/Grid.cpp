@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 10:40:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/04 16:45:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ bool						Grid::play(Player_human &player)
 	if (player.getX() < SIZE_GRID && player.getY() < SIZE_GRID && GET_VAL(m_cell[player.getY()][player.getX()]) == EMPTY_CELL &&
 			(GET_PERM(m_cell[player.getY()][player.getX()]) & player.getUnpossible()) == 0 && this->putStone(player) == true)
 	{
-		if (player.isOnline() != OFFLINE)
+		if (this->win(player) == false && player.isOnline() != OFFLINE)
 		{
 			deep = player.getDeep();
 			player.send_to_server(player.isOnline() == ONLINE ? IA : LAN, SIZE_CMD);
