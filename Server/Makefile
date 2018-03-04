@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/28 17:10:02 by fpasquer          #+#    #+#              #
-#    Updated: 2018/02/28 11:55:52 by amaindro         ###   ########.fr        #
+#*   Updated: 2018/03/03 20:32:52 by fpasquer         ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 INC = $(addprefix -I,$(INC_PATH))
 
-CC = clang++
-CFLAGS = -Wall -Wextra -Werror
+CC = g++
+CFLAGS = -Wall -Wextra -Werror -O3 -march=native
 LDFLAGS = $(addprefix -L,)
 LDLIBS = -I/usr/local/opt/qt/include -lncurses
 
