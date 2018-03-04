@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:36:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:09:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/04 15:08:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 # define CAPTURES_HPP
 
 # include "FreeThree.hpp"
+# include "HaveWin.hpp"
 
 # define NB_STONE_CAPTURE 2
-
-typedef enum				e_way
-{
-	NONE, LEFT, LEFT_TOP, TOP, TOP_RIGHT, RIGHT, RIGHT_BOTTOM, BOTTOM, BOTTOM_LEFT
-}							t_way;
 
 class Captures : public FreeThree
 {
 	protected:
 							Captures(void);
 							Captures(short const cell[SIZE_GRID][SIZE_GRID]);
-        typedef struct		s_list_way
+		typedef struct		s_list_way
 		{
 			t_way			way;
 			t_way			(Captures::*f)(unsigned int const, unsigned int const, short const);

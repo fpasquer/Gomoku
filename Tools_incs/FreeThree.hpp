@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:21:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:08:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/04 15:11:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ class FreeThree : public virtual CountStone
 	private:
 		typedef struct		s_checkFreet
 		{
-			bool			(FreeThree::*f)(unsigned const int, unsigned const int, short const) const;
+			bool			(FreeThree::*f)(unsigned const int, unsigned const int, short const, char &) const;
 		}					t_checkFreet;
 		static t_checkFreet const
 							m_func[];
-		bool				checkFTLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTTopLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTTop(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTTopRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTBottomRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTBottom(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
-		bool				checkFTBottomLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val) const;
+		bool				checkFTLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char &way) const;
+		bool				checkFTTopLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTTop(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTTopRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTBottomRight(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTBottom(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
+		bool				checkFTBottomLeft(unsigned const int y_tmp, unsigned const int x_tmp, short const val, char & way) const;
 		void				checkFreethreeAgent(unsigned int const y1, unsigned int const x1,
 				unsigned int const y2, unsigned int const x2, char const other_perm, char const other_val);
 };

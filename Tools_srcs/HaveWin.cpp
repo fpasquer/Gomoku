@@ -6,20 +6,20 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 11:44:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 15:08:32 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/04 15:01:49 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Tools_incs/HaveWin.hpp"
 
-                            HaveWin::HaveWin(void) : CountStone()
+							HaveWin::HaveWin(void) : CountStone()
 {
-    
+
 }
 
-                            HaveWin::HaveWin(short const cell[SIZE_GRID][SIZE_GRID]) : CountStone(cell)
+							HaveWin::HaveWin(short const cell[SIZE_GRID][SIZE_GRID]) : CountStone(cell)
 {
-    
+
 }
 
 bool						HaveWin::haveWin(unsigned int const y,

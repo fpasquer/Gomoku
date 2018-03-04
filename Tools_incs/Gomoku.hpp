@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/26 13:23:54 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/04 15:06:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@
 # define NB_WIN_CAPTURE 10
 # define CAN_NOT_PLAY1 0x1 //00000001
 # define CAN_NOT_PLAY2 0x2 //00000010
+
+typedef enum				e_way
+{
+	NONE = 0x0,
+	LEFT = 0x1,
+	LEFT_TOP = 0x2,
+	TOP = 0x4,
+	TOP_RIGHT = 0x8,
+	RIGHT = 0x10,
+	RIGHT_BOTTOM = 0x20,
+	BOTTOM = 0x40,
+	BOTTOM_LEFT = 0x80
+}							t_way;
 
 # define QUIT		"QUIT     "
 # define IA			"IA       "
