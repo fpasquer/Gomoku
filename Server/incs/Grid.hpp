@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 07:57:19 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 10:41:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/05 16:35:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ class Grid :  public Captures , public HaveWin
     public:
                             Grid(void);
         bool                readInfoGrid(Client const & player);
-        bool                setValue(short const val, unsigned int const y, unsigned int const x);
+        bool                setValue(short const val, unsigned int const y, unsigned int const x, char *way_captures);
+        bool                unsetValue(short const val, unsigned int const y, unsigned int const x, char const way_captures);
         unsigned int        getDepth(void) const;
         std::string         getNbCaptureIa(void) const;
         std::string         getNbCapturePlayer(void) const;

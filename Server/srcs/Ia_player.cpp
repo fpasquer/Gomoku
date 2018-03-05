@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 11:16:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/05 16:13:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 	}	while (grid[y][x] != EMPTY_CELL);
 	return ;
 #else
+	char					way_captures;
 	short					c;
 	unsigned int			y_ia;
 	unsigned int			x_ia;
@@ -44,7 +45,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 		{
 			if (ia_player.m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
 					(GET_PERM(c) & CAN_NOT_PLAY2) != 0 ||
-					ia_player.m_grid.setValue(PLAYER2, y_ia, x_ia) == false)
+					ia_player.m_grid.setValue(PLAYER2, y_ia, x_ia, &way_captures) == false)
 				continue ;
 #ifdef DEBUG
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
@@ -57,13 +58,14 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 				y = y_ia;
 				x = x_ia;
 			}
-			ia_player.m_grid.setValue(EMPTY_CELL, y_ia, x_ia);
+			ia_player.m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
 #endif
 }
 
 int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x)
 {
+	char					way_captures;
 	short					c;
 	bool					retHaveWin = false;
 	unsigned int			y_ia;
@@ -77,22 +79,23 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
 			if (this->m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
-					(GET_PERM(c) & CAN_NOT_PLAY1) != 0)
+					(GET_PERM(c) & CAN_NOT_PLAY1) != 0 || this->m_grid.setValue(PLAYER1, y_ia, x_ia, &way_captures) == false)
 				continue ;
-			this->m_grid.setValue(PLAYER1, y_ia, x_ia);
+			;
 #ifdef DEBUG
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
 				this->show(y_ia, x_ia);
 #endif
 			if ((tmp = this->max(depth -1, y_ia, x_ia)) < min)
 				min = tmp;
-			this->m_grid.setValue(EMPTY_CELL, y_ia, x_ia);
+			this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
 		}
 	return (min);
 }
 
 int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x)
 {
+	char					way_captures;
 	short					c;
 	bool					retHaveWin = false;
 	unsigned int			y_ia;
@@ -106,16 +109,15 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
 			if (this->m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
-					(GET_PERM(c) & CAN_NOT_PLAY2) != 0)
+					(GET_PERM(c) & CAN_NOT_PLAY2) != 0 || this->m_grid.setValue(PLAYER2, y_ia, x_ia, &way_captures) == false)
 				continue ;
-			this->m_grid.setValue(PLAYER2, y_ia, x_ia);
 #ifdef DEBUG
 			std::cout << "Line : " << __LINE__ << std::endl << "\t";
 			this->show(y_ia, x_ia);
 #endif
 			if ((tmp = this->min(depth -1, y_ia, x_ia)) > max)
 				max = tmp;
-			this->m_grid.setValue(EMPTY_CELL, y_ia, x_ia);
+			this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
 	return (max);
 }

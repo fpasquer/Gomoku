@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 13:23:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/04 15:32:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/05 16:25:26 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool						FreeThree::checkFTLeft(unsigned const int y_tmp, unsigned const int x_
 		way ^= LEFT;
 		return (true);
 	}
-	if ((way ^ RIGHT) == 0 && this->getValue(c, x + 1, y) == true && GET_VAL(c) == EMPTY_CELL &&
+	if (this->getValue(c, x + 1, y) == true && GET_VAL(c) == EMPTY_CELL &&
 			this->countLeft(y, x, val, count) == true && count >= 1)
 	{
 		way ^= LEFT;

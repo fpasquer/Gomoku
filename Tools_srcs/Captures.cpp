@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 20:13:50 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:08:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/05 15:39:52 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,13 +224,19 @@ void						Captures::captureFreethree(unsigned int const y_tmp, unsigned int cons
 			m_cell[y_tmp + i][x_tmp - i] = SET_PERM(m_cell[y_tmp + i][x_tmp - i], other_perm);
 }
 
-unsigned int				Captures::checkCaptures(unsigned int const y_tmp, unsigned int const x_tmp, short const val)
+unsigned int				Captures::checkCaptures(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char *way)
 {
+	char					tmp;
 	unsigned int			i;
 	unsigned int			count;
 
-	for (count = 0, i = 0; m_list_way[i].f != NULL; i++)
+	for (tmp = NONE, count = 0, i = 0; m_list_way[i].f != NULL; i++)
 		if (((*this).*m_list_way[i].f)(y_tmp, x_tmp, val) == m_list_way[i].way)
+		{
+			tmp ^=  m_list_way[i].way;
 			count++;
+		}
+	if (way != NULL)
+		*way = tmp;
 	return (count);
 }
