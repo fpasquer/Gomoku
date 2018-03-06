@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 11:01:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 11:15:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ bool						Grid::unsetValueAgent(std::string *ptr, char const flag_way,
 		*ptr = ptr->substr(0, ptr->size()-2);
 		m_cell[y1][x1] = SET_VAL(m_cell[y1][x1], GET_VAL(val));
 		m_cell[y2][x2] = SET_VAL(m_cell[y2][x2], GET_VAL(val));
-		this->checkFreeThree(y1, x1, val);
-		this->checkFreeThree(y2, x2, val);
+		this->setUnavailable(y1, x1, val);
+		this->setAvailable(y1, x1, val);
+		this->setUnavailable(y2, x2, val);
+		this->setAvailable(y2, x2, val);
 		return (true);
 	}
 	return (false);
