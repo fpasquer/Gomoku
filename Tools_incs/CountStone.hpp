@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:21:07 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:06:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 10:26:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 class CountStone : public Cell
 {
-    public:
-                            CountStone(void);
+	public:
+							CountStone(void);
 							CountStone(short const cell[SIZE_GRID][SIZE_GRID]);
-        bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
+		bool				countLeft(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countRight(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countTop(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;
 		bool				countBottom(unsigned int const y, unsigned int const x, short const val, unsigned int &count) const;

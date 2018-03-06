@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:12:58 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/02 09:29:01 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 10:24:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 
 class Cell
 {
-    public:
-        short               m_cell[SIZE_GRID][SIZE_GRID];
-                            Cell(void);
-                            Cell(short const cell[SIZE_GRID][SIZE_GRID]);
-        bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
-    protected:
-        static unsigned int	m_last_x;
+	public:
+		short				m_cell[SIZE_GRID][SIZE_GRID];
+							Cell(void);
+							Cell(short const cell[SIZE_GRID][SIZE_GRID]);
+		bool				getValue(short &val, unsigned int const x, unsigned int const y) const;
+	protected:
+		static unsigned int	m_last_x;
 		static unsigned int	m_last_y;
 };
 

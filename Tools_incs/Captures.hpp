@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:36:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/04 15:08:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 10:08:06 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Captures : public FreeThree
 		}					t_list_way;
 		static t_list_way const
 							m_list_way[];
-		unsigned int		checkCaptures(unsigned int const y_tmp, unsigned int const x_tmp, short const val);
+		unsigned int		checkCaptures(unsigned int const y_tmp, unsigned int const x_tmp, short const val, char *way = NULL);
 		t_way				checkLeft(unsigned int const y, unsigned int const x, short const val);
 		t_way				checkLeftTop(unsigned int const y, unsigned int const x, short const val);
 		t_way				checkTop(unsigned int const y, unsigned int const x, short const val);
