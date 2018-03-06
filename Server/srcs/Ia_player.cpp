@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 10:17:11 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 11:08:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 				y = y_ia;
 				x = x_ia;
 			}
-			ia_player.m_grid.unsetValue(EMPTY_CELL, y_ia, x_ia, way_captures);
+			ia_player.m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
 #endif
 }
@@ -87,7 +87,7 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 #endif
 			if ((tmp = this->max(depth -1, y_ia, x_ia)) < min)
 				min = tmp;
-			this->m_grid.unsetValue(EMPTY_CELL, y_ia, x_ia, way_captures);
+			this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
 		}
 	return (min);
 }
@@ -116,7 +116,7 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 #endif
 			if ((tmp = this->min(depth -1, y_ia, x_ia)) > max)
 				max = tmp;
-			this->m_grid.unsetValue(EMPTY_CELL, y_ia, x_ia, way_captures);
+			this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
 	return (max);
 }
