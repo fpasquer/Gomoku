@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 11:15:29 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/06 11:31:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool						Grid::unsetValueAgent(std::string *ptr, char const flag_way,
 	if ((way_captures & flag_way) != 0 && y1 < SIZE_GRID && x1 < SIZE_GRID &&
 			y2 < SIZE_GRID && x2 < SIZE_GRID)
 	{
-		*ptr = ptr->substr(0, ptr->size()-2);
+		*ptr = ptr->substr(0, ptr->size() - 2);
 		m_cell[y1][x1] = SET_VAL(m_cell[y1][x1], GET_VAL(val));
 		m_cell[y2][x2] = SET_VAL(m_cell[y2][x2], GET_VAL(val));
 		this->setUnavailable(y1, x1, val);
