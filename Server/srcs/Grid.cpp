@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 11:31:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/09 13:09:25 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ bool						Grid::unsetValue(short const val, unsigned int const y, unsigned int c
 	//reset right
 	this->unsetValueAgent(ptr, RIGHT, other_player, y, x + 1, y, x + 2, way_capture);
 	//reset bottom right
-	this->unsetValueAgent(ptr, RIGHT_BOTTOM, other_player, y, x + 1, y, x + 2, way_capture);
+	this->unsetValueAgent(ptr, RIGHT_BOTTOM, other_player, y + 1, x + 1, y + 2, x + 2, way_capture);
 	//reset bottom
 	this->unsetValueAgent(ptr, BOTTOM, other_player, y + 1, x, y + 2, x, way_capture);
 	//reset bottom left
-	this->unsetValueAgent(ptr, BOTTOM_LEFT, other_player, y, x + 1, y, x + 2, way_capture);
+	this->unsetValueAgent(ptr, BOTTOM_LEFT, other_player, y + 1, x - 1, y + 2, x - 2, way_capture);
 	this->setUnavailable(y, x, val);
 	this->setAvailable(y, x, val);
 	return (true);
