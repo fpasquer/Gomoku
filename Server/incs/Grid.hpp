@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 07:57:19 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 10:41:20 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/15 11:15:05 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@ class Grid :  public Captures , public HaveWin
 		std::string			getNbCaptureIa(void) const;
 		std::string			getNbCapturePlayer(void) const;
 		void				show(unsigned int const y, unsigned int const x) const;
+		unsigned int		getLastY(void) const;
+		unsigned int		getLastX(void) const;
 
 	private:
 		unsigned int		m_depth;
+		unsigned int		last_y;
+		unsigned int		last_x;
 		std::string			m_nb_capture_ia;
 		std::string			m_nb_capture_player;
 };

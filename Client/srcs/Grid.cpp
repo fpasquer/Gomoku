@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/04 16:45:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/15 11:03:04 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ bool						Grid::play(Player_human &player)
 				std::strncpy(buff2, m_ia.getCapture().c_str(), NB_WIN_CAPTURE);
 				player.send_to_server(buff2, NB_WIN_CAPTURE);
 			}
-			else if (player.isOnline() == ONLINE_LAN)
+			if (player.isOnline() == ONLINE_LAN || player.isOnline() == ONLINE)
 			{
 				y = player.getY();
 				x = player.getX();

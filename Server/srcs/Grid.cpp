@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/09 13:09:25 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/15 11:14:27 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,22 @@ bool						Grid::readInfoGrid(Client const &player)
 	std::memset(buff, 0, NB_WIN_CAPTURE);
 	player.read_from_client(buff, NB_WIN_CAPTURE);
 	m_nb_capture_ia = buff;
+	player.read_from_client(&this->last_y, sizeof(this->last_y));
+	player.read_from_client(&this->last_x, sizeof(this->last_x));
 	if (m_depth < MIN_DEEP || m_depth > MAX_DEEP || m_nb_capture_ia.size() > NB_WIN_CAPTURE ||
 			m_nb_capture_player.size() > NB_WIN_CAPTURE)
 		return false;
 	return (true);
+}
+
+unsigned int				Grid::getLastY(void) const
+{
+	return (this->last_y);
+}
+
+unsigned int				Grid::getLastX(void) const
+{
+	return (this->last_x);
 }
 
 unsigned int				Grid::getDepth(void) const

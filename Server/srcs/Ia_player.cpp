@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 09:07:18 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/15 11:57:21 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,9 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 #endif
 			if ((tmp = this->max(depth -1, y_ia, x_ia, min)) < min)
 				min = tmp;
-			if (tmp <= prev_branch)
-			{
-				this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
-				return (min);
-			}
 			this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
+			if (tmp <= prev_branch)
+				return (min);
 		}
 	return (min);
 }
@@ -121,12 +118,9 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 #endif
 			if ((tmp = this->min(depth -1, y_ia, x_ia, max)) > max)
 				max = tmp;
-			if (tmp >= prev_branch)
-			{
-				this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
-				return (max);
-			}
 			this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
+			if (tmp >= prev_branch)
+				return (max);
 		}
 	return (max);
 }
@@ -141,7 +135,10 @@ void						Ia_player::show(unsigned int const line, unsigned int const y, unsigne
 int							Ia_player::eval(bool const retHaveWin, char const player, int const depth) const
 {
 	int						ret;
+	int						count_capture;
 
+	count_capture = this->m_grid.getNbCaptureIa().size() - this->m_grid.getNbCapturePlayer().size();
 	ret = retHaveWin == true ? Ia_player::win : 0;
-	return (player == PLAYER1 ? ret * -1 * (depth + 1): ret * (depth + 1));
+	return (player == PLAYER1 ? ret * -1 * (depth + 1) * 1000 + count_capture:
+			ret * (depth + 1) * 1000 + count_capture);
 }
