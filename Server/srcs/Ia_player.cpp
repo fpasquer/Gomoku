@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 11:30:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/15 09:07:18 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
 				ia_player.show(y_ia, x_ia);
 #endif
-			if ((tmp = ia_player.min(ia_player.m_grid.getDepth() - 1, y_ia, x_ia)) > max)
+			if ((tmp = ia_player.min(ia_player.m_grid.getDepth() - 1, y_ia, x_ia, max)) > max)
 			{
 				ia_player.show(__LINE__, y_ia, x_ia, tmp);
 				max = tmp;
@@ -63,7 +63,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 #endif
 }
 
-int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x)
+int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x, int prev_branch)
 {
 	char					way_captures;
 	short					c;
@@ -85,14 +85,19 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
 				this->show(y_ia, x_ia);
 #endif
-			if ((tmp = this->max(depth -1, y_ia, x_ia)) < min)
+			if ((tmp = this->max(depth -1, y_ia, x_ia, min)) < min)
 				min = tmp;
+			if (tmp <= prev_branch)
+			{
+				this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
+				return (min);
+			}
 			this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
 		}
 	return (min);
 }
 
-int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x)
+int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x, int prev_branch)
 {
 	char					way_captures;
 	short					c;
@@ -114,8 +119,13 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 			std::cout << "Line : " << __LINE__ << std::endl << "\t";
 			this->show(y_ia, x_ia);
 #endif
-			if ((tmp = this->min(depth -1, y_ia, x_ia)) > max)
+			if ((tmp = this->min(depth -1, y_ia, x_ia, max)) > max)
 				max = tmp;
+			if (tmp >= prev_branch)
+			{
+				this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
+				return (max);
+			}
 			this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
 	return (max);
