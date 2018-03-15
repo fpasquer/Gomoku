@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/01 15:17:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:51:49 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ class Grid : public Captures , public HaveWin
 		bool				win(Player const &player) const;
 
 	private:
+		void				relevant_ia_agent(int const i_y, int const i_x, int const start_y, int const start_x);
+		void				relevant_ia(unsigned int const y, unsigned int const x);
 		bool				putStone(Player &player);
 		double				m_time_spend;
 		Player_ia			m_ia;

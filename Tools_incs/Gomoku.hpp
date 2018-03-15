@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/07 08:52:08 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/04 15:06:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:27:43 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef enum				e_way
 	BOTTOM = 0x40,
 	BOTTOM_LEFT = 0x80
 }							t_way;
+
+# define RELEVANT 0x400
 
 # define QUIT		"QUIT     "
 # define IA			"IA       "

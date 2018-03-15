@@ -6,12 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 11:57:21 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:57:17 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Ia_player.hpp"
 //#define DEBUG
+
+unsigned long long int		prune;
 
 int const					Ia_player::start_min = 10000;
 int const					Ia_player::start_max = -10000;
@@ -40,6 +42,9 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 	int						tmp;
 	Ia_player				ia_player(grid);
 
+
+	prune = 0;
+
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
@@ -51,7 +56,8 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
 				ia_player.show(y_ia, x_ia);
 #endif
-			if ((tmp = ia_player.min(ia_player.m_grid.getDepth() - 1, y_ia, x_ia, max)) > max)
+			if ((tmp = ia_player.min(ia_player.m_grid.getDepth() - 1, y_ia, x_ia, max,
+							((way_captures != 0) ? 1 * ia_player.m_grid.getDepth() : 0))) > max)
 			{
 				ia_player.show(__LINE__, y_ia, x_ia, tmp);
 				max = tmp;
@@ -60,10 +66,11 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 			}
 			ia_player.m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
 		}
+	std::cout << "Pruned : " << prune << std::endl;
 #endif
 }
 
-int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x, int prev_branch)
+int							Ia_player::min(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight)
 {
 	char					way_captures;
 	short					c;
@@ -74,7 +81,7 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 	int						tmp;
 
 	if ((retHaveWin = this->m_grid.haveWin(y, x, PLAYER2, this->m_grid.getNbCaptureIa())) == true || depth <= 0)
-		return (this->eval(retHaveWin, PLAYER2, depth));
+		return (this->eval(retHaveWin, PLAYER2, depth, weight));
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
@@ -85,16 +92,21 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 				std::cout << "Line : " << __LINE__ << std::endl << "\t";
 				this->show(y_ia, x_ia);
 #endif
-			if ((tmp = this->max(depth -1, y_ia, x_ia, min)) < min)
+			weight -= (way_captures != NONE) ? 1 * depth : 0;
+			if ((tmp = this->max(depth -1, y_ia, x_ia, min, weight)) < min)
 				min = tmp;
 			this->m_grid.unsetValue(PLAYER1, y_ia, x_ia, way_captures);
+			weight += (way_captures != NONE) ? 1 * depth : 0;
 			if (tmp <= prev_branch)
+			{
+				prune += pow(361, depth);
 				return (min);
+			}
 		}
 	return (min);
 }
 
-int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x, int prev_branch)
+int							Ia_player::max(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight)
 {
 	char					way_captures;
 	short					c;
@@ -105,7 +117,7 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 	int						tmp;
 
 	if ((retHaveWin = this->m_grid.haveWin(y, x, PLAYER1, this->m_grid.getNbCapturePlayer())) == true || depth <= 0)
-		return (this->eval(retHaveWin, PLAYER1, depth));
+		return (this->eval(retHaveWin, PLAYER1, depth, weight));
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
@@ -116,11 +128,16 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 			std::cout << "Line : " << __LINE__ << std::endl << "\t";
 			this->show(y_ia, x_ia);
 #endif
-			if ((tmp = this->min(depth -1, y_ia, x_ia, max)) > max)
+			weight += (way_captures != NONE) ? 1 * depth : 0;
+			if ((tmp = this->min(depth -1, y_ia, x_ia, max, weight)) > max)
 				max = tmp;
 			this->m_grid.unsetValue(PLAYER2, y_ia, x_ia, way_captures);
+			weight -= (way_captures != NONE) ? 1 * depth : 0;
 			if (tmp >= prev_branch)
+			{
+				prune += pow(361, depth);
 				return (max);
+			}
 		}
 	return (max);
 }
@@ -132,13 +149,10 @@ void						Ia_player::show(unsigned int const line, unsigned int const y, unsigne
 	std::cout << std::endl<< std::endl;
 }
 
-int							Ia_player::eval(bool const retHaveWin, char const player, int const depth) const
+int							Ia_player::eval(bool const retHaveWin, char const player, int const depth, int const weight) const
 {
 	int						ret;
-	int						count_capture;
 
-	count_capture = this->m_grid.getNbCaptureIa().size() - this->m_grid.getNbCapturePlayer().size();
 	ret = retHaveWin == true ? Ia_player::win : 0;
-	return (player == PLAYER1 ? ret * -1 * (depth + 1) * 1000 + count_capture:
-			ret * (depth + 1) * 1000 + count_capture);
+	return (player == PLAYER1 ? ret * -1 * (depth + 1) * 1000 + weight: ret * (depth + 1) * 1000 + weight);
 }
