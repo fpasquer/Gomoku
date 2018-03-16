@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:21:07 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 10:26:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/16 13:40:10 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "Cell.hpp"
 # include <string>
 
-class CountStone : public Cell
+class CountStone : public virtual Cell
 {
 	public:
 							CountStone(void);

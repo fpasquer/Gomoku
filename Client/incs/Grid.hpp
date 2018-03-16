@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:30:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/16 10:36:29 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 13:51:14 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include "../../Tools_incs/Gomoku.hpp"
 # include "../../Tools_incs/Captures.hpp"
 # include "../../Tools_incs/HaveWin.hpp"
+# include "../../Tools_incs/Relevant.hpp"
 
-class Grid : public Captures , public HaveWin
+class Grid : public Captures, public HaveWin, public Relevant
 {
 	public:
 							Grid(void);
@@ -38,8 +39,6 @@ class Grid : public Captures , public HaveWin
 		bool				win(Player const &player) const;
 
 	private:
-		void				relevant_ia_agent(int const i_y, int const i_x, unsigned int const start_y, unsigned int const start_x);
-		void				relevant_ia(unsigned int const y, unsigned int const x);
 		bool				putStone(Player &player);
 		double				m_time_spend;
 		Player_ia			m_ia;

@@ -16,7 +16,7 @@ SRC_NAME = $(sort main.cpp Error.cpp Server.cpp Fork_abstract.cpp Fork_ia.cpp	\
 			Client.cpp Ia_player.cpp Fork_lan.cpp CountWin.cpp Grid.cpp)
 
 SRC_NAME_TOOL = $(sort Captures.cpp Cell.cpp CountStone.cpp FreeThree.cpp		\
-			HaveWin.cpp)
+			HaveWin.cpp Relevant.cpp)
 
 SRC_PATH = ./srcs/
 SRC_PATH_TOOL = ../Tools_srcs/

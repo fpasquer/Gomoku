@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/16 10:43:00 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 13:51:57 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
 
-							Grid::Grid(void) : Captures(), HaveWin(), m_time_spend(0.0), m_ia()
+							Grid::Grid(void) : Captures(), HaveWin(), Relevant(), m_time_spend(0.0), m_ia()
 {
 	
 }
@@ -40,38 +40,6 @@ bool						Grid::checkIaWin(Player_human const &player) const
 		m_ia.getCapture()));
 }
 
-void						Grid::relevant_ia_agent(int const i_y, int const i_x, unsigned int const start_y, unsigned int const start_x)
-{
-	int			i;
-
-	for (i = 0; i < 5; i++)
-	{
-		if (i * i_y + start_y >= SIZE_GRID || i * i_x + start_x >= SIZE_GRID)
-			break ;
-		m_cell[i * i_y + start_y][i * i_x + start_x] = m_cell[i * i_y + start_y][i * i_x + start_x] | RELEVANT;
-	}
-}
-
-void						Grid::relevant_ia(unsigned int const y, unsigned int const x)
-{
-	//gauche
-	this->relevant_ia_agent(0, -1, y, x);
-	//haut gauche
-	this->relevant_ia_agent(-1, -1, y, x);
-	//haut
-	this->relevant_ia_agent(-1, 0, y, x);
-	//haut droit
-	this->relevant_ia_agent(-1, 1, y, x);
-	//droite
-	this->relevant_ia_agent(0, 1, y, x);
-	//bas droit
-	this->relevant_ia_agent(1, 1, y, x);
-	//bas
-	this->relevant_ia_agent(1, 0, y, x);
-	//bas gauche
-	this->relevant_ia_agent(1, -1, y, x);
-}
-
 bool						Grid::putStone(Player &player)
 {
 	short					val;
@@ -93,7 +61,7 @@ bool						Grid::putStone(Player &player)
 			player.addCapture();
 		this->setUnavailable(m_last_y, m_last_x, val);
 		this->setAvailable(m_last_y, m_last_x, val);
-		this->relevant_ia(m_last_y, m_last_x);
+		this->relevant(m_last_y, m_last_x);
 		return (true);
 	}
 	return (false);
