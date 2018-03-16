@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 07:57:19 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 11:15:05 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 14:04:53 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 # include "../../Tools_incs/Captures.hpp"
 # include "../../Tools_incs/Gomoku.hpp"
 # include "../../Tools_incs/HaveWin.hpp"
+# include "../../Tools_incs/Relevant.hpp"
 # include "Client.hpp"
 # include <string>
 
-class Grid :  public Captures , public HaveWin
+class Grid :  public Captures, public HaveWin, public Relevant
 {
 	public:
 							Grid(void);

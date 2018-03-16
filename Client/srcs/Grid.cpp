@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/16 13:51:57 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 14:02:23 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool						Grid::putStone(Player &player)
 			player.addCapture();
 		this->setUnavailable(m_last_y, m_last_x, val);
 		this->setAvailable(m_last_y, m_last_x, val);
-		this->relevant(m_last_y, m_last_x);
+		this->relevant(m_last_y, m_last_x, RELEVANT);
 		return (true);
 	}
 	return (false);

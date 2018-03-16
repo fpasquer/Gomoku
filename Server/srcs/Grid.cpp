@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/16 11:18:01 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 14:19:54 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/Grid.hpp"
 
-							Grid::Grid(void) : Captures(), HaveWin()
+							Grid::Grid(void) : Captures(), HaveWin(), Relevant()
 {
 
 }
@@ -48,6 +48,7 @@ bool						Grid::setValue(short const val, unsigned int const y, unsigned int con
 		(*ptr) += "**";
 	this->setUnavailable(y, x, val);
 	this->setAvailable(y, x, val);
+	this->relevant(y, x, RELEVANT_IA);
 	return (true);
 }
 
@@ -80,6 +81,7 @@ bool						Grid::unsetValue(short const val, unsigned int const y, unsigned int c
 	this->unsetValueAgent(ptr, BOTTOM_LEFT, other_player, y + 1, x - 1, y + 2, x - 2, way_capture);
 	this->setUnavailable(y, x, val);
 	this->setAvailable(y, x, val);
+	this->unset_relevant(y, x, UNSET_RELEVANT_IA);
 	return (true);
 }
 
