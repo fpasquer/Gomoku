@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 08:01:10 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 14:19:19 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 11:18:01 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,15 @@ void						Grid::show(unsigned int const y, unsigned int const x) const
 		{
 			if (y == y_ia && x == x_ia)
 				str += "\033[31m";
-			if (snprintf(buff, 5, "%4d", (int)m_cell[y_ia][x_ia]) > 0)
-				str += m_cell[y_ia][x_ia] == ' ' ? "  . " : buff;
+			if (snprintf(buff, 5, "%4d", (int)GET_VAL(m_cell[y_ia][x_ia])) > 0)
+			{
+				if (GET_VAL(m_cell[y_ia][x_ia]) == ' ' && GET_PERM((m_cell[y_ia][x_ia] ^ RELEVANT)) == 0)
+					str += ((m_cell[y_ia][x_ia] & RELEVANT) != 0) ? "\033[30;100m  . \033[0m" : "  . ";
+				else if (GET_VAL(m_cell[y_ia][x_ia]) == ' ')
+					str += ((m_cell[y_ia][x_ia] & RELEVANT) != 0) ? "\033[30;41m  . \033[0m" : "  . ";
+				else
+					str += buff;
+			}
 			if (y == y_ia && x == x_ia)
 				str += "\033[0m";
 		}

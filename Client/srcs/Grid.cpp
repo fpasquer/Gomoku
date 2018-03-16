@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:33:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 15:54:31 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 10:43:00 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ bool						Grid::checkIaWin(Player_human const &player) const
 		m_ia.getCapture()));
 }
 
-void						Grid::relevant_ia_agent(int const i_y, int const i_x, int const start_y, int const start_x)
+void						Grid::relevant_ia_agent(int const i_y, int const i_x, unsigned int const start_y, unsigned int const start_x)
 {
-	int						i;
+	int			i;
 
 	for (i = 0; i < 5; i++)
-		if (i * i_y + start_y < 0 || i * i_y + start_y >= SIZE_GRID || i * i_x + start_x < 0 || i + i_x + start_x >= SIZE_GRID)
-			m_cell[i * i_y + start_y][i * i_x + start_x] = m_cell[i * i_y + start_y][i * i_x + start_x] | RELEVANT;
+	{
+		if (i * i_y + start_y >= SIZE_GRID || i * i_x + start_x >= SIZE_GRID)
+			break ;
+		m_cell[i * i_y + start_y][i * i_x + start_x] = m_cell[i * i_y + start_y][i * i_x + start_x] | RELEVANT;
+	}
 }
 
 void						Grid::relevant_ia(unsigned int const y, unsigned int const x)
@@ -90,7 +93,7 @@ bool						Grid::putStone(Player &player)
 			player.addCapture();
 		this->setUnavailable(m_last_y, m_last_x, val);
 		this->setAvailable(m_last_y, m_last_x, val);
-																								//this->relevant_ia(m_last_y, m_last_x);
+		this->relevant_ia(m_last_y, m_last_x);
 		return (true);
 	}
 	return (false);

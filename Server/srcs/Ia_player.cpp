@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/10 11:43:03 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 15:57:17 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/16 11:24:37 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void						Ia_player::play(Grid &grid, unsigned int &x, unsigned int &y)
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
-			if (ia_player.m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
+			if (ia_player.m_grid.getValue(c, x_ia, y_ia) == false || (c & RELEVANT) == 0 || GET_VAL(c) != EMPTY_CELL ||
 					(GET_PERM(c) & CAN_NOT_PLAY2) != 0 ||
 					ia_player.m_grid.setValue(PLAYER2, y_ia, x_ia, &way_captures) == false)
 				continue ;
@@ -85,7 +85,7 @@ int							Ia_player::min(int const depth, unsigned int const y, unsigned int con
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
-			if (this->m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
+			if (this->m_grid.getValue(c, x_ia, y_ia) == false || (c & RELEVANT) == 0 || GET_VAL(c) != EMPTY_CELL ||
 					(GET_PERM(c) & CAN_NOT_PLAY1) != 0 || this->m_grid.setValue(PLAYER1, y_ia, x_ia, &way_captures) == false)
 				continue ;
 #ifdef DEBUG
@@ -121,7 +121,7 @@ int							Ia_player::max(int const depth, unsigned int const y, unsigned int con
 	for (y_ia = 0; y_ia < SIZE_GRID; y_ia++)
 		for (x_ia = 0; x_ia < SIZE_GRID; x_ia++)
 		{
-			if (this->m_grid.getValue(c, x_ia, y_ia) == false || GET_VAL(c) != EMPTY_CELL ||
+			if (this->m_grid.getValue(c, x_ia, y_ia) == false || (c & RELEVANT) == 0 || GET_VAL(c) != EMPTY_CELL ||
 					(GET_PERM(c) & CAN_NOT_PLAY2) != 0 || this->m_grid.setValue(PLAYER2, y_ia, x_ia, &way_captures) == false)
 				continue ;
 #ifdef DEBUG
