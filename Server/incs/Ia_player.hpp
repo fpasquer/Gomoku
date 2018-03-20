@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:29:31 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/15 14:44:37 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/20 11:45:38 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ class Ia_player
 		static int const	start_max;
 		static int const	win;
 		bool				haveWin(unsigned int const y, unsigned int const x, short const val) const;
-		int					eval(bool const retHaveWin, char const player, int const depth, int const weight) const;
-		int					max(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight);
-		int					min(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight);
+		int					eval(bool const retHaveWin, char const player, int const depth, int const weight_ia, int const weight_player) const;
+		int					max(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight_ia, int weight_player);
+		int					min(int const depth, unsigned int const y, unsigned int const x, int prev_branch, int weight_ia, int weight_player);
 		void				show(unsigned int const line, unsigned int const y, unsigned int const x, int const max) const;
 };
 

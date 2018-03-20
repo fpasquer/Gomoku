@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 09:24:16 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/06 10:25:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/20 10:50:14 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ RETURN VALUES:
 {
 	unsigned int			i;
 
-	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && m_cell[y - i - 1][x] == GET_VAL(val); i++)
+	for (count = 0, i = 0; y - i - 1 < SIZE_GRID && GET_VAL(m_cell[y - i - 1][x]) == GET_VAL(val); i++)
 		count ++;
 	return (y - i - 1 < SIZE_GRID && GET_VAL(m_cell[y - i - 1][x]) == EMPTY_CELL ? true : false);
 }

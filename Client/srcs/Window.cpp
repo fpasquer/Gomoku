@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:37:45 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/02/24 15:13:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2018/03/20 10:39:04 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ void						Window::show_each_loop(Grid const &grid,Player_human const &player, st
 		keys.push_back(' ');
 		keys += buff;
 	}
-	count_line = (grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count_line) == false) ? 1 : count_line;
-	count_col = (grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count_col) == false) ? 1 : count_col;
-	count_dlr = (grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count_dlr) == false) ? 1 : count_dlr;
-	count_drl = (grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count_drl) == false) ? 1 : count_drl;
+	grid.getLineNbStone(player.getY(), player.getX(), player.getValue(), count_line);
+	grid.getColNbStone(player.getY(), player.getX(), player.getValue(), count_col);
+	grid.getDiagLeftTopRightBottomNbStone(player.getY(), player.getX(), player.getValue(), count_dlr);
+	grid.getDiagRightTopLeftBottomNbStone(player.getY(), player.getX(), player.getValue(), count_drl);
 	mvwprintw(m_win_refresh_each_loop, 1, 1, "Player y : %3d\n Player x : %3d\n Turn     : %3c\n\n Number stone LINE : %5u\n Number stone COL  : %5u\n Number Stone DLR  : %5u\n Number Stone DRL  : %5u\n\n Key :%20s",
 			player.getY(), player.getX(), GET_VAL(player.getValue()), count_line, count_col, count_dlr, count_drl, keys.c_str());
 	box(m_win_refresh_each_loop, ACS_VLINE, ACS_HLINE);

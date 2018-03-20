@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 11:44:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2018/03/08 15:17:37 by amaindro         ###   ########.fr       */
+/*   Updated: 2018/03/20 14:20:18 by amaindro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 }
 
 bool						HaveWin::haveWin(unsigned int const y,
-		unsigned int const x, short const val, std::string const &capture) const
+		unsigned int const x, short const val, std::string const &capture, int *weight) const
 {
 	unsigned int			count1;
 	unsigned int			count2;
@@ -32,6 +32,7 @@ bool						HaveWin::haveWin(unsigned int const y,
 	unsigned int			y_tmp;
 	unsigned int			x_tmp;
 	int						countered;
+	int						tmp_weight = 0;
 
 	this->countLeft(y, x, val, count1);
 	this->countRight(y, x, val, count2);
@@ -52,6 +53,10 @@ bool						HaveWin::haveWin(unsigned int const y,
 		if (countered >= NB_STONE_WIN)
 			return (true);
 	}
+		//setting the alignment weight
+		if (tmp_weight < (int)(count1 + count2 + 1))
+			tmp_weight = count1 + count2 + 1;
+
 	this->countTop(y, x, val, count1);
 	this->countBottom(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
@@ -71,6 +76,10 @@ bool						HaveWin::haveWin(unsigned int const y,
 		if (countered >= NB_STONE_WIN)
 			return (true);
 	}
+		//setting the alignment weight
+		if (tmp_weight < (int)(count1 + count2 + 1))
+			tmp_weight = count1 + count2 + 1;
+
 	this->countLeftTop(y, x, val, count1);
 	this->countRightBottom(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
@@ -90,6 +99,10 @@ bool						HaveWin::haveWin(unsigned int const y,
 		if (countered >= NB_STONE_WIN)
 			return (true);
 	}
+		//setting the alignment weight
+		if (tmp_weight < (int)(count1 + count2 + 1))
+			tmp_weight = count1 + count2 + 1;
+
 	this->countTopRight(y, x, val, count1);
 	this->countBottomLeft(y, x, val, count2);
 	if (count1 + count2 + 1 >= NB_STONE_WIN)
@@ -108,6 +121,24 @@ bool						HaveWin::haveWin(unsigned int const y,
 		}
 		if (countered >= NB_STONE_WIN)
 			return (true);
+	}
+		//setting the alignment weight
+		if (tmp_weight < (int)(count1 + count2 + 1))
+			tmp_weight = count1 + count2 + 1;
+
+	if (weight != NULL)
+	{
+		switch (tmp_weight)
+		{
+			case 4 ... SIZE_GRID : *weight = 50;
+					break ;
+			case 3: *weight = 10;
+					break ;
+			case 2: *weight = 1;
+					break ;
+			default: *weight = 0;
+		}
+		*weight += capture.size() * 50;
 	}
 	return (capture.size() >= NB_WIN_CAPTURE ? true : false);
 }
